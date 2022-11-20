@@ -1,0 +1,535 @@
+<div class="auth-wrapper auth-v2">
+  <div class="auth-inner row m-0">
+
+    <!-- <div class="brand-logo img" align="center"> -->
+    <img src="assets/images/banner/cintillo-ipostel-carabobo.jpg" class="d-none d-sm-none d-md-block banner-fona"
+      alt="banner" width="100%" />
+    <!-- </div>  -->
+
+    <!-- /Left Text-->
+    <!-- Login-->
+    <div class="d-flex col-lg-12 align-items-center auth-bg px-2 p-lg-5">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+        <h1 class="card-title font-weight-bold mb-1 text-primary" align="center">
+          <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
+          <strong>{{ coreConfig.app.appName }}</strong>
+        </h1>
+        <!-- </a> -->
+        <p class="card-text mb-8" align="center"><strong>RESUMEN DE OPERADOR POSTAL PRIVADO (OPP)</strong></p>
+
+
+
+        <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm">
+          <div class="datos-generales" align="center">
+            <h3>
+              <font color="#FFFFFF"><strong>DATOS GENERALES DEL OPERADOR POSTAL PRIVADO</strong></font>
+            </h3>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label">Nombre de la Empresa</label>
+                <input required email type="text" class="form-control" #NombreEmpresa="ngModel"
+                [(ngModel)]="IFormOPP.nombre_empresa" [ngModelOptions]="{standalone: true}"
+                [class.error]="!NombreEmpresa.valid && formUsersRegister.submitted"
+                placeholder="Nombre de Empresa" />
+                <span *ngIf="formUsersRegister.submitted && NombreEmpresa.invalid" class="invalid-form">
+                  <small class="form-text text-danger" *ngIf="NombreEmpresa.errors.required">Nombre de Empresa es
+                    requerido!</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label">Numero de RIF</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.rif" [ngModelOptions]="{standalone: true}"
+                  class="form-control" placeholder="Numero de RIF" />
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Dirección Fiscal</label>
+                <textarea class="form-control" [(ngModel)]="IFormOPP.direccion_empresa"
+                  [ngModelOptions]="{standalone: true}" id="basicTextarea" rows="3" class="form-control"
+                  placeholder="Dirección Fiscal"></textarea>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Estado</label>
+                <ng-select [items]="SelectEstado" bindLabel="estado" placeholder="Seleccione Estado"
+                  [(ngModel)]="IFormOPP.estado_empresa" [ngModelOptions]="{standalone: true}" required
+                  autocomplete="off" (ngModelChange)="Select_Ciudad($event.id_estado)">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Ciudad</label>
+                <ng-select [items]="SelectCiudad" [(ngModel)]="IFormOPP.ciudad_empresa"
+                  [ngModelOptions]="{standalone: true}" (ngModelChange)="Select_Municipo($event.id_estado)"
+                  bindLabel="ciudad" placeholder="Seleccione Ciudad" required autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Municipios</label>
+                <ng-select [items]="SelectMunicipio" [(ngModel)]="IFormOPP.municipio_empresa"
+                  [ngModelOptions]="{standalone: true}" (ngModelChange)="Select_Parroquia($event.id_municipio)"
+                  bindLabel="municipio" placeholder="Seleccione Municipios" required autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label">Parroquia</label>
+                <ng-select [items]="SelectParroquia" [(ngModel)]="IFormOPP.parroquia_empresa"
+                  [ngModelOptions]="{standalone: true}" bindLabel="parroquia" placeholder="Seleccione Parroquia"
+                  required autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Correo Electronico OPP</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.correo_electronico"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Correo Electronico OPP" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Facebook</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.empresa_facebook"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Correo Principal" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Instagram</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.empresa_instagram"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Correo Electronico Secundario" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Twitter</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.empresa_twitter"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Correo Electronico Secundario" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Tipo de Agencia</label>
+                <ng-select [items]="SelectTipoAgencia" bindValue="id_tipo_agencia" [(ngModel)]="IFormOPP.tipo_agencia"
+                  [ngModelOptions]="{standalone: true}" bindLabel="nombre_tipo_agencia"
+                  placeholder="Seleccione Tipo de Agencia" required autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Cantidad de Sucursales</label>
+                <input required type="number" class="form-control" [(ngModel)]="IFormOPP.sucursales"
+                  [ngModelOptions]="{standalone: true}" placeholder="Ingrese Cantidad de Sucursales" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Cantidad de Sub Contrataciones</label>
+                <input required type="number" class="form-control" [(ngModel)]="IFormOPP.subcontrataciones"
+                  [ngModelOptions]="{standalone: true}" placeholder="Ingrese Cantidad de Sub Contrataciones" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Tipología de Empresa OPP</label>
+                <ng-select [items]="SelectTipologiaEmpresa" bindValue="id_tipologia"
+                  [(ngModel)]="IFormOPP.tipologia_empresa" [ngModelOptions]="{standalone: true}"
+                  bindLabel="nombre_tipologia" placeholder="Seleccione Tipología de Empresa OPP" required
+                  autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Tipo de servicio que presta o proveé el OPP</label>
+                <ng-select #selectMultiLimited [items]="SelectEspecificacionServicio" [multiple]="true"
+                  [(ngModel)]="IFormOPP.tipo_servicio" [ngModelOptions]="{standalone: true}" [maxSelectedItems]="7"
+                  placeholder="Seleccione Tipo de Servicio OPP" bindLabel="nombre_especificacion_servicio"
+                  autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label">Especificación de Servicio</label>
+                <ng-select #selectMultiLimited [items]="SelectEspecificacionServicio" [multiple]="true"
+                  [(ngModel)]="IFormOPP.tipo_servicio" [ngModelOptions]="{standalone: true}" [maxSelectedItems]="7"
+                  placeholder="Seleccione Especificación Servicio" bindLabel="nombre_especificacion_servicio"
+                  autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Licencia Actividades Economicas Municipales</label>
+                <input required email type="text" class="form-control"
+                  [(ngModel)]="IFormOPP.licencia_actividades_economicas_municipales"
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Ingrese Nro. Licencia Actividades Economicas Municipalesl" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Licencia Actividades Economicas ante el SENIAT</label>
+                <input required email type="text" class="form-control"
+                  [(ngModel)]="IFormOPP.actividades_economicas_seniat" [ngModelOptions]="{standalone: true}"
+                  placeholder="Ingrese Nro. Licencia Actividades Economicas ante el Seniat" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Certificado de RUPDAE</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.certificado_rupdae"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Nro Certificadode RUPDAE" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Patronal IVSS</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.patronal_ivss"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Nro. Patronal IVSS" />
+              </div>
+            </div>
+
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Matricula INCES</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.matricula_inces"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Nro. Matricula INCES" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Identificación Laboral Ministerrio del Trabajo</label>
+                <input required email type="text" class="form-control"
+                  [(ngModel)]="IFormOPP.identificacion_laboral_ministerio_trabajo" [ngModelOptions]="{standalone: true}"
+                  placeholder="Ingrese Nro. Identificación Laboral Ministerrio del Trabajo" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Certificado de OMIC </label>
+                <input required email type="text" [(ngModel)]="IFormOPP.certificado_eomic"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Nro Certificado de OMIC" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Permiso de Bomberos</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.permiso_bomberos"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Nro. Permiso de Bomberos" />
+              </div>
+            </div>
+
+
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Registro del SAPI</label>
+                <input required email type="text" [(ngModel)]="IFormOPP.registro_sapi"
+                  [ngModelOptions]="{standalone: true}" class="form-control"
+                  placeholder="Ingrese Nro. Registro del SAPI" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Registro Nacional de Contratista</label>
+                <input required email type="text" class="form-control"
+                  [(ngModel)]="IFormOPP.registro_nacional_contratista" [ngModelOptions]="{standalone: true}"
+                  placeholder="Ingrese Nro. Registro Nacional de Contratista" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Flota Utilizada</label>
+                <ng-select #selectMultiLimited [items]="SelectEspecificacionServicio" [multiple]="true"
+                  [maxSelectedItems]="7" placeholder="Seleccione Flota Utilizada" [(ngModel)]="IFormOPP.flota_utilizada"
+                  [ngModelOptions]="{standalone: true}" bindLabel="nombre_especificacion_servicio" autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-12">
+              <label class="form-label" for="email">Estatus de la Flota</label>
+              <div class="form-group">
+                <label class="form-label" for="email">Total Arrendados</label>
+                <input required email type="number" [(ngModel)]="IFormOPP.total_arrendados"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Total Arrendados" />
+              </div>
+            </div>
+            <div class="col-md-2 col-12">
+              <label class="form-label" for="email">Estatus de la Flota</label>
+              <div class="form-group">
+                <label class="form-label" for="email">Total Propio</label>
+                <input required email type="number" class="form-control" [(ngModel)]="IFormOPP.total_propio"
+                  [ngModelOptions]="{standalone: true}" placeholder="Ingrese Total Propio" />
+              </div>
+            </div>
+            <div class="col-md-2 col-12">
+              <label class="form-label" for="email">Estatus de la Flota</label>
+              <div class="form-group">
+                <label class="form-label" for="email">Subcontratados</label>
+                <input required email type="number" [(ngModel)]="IFormOPP.subcontratados"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Subcontratados" />
+              </div>
+            </div>
+            <div class="col-md-2 col-12">
+              <label class="form-label" for="email">Estatus de la Flota</label>
+              <div class="form-group">
+                <label class="form-label" for="email">Alianzas</label>
+                <input required email type="number" class="form-control" [(ngModel)]="IFormOPP.alianzas"
+                  [ngModelOptions]="{standalone: true}" placeholder="Ingrese Alianzas" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <label class="form-label" for="email">Estatus de la Flota</label>
+              <div class="form-group">
+                <label class="form-label" for="email">Otros</label>
+                <input required email type="number" [(ngModel)]="IFormOPP.otros" [ngModelOptions]="{standalone: true}"
+                  class="form-control" placeholder="Ingrese Otros" />
+              </div>
+            </div>
+
+
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. trabajadores directos que conforman la nomina de la
+                  OPP</label>
+                <input required email type="number" class="form-control" [(ngModel)]="IFormOPP.cantidad_trabajadores"
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Ingrese Nro. trabajadores directos que conforman la nomina de la OPP" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Subcontratados</label>
+                <input required email type="number" [(ngModel)]="IFormOPP.cantidad_subcontratados"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Subcontratados" />
+              </div>
+            </div>
+
+          </div>
+
+          <div class="datos-generales" align="center">
+            <h3>
+              <font color="#FFFFFF"><strong>DATOS DEL REPRESENTANTE LEGAL DE LAS EMPRESA OPP</strong></font>
+            </h3>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">Registro Nro.</label>
+                <input required email type="text" class="form-control" placeholder="Registro Nro." />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">De Fecha</label>
+                <input required email type="text" class="form-control" placeholder="Fecha" />
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">Tomo</label>
+                <input required email type="text" class="form-control" placeholder="Tomo" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nombres</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Nombres" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label">Apellidos</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Apellidos" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Cédula de Identidad</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Cédula de Identidad" />
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Dirección</label>
+                <textarea class="form-control" id="basicTextarea" rows="3" class="form-control"
+                  placeholder="Dirección Fiscal"></textarea>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Correo Electronico</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Correo Electronico" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Facebook</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Facebook" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Instagram</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Instagram" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Twitter</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Twitter" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label">Cargo Junta Directiva</label>
+                <input required email type="text" class="form-control"
+                  placeholder="Ingrese Cargo en la Junta Directiva" />
+              </div>
+            </div>
+
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Telefono Movil</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Nro. Telefono Movil" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Telefono Residencial</label>
+                <input required email type="text" class="form-control"
+                  placeholder="Ingrese Nro. Telefono Residencial" />
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="datos-generales" align="center">
+            <h3>
+              <font color="#FFFFFF"><strong>DATOS DEL DELEGADO POR EL OPP</strong></font>
+            </h3>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nombres</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Nombres" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label">Apellidos</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Apellidos" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Cédula de Identidad</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Cédula de Identidad" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Correo Electronico</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Correo Electronico" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Facebook</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Facebook" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Instagram</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Instagram" />
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Twitter</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Twitter" />
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Cargo que Ocupa</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Cargo que Ocupa" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Nro. Telefono</label>
+                <input required email type="text" class="form-control" placeholder="Ingrese Nro. Telefono" />
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col-12" align="center">
+            <button type="submit" [disabled]="!formUsersRegister.form.valid" (click)="RegisterPrivatePostOffices()"
+              rippleEffect class="btn btn-success mr-1">Registrarse</button>
+            <button routerLink="/" rippleEffect class="btn btn-outline-secondary">Regresar</button>
+          </div>
+        </form>
+
+
+
+
+
+        <div class="divider my-2">
+          <div class="divider-text">Contáctanos</div>
+        </div>
+        <div class="auth-footer-btn d-flex justify-content-center">
+          <a class="btn btn-facebook" href="https://www.facebook.com/" target="new"><i
+              data-feather="facebook"></i></a><a class="btn btn-twitter white" href="https://twitter.com/"
+            target="new"><i data-feather="twitter"></i></a>
+        </div>
+        <br>
+        <div class="auth-footer-btn d-flex justify-content-center">
+          <p class="text-center mt-2">
+            <small align="center">INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA – RIF G-20000043-0
+              <br>
+              Dirección : Avenida José Ángel Lamas, San Martín, Caracas, edificio Centro Postal Caracas, Distrito
+              Capital
+              <br>
+              E-mail: <a href="mailto:tsuarez@ipostel.gob.ve@fona.gob.ve">tsuarez@ipostel.gob.ve</a>
+              <br>
+              Telf: <a href="Tel:02124053340">0212-405.33.40</a> / 0412-711.08.00 / fax: 0212-405.33.66
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /Login-->
+  </div>
+</div>
