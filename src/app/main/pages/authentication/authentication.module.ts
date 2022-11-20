@@ -19,7 +19,6 @@ import { AuthResetPasswordV2Component } from './auth-reset-password-v2/auth-rese
 import { AuthForgotPasswordV2Component } from './auth-forgot-password-v2/auth-forgot-password-v2.component';
 import { AuthRegisterV2Component } from './auth-register-v2/auth-register-v2.component';
 import { CertificatesComponent } from './certificates/certificates.component';
-import { LoginInternalComponent } from './login-internal/login-internal.component';
 
 
 
@@ -28,10 +27,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthLoginV2Component,
-  },
-  {
-    path: 'admin-recosup',
-    component: LoginInternalComponent,
   },
   {
     path: 'login/:id',
@@ -62,7 +57,6 @@ const routes: Routes = [
                           AuthRegisterV2Component,
                           AuthResetPasswordV2Component,
                           AuthForgotPasswordV2Component,
-                          LoginInternalComponent,
 ],
   imports: [CommonModule, RouterModule.forChild(routes), NgbModule,  NgSelectModule,
     FormsModule, ReactiveFormsModule, CoreCommonModule, ContentHeaderModule,

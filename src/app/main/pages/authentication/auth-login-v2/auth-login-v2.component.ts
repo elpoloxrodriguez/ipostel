@@ -153,7 +153,7 @@ export class AuthLoginV2Component implements OnInit {
     this.submitted = true;
     this.loading = true;
     var Xapi = {
-      "funcion": 'RECOSUP_R_Login',
+      "funcion": 'IPOSTEL_R_Login',
       "parametros": this.usuario + ',' + this.clave
     }
     this.loginService.getLoginExternas(Xapi).subscribe(
@@ -164,7 +164,7 @@ export class AuthLoginV2Component implements OnInit {
           sessionStorage.setItem("token", this.itk.token);
           this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
           // console.log(this.infoUsuario.Usuario[0])
-          this.utilservice.alertConfirmMini('success', `Bienvenido al FONA ${this.infoUsuario.Usuario[0].Nombres} ${this.infoUsuario.Usuario[0].Apellidos}`);
+          this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL ${this.infoUsuario.Usuario[0].Nombres} ${this.infoUsuario.Usuario[0].Apellidos}`);
           this._router.navigate(['home'])
             .then(() => {
               window.location.reload();

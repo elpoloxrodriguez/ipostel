@@ -176,11 +176,11 @@ public cargo = ''
    * On init
    */
   ngOnInit(): void {
-    this.token =  jwt_decode(sessionStorage.getItem('token'));
-    this.cargo = this.token.Usuario[0].Cargo
-    this.nombre = this.token.Usuario[0].Nombres +' '+ this.token.Usuario[0].Apellidos
+    // this.token =  jwt_decode(sessionStorage.getItem('token'));
+    // this.cargo = this.token.Usuario[0].Cargo
+    // this.nombre = this.token.Usuario[0].Nombres +' '+ this.token.Usuario[0].Apellidos
     // get the currentUser details from localStorage
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     // Subscribe to the config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
