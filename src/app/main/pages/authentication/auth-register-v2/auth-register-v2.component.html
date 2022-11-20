@@ -15,7 +15,7 @@
           <strong>{{ coreConfig.app.appName }}</strong>
         </h1>
         <!-- </a> -->
-        <p class="card-text mb-8" align="center"><strong>RESUMEN DE OPERADOR POSTAL PRIVADO (OPP)</strong></p>
+        <p class="card-text mb-8" align="center"><strong>RESUMEN DE OPERADOR POSTAL PRIVADO</strong></p>
 
 
 
@@ -26,19 +26,27 @@
             </h3>
           </div>
           <div class="row">
+
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label class="form-label" for="email">Seleccione Oficina Postal Privada</label>
+                <ng-select #selectMultiLimited  [items]="SelectOpp" [multiple]="true"
+                  [(ngModel)]="IFormOPP.opp" [ngModelOptions]="{standalone: true}" [maxSelectedItems]="7"
+                  placeholder="Seleccione Oficina Postal Privada" bindLabel="nombre_empresa"
+                  autocomplete="off">
+                </ng-select>
+              </div>
+            </div>
+            
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label">Nombre de la Empresa</label>
-                <input required email type="text" class="form-control" #NombreEmpresa="ngModel"
+                <input required email type="text" class="form-control"
                 [(ngModel)]="IFormOPP.nombre_empresa" [ngModelOptions]="{standalone: true}"
-                [class.error]="!NombreEmpresa.valid && formUsersRegister.submitted"
                 placeholder="Nombre de Empresa" />
-                <span *ngIf="formUsersRegister.submitted && NombreEmpresa.invalid" class="invalid-form">
-                  <small class="form-text text-danger" *ngIf="NombreEmpresa.errors.required">Nombre de Empresa es
-                    requerido!</small>
-                </span>
               </div>
             </div>
+
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label">Numero de RIF</label>
@@ -226,10 +234,10 @@
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
-                <label class="form-label" for="email">Nro. Certificado de OMIC </label>
+                <label class="form-label" for="email">Nro. Certificado de EOMIC </label>
                 <input required email type="text" [(ngModel)]="IFormOPP.certificado_eomic"
                   [ngModelOptions]="{standalone: true}" class="form-control"
-                  placeholder="Ingrese Nro Certificado de OMIC" />
+                  placeholder="Ingrese Nro Certificado de EOMIC" />
               </div>
             </div>
             <div class="col-md-3 col-12">
@@ -323,7 +331,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Subcontratados</label>
-                <input required email type="number" [(ngModel)]="IFormOPP.cantidad_subcontratados"
+                <input required email type="number" [(ngModel)]="IFormOPP.registro_nacional_contratista"
                   [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Subcontratados" />
               </div>
             </div>
@@ -332,7 +340,7 @@
 
           <div class="datos-generales" align="center">
             <h3>
-              <font color="#FFFFFF"><strong>DATOS DEL REPRESENTANTE LEGAL DE LAS EMPRESA OPP</strong></font>
+              <font color="#FFFFFF"><strong>DATOS DEL REPRESENTANTE LEGAL DE LA EMPRESA </strong></font>
             </h3>
           </div>
 
@@ -340,74 +348,87 @@
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label class="form-label">Registro Nro.</label>
-                <input required email type="text" class="form-control" placeholder="Registro Nro." />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.n_registro"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Registro Nro." />
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label class="form-label">De Fecha</label>
-                <input required email type="text" class="form-control" placeholder="Fecha" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.fecha_registro"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Fecha" />
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label class="form-label">Tomo</label>
-                <input required email type="text" class="form-control" placeholder="Tomo" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.tomo"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Tomo" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nombres</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Nombres" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.nombres_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Nombres" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label">Apellidos</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Apellidos" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.apellidos_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Apellidos" />
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Cédula de Identidad</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Cédula de Identidad" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.cedula_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Cédula de Identidad" />
               </div>
             </div>
             <div class="col-md-12 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Dirección</label>
-                <textarea class="form-control" id="basicTextarea" rows="3" class="form-control"
+                <textarea class="form-control" [(ngModel)]="IFormOPP_RepresentanteLegal.direccion_representante_legal"
+                [ngModelOptions]="{standalone: true}" id="basicTextarea" rows="3" class="form-control"
                   placeholder="Dirección Fiscal"></textarea>
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Correo Electronico</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Correo Electronico" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.email_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Correo Electronico" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Facebook</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Facebook" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.facebook_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Facebook" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Instagram</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Instagram" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.instagram_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Instagram" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Twitter</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Twitter" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.twitter_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Twitter" />
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label">Cargo Junta Directiva</label>
                 <input required email type="text" class="form-control"
+                [(ngModel)]="IFormOPP_RepresentanteLegal.cargo_representante_legal"
+                [ngModelOptions]="{standalone: true}"
                   placeholder="Ingrese Cargo en la Junta Directiva" />
               </div>
             </div>
@@ -415,13 +436,16 @@
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nro. Telefono Movil</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Nro. Telefono Movil" />
+                <input required email type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.telefono_movil_representante_legal"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Nro. Telefono Movil" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nro. Telefono Residencial</label>
                 <input required email type="text" class="form-control"
+                [(ngModel)]="IFormOPP_RepresentanteLegal.telefono_residencial_representante_legal"
+                [ngModelOptions]="{standalone: true}"
                   placeholder="Ingrese Nro. Telefono Residencial" />
               </div>
             </div>
@@ -431,7 +455,7 @@
 
           <div class="datos-generales" align="center">
             <h3>
-              <font color="#FFFFFF"><strong>DATOS DEL DELEGADO POR EL OPP</strong></font>
+              <font color="#FFFFFF"><strong>DATOS DEL DELEGADO</strong></font>
             </h3>
           </div>
 
@@ -439,43 +463,50 @@
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nombres</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Nombres" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.nombres_delegado"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Nombres" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label">Apellidos</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Apellidos" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.apellidos_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Apellidos" />
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Cédula de Identidad</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Cédula de Identidad" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.cedula_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Cédula de Identidad" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Correo Electronico</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Correo Electronico" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.email_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Correo Electronico" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Facebook</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Facebook" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.facebook_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Facebook" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Instagram</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Instagram" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.instagram_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Instagram" />
               </div>
             </div>
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Twitter</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Twitter" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.twitter_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Twitter" />
               </div>
             </div>
 
@@ -488,7 +519,8 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nro. Telefono</label>
-                <input required email type="text" class="form-control" placeholder="Ingrese Nro. Telefono" />
+                <input required email type="text" [(ngModel)]="IFormOPP_DelegadoOPP.telefono_delegado"
+                [ngModelOptions]="{standalone: true}"  class="form-control" placeholder="Ingrese Nro. Telefono" />
               </div>
             </div>
 

@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
 import { UtilService } from '@core/services/util/util.service';
 import { DatePipe } from '@angular/common';
-import { IPOSTEL_C_OPP } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_DelegadoOPP, IPOSTEL_C_OPP, IPOSTEL_C_RepresentanteLegal } from '@core/services/empresa/form-opp.service';
 
 @Component({
   selector: 'app-auth-register-v2',
@@ -31,10 +31,6 @@ export class AuthRegisterV2Component implements OnInit {
     empresa_facebook: '',
     empresa_instagram: '',
     empresa_twitter: '',
-    tipo_agencia: 0,
-    sucursales: 0,
-    subcontrataciones: 0,
-    tipologia_empresa: 0,
     tipo_servicio: '',
     licencia_actividades_economicas_municipales: '',
     actividades_economicas_seniat: '',
@@ -47,15 +43,39 @@ export class AuthRegisterV2Component implements OnInit {
     registro_sapi: '',
     registro_nacional_contratista: '',
     flota_utilizada: '',
-    total_arrendados: 0,
-    total_propio: 0,
-    subcontratados: 0,
-    alianzas: 0,
-    otros: 0,
-    cantidad_trabajadores: 0,
-    cantidad_subcontratados: 0
+    status: 0,
+    tipo_registro: 0
   }
 
+  public IFormOPP_RepresentanteLegal : IPOSTEL_C_RepresentanteLegal = {
+    id_opp: 0,
+    n_registro: '',
+    fecha_registro: '',
+    tomo: '',
+    nombres_representante_legal: '',
+    apellidos_representante_legal: '',
+    cedula_representante_legal: '',
+    direccion_representante_legal: '',
+    email_representante_legal: '',
+    facebook_representante_legal: '',
+    instagram_representante_legal: '',
+    twitter_representante_legal: '',
+    cargo_representante_legal: '',
+    telefono_movil_representante_legal: '',
+    telefono_residencial_representante_legal: '',
+  }
+
+  public IFormOPP_DelegadoOPP : IPOSTEL_C_DelegadoOPP = {
+    nombres_delegado: '',
+    apellidos_delegado: '',
+    cedula_delegado: '',
+    cargo_delegado: '',
+    telefono_delegado: '',
+    email_delegado: '',
+    facebook_delegado: '',
+    instagram_delegado: '',
+    twitter_delegado: ''
+  }
 
   public xAPI : IAPICore = {
     funcion: '',
@@ -70,11 +90,19 @@ export class AuthRegisterV2Component implements OnInit {
   public SelectParroquia
   public SelectTipoAgencia
   public SelectTipologiaEmpresa 
-public SelectEspecificacionServicio
+  public SelectEspecificacionServicio
+
+  public SelectOpp
 
 
-
-  public tipoDocumento
+  public TipoRegistro = [
+    {
+      name: 'Operador Postal Privado'
+    },
+    {
+      name: 'SubContratista'
+    }
+  ]
 
 
   estado
@@ -162,22 +190,46 @@ public SelectEspecificacionServicio
     this.Select_TipoAgencia()
     this.Select_TipologiaEmpresa()
     this.Select_Especificacion_servicio()
+    this.Select_Opp()
   }
 
   async RegisterPrivatePostOffices(){
+    this.IFormOPP.tipo_registro = 1
     this.IFormOPP.estado_empresa = this.IFormOPP.estado_empresa['estado']
     this.IFormOPP.ciudad_empresa = this.IFormOPP.ciudad_empresa['ciudad']
     this.IFormOPP.municipio_empresa = this.IFormOPP.municipio_empresa['municipio']
     this.IFormOPP.parroquia_empresa = this.IFormOPP.parroquia_empresa['parroquia']
-    // console.log(this.IFormOPP)
     this.xAPI.funcion = 'IPOSTEL_C_OPP'
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.IFormOPP)
     await this.apiService.EjecutarDev(this.xAPI).subscribe(
-      (data) => {
-       if (data.tipo === 1) {
-        this.utilService.alertConfirmMini('success', 'Felicidades! Registro Exitoso')
-        this._router.navigate(['/'])
+      (opp) => {
+       if (opp.tipo === 1) {
+         this.IFormOPP_RepresentanteLegal.id_opp = opp.msj
+         this.xAPI.funcion = 'IPOSTEL_C_RepresentanteLegal'
+         this.xAPI.parametros = ''
+         this.xAPI.valores = JSON.stringify(this.IFormOPP_RepresentanteLegal)
+         this.apiService.EjecutarDev(this.xAPI).subscribe(
+           (representante_legal) => {
+            this.IFormOPP_DelegadoOPP.id_opp = opp.msj
+            this.xAPI.funcion = 'IPOSTEL_C_DelegadoOPP'
+            this.xAPI.parametros = ''
+            this.xAPI.valores = JSON.stringify(this.IFormOPP_DelegadoOPP)
+            this.apiService.EjecutarDev(this.xAPI).subscribe(
+              (delegado) => {
+               console.log(representante_legal)
+                this.utilService.alertConfirmMini('success', 'Felicidades! Registro Exitoso')
+                this._router.navigate(['/'])             
+             },
+             (error) => {
+               console.error(error)
+             }
+           )            
+          },
+          (error) => {
+            console.error(error)
+          }
+        )
        } else {
         this.utilService.alertConfirmMini('error', 'Oops! Lo sentimos algo salio mal, intente de nuevo.')
        }
@@ -301,6 +353,22 @@ public SelectEspecificacionServicio
     )
   }
   
+  async Select_Opp(){
+      this.xAPI.funcion = 'IPOSTEL_R_OPP'
+      this.xAPI.parametros = ''
+      this.xAPI.valores = ''
+      this.SelectOpp = []
+      await this.apiService.EjecutarDev(this.xAPI).subscribe(
+        (data) => {
+          this.SelectOpp = data.Cuerpo.map(e => {
+            return e
+          })
+        },
+        (error) => {
+          console.error(error)
+        }
+      )      
+  }
 
   /**
    * On destroy
