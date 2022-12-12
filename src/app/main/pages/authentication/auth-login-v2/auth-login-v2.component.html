@@ -12,19 +12,19 @@
         background-position:center center;'
         >
         <div class="w-100 text-center">
-          <h1 class="mb-1 fondo-negro"><strong><font color="#ffffff">SISTEMA INTEGRADO DE REGULACIÓN POSTAL </font></strong></h1>
+          <h1 class="mb-1 fondo-negro"><strong><font color="#ffffff">SISTEMA INTEGRADO DE REGULACIÓN <br> POSTAL VENEZOLANO 🇻🇪 </font></strong></h1>
           <img
           class="img-fluid drop"
           [src]="
             coreConfig.layout.skin === 'dark'
-              ? 'assets/images/logos/logo.png'
-              : 'assets/images/logos/logo.png'
+              ? 'assets/images/logos/ipostel.png'
+              : 'assets/images/logos/ipostel.png'
           "
           alt="Login"
-          width="400px"
+          width="450px"
         />
-          <h2 class="mb-1 fondo-negro"><strong><font color="#ffffff">Validación de Certificados ✅</font></strong></h2>
-          <p class="mb-3 fondo-negro"><font color="#ffffff">Ingrese el codigo QR del certificado.</font></p>
+          <h2 class="mb-1 drop"><strong><font color="#ffffff">Validación de Certificados ✅</font></strong></h2>
+          <p class="mb-3 drop"><font color="#ffffff">Ingrese el codigo QR del certificado.</font></p>
           <form class="form-inline justify-content-center row m-0 mb-2" action="javascript:void(0);">
             <input
               class="form-control col-12 col-md-5 mb-1 mr-md-2"
@@ -35,7 +35,7 @@
               [ngModelOptions]="{standalone: true, required: true}"
               placeholder="Ingrese el numero del certificado"
             />
-            <button class="btn btn-primary mb-1 btn-sm-block" type="submit" (click)="Certificado(Qr)" rippleEffect>Verificar</button>
+            <button class="btn btn-primary mb-1 btn-sm-block" type="submit" (click)="Certificado(Qr)"  rippleEffect>Verificar</button>
           </form>
         </div>
       </div>
@@ -49,7 +49,7 @@
               <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
               <strong>{{ coreConfig.app.appName }}</strong></h1>
           <!-- </a> -->
-          <p class="card-text mb-2" align="center">Sistema Integrado de Regulación Postal</p>
+          <h4><p class="card-text mb-2" align="center">Sistema Integrado de Regulación Postal Venezolano 🇻🇪</p></h4>
 
           <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
             <div class="alert-body">
@@ -97,39 +97,19 @@
                 <label class="custom-control-label" for="remember-me"> Recuérdame</label>
               </div>
             </div>
-            <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+            <button [disabled]="loading" *ngIf="btnShow" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Iniciar Sesión
             </button>
           </form>
           <p class="text-center mt-2">
-        <a class="btn btn-warning btn-block" routerLink="/register-private-post-offices"><span>&nbsp;Crear nueva cuenta OPP</span></a>
-        <a class="btn btn-success btn-block" routerLink="/register-subcontractor"><span>&nbsp;Crear nueva cuenta Subcontratista</span></a>
+        <a class="btn btn-warning btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices"><span>&nbsp;Crear nueva cuenta OPP</span></a>
+        <a class="btn btn-success btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices-subcontrator"><span>&nbsp;Crear nueva cuenta Subcontratista</span></a>
 
         </p>
 
+        <app-footer></app-footer>
 
-        <div class="divider my-2">
-          <div class="divider-text">Contáctanos</div>
-        </div>
-        <div class="auth-footer-btn d-flex justify-content-center">
-          <a class="btn btn-facebook" href="https://www.facebook.com/" target="new"><i data-feather="facebook"></i></a
-            ><a class="btn btn-twitter white" href="https://twitter.com" target="new"><i data-feather="twitter"></i></a
-            ><a class="btn btn-google white" href="https://instagram.com" target="new"><i data-feather="instagram"></i></a
-              >
-          </div>
-          <br>
-          <div class="auth-footer-btn d-flex justify-content-center">
-            <p class="text-center mt-2">
-          <small align="center">INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA – RIF G-20000043-0
-          <br>
-          Dirección : Avenida José Ángel Lamas, San Martín, Caracas, edificio Centro Postal Caracas, Distrito Capital
-          <br>
-          E-mail: <a href="mailto:tsuarez@ipostel.gob.ve@fona.gob.ve">tsuarez@ipostel.gob.ve</a>
-          <br>
-          Telf: <a href="Tel:02124053340">0212-405.33.40</a> / 0412-711.08.00 / fax: 0212-405.33.66
-          </small>
-          </p>
-        </div>
+
       </div>
     </div>
       <!-- /Login-->

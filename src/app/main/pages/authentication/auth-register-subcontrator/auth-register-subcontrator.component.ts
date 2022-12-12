@@ -10,15 +10,21 @@ import Swal from 'sweetalert2';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
 import { UtilService } from '@core/services/util/util.service';
 import { DatePipe } from '@angular/common';
-import { IPOSTEL_C_DelegadoOPP, IPOSTEL_C_OPP, IPOSTEL_C_RepresentanteLegal } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_ConexionFlotaUtilizada, IPOSTEL_C_DelegadoOPP, IPOSTEL_C_OPP, IPOSTEL_C_RepresentanteLegal } from '@core/services/empresa/form-opp.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 
 @Component({
-  selector: 'app-auth-register-v2',
-  templateUrl: './auth-register-v2.component.html',
-  styleUrls: ['./auth-register-v2.component.scss'],
+  selector: 'app-auth-register-subcontrator',
+  templateUrl: './auth-register-subcontrator.component.html',
+  styleUrls: ['./auth-register-subcontrator.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AuthRegisterV2Component implements OnInit {
+export class AuthRegisterSubcontratorComponent implements OnInit {
+
+  @BlockUI() blockUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+
 
   public fechaActual = new Date();
 
@@ -44,7 +50,9 @@ export class AuthRegisterV2Component implements OnInit {
     registro_nacional_contratista: '',
     flota_utilizada: '',
     status: 0,
-    tipo_registro: 0
+    tipo_registro: 0,
+    password: '',
+    especificacion_servicio: ''
   }
 
   public IFormOPP_RepresentanteLegal : IPOSTEL_C_RepresentanteLegal = {
@@ -77,11 +85,46 @@ export class AuthRegisterV2Component implements OnInit {
     twitter_delegado: ''
   }
 
+  public IConexionFlotaUtilizada: IPOSTEL_C_ConexionFlotaUtilizada = {
+    id_opp_sub: null,
+    vehiculo_liviano: null,
+    camionetas: null,
+    camion_350: null,
+    camion_750: null,
+    camion_3_ejes: null,
+    camion_4_ejes: null,
+    camion_5_ejes: null,
+    camion_6_ejes: null,
+    buques: null,
+    aviones: null,
+    avionetas: null,
+    containers: null,
+    motos: null,
+    bicicletas: null
+  }
+
   public xAPI : IAPICore = {
     funcion: '',
     parametros: '',
     valores : {},
   };
+
+    // Show Inputs Conexion Flota Utilizada
+    public vehiculo_liviano = false
+    public camionetas = false
+    public camion_350 = false
+    public camion_750 = false
+    public camion_3_ejes = false
+    public camion_4_ejes = false
+    public camion_5_ejes = false
+    public camion_6_ejes = false
+    public buques = false
+    public aviones = false
+    public avionetas = false
+    public containers = false
+    public motos = false
+    public bicicletas = false
+  
 
 
   public SelectEstado
@@ -90,7 +133,9 @@ export class AuthRegisterV2Component implements OnInit {
   public SelectParroquia
   public SelectTipoAgencia
   public SelectTipologiaEmpresa 
-  public SelectEspecificacionServicio
+  public labelTipologiaEmpresa
+  public SelectTipoServicio
+  public SelectFlotaUtilizada
 
   public SelectOpp
 
@@ -104,6 +149,8 @@ export class AuthRegisterV2Component implements OnInit {
     }
   ]
 
+  
+public passwordConfirm
 
   estado
   ciudad
@@ -188,51 +235,66 @@ export class AuthRegisterV2Component implements OnInit {
     });
     this.Select_Estados()
     this.Select_TipoAgencia()
-    this.Select_TipologiaEmpresa()
-    this.Select_Especificacion_servicio()
+    this.Select_Tipo_servicio()
     this.Select_Opp()
+    this.Select_Tipo_Flota()
   }
 
-  async RegisterPrivatePostOffices(){
-    this.IFormOPP.tipo_registro = 1
+  async RegisterOPPSubContrator(){
+    this.IFormOPP.tipo_registro = 2
+    this.IFormOPP.password = this.utilService.md5(this.IFormOPP.password)
     this.IFormOPP.estado_empresa = this.IFormOPP.estado_empresa['estado']
     this.IFormOPP.ciudad_empresa = this.IFormOPP.ciudad_empresa['ciudad']
     this.IFormOPP.municipio_empresa = this.IFormOPP.municipio_empresa['municipio']
     this.IFormOPP.parroquia_empresa = this.IFormOPP.parroquia_empresa['parroquia']
+    this.IFormOPP.tipo_servicio = JSON.stringify(this.IFormOPP.tipo_servicio)
+    this.IFormOPP.flota_utilizada = JSON.stringify(this.IFormOPP.flota_utilizada)
     this.xAPI.funcion = 'IPOSTEL_C_OPP'
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.IFormOPP)
     await this.apiService.EjecutarDev(this.xAPI).subscribe(
       (opp) => {
-       if (opp.tipo === 1) {
-         this.IFormOPP_RepresentanteLegal.id_opp = opp.msj
-         this.xAPI.funcion = 'IPOSTEL_C_RepresentanteLegal'
-         this.xAPI.parametros = ''
-         this.xAPI.valores = JSON.stringify(this.IFormOPP_RepresentanteLegal)
-         this.apiService.EjecutarDev(this.xAPI).subscribe(
-           (representante_legal) => {
-            this.IFormOPP_DelegadoOPP.id_opp = opp.msj
-            this.xAPI.funcion = 'IPOSTEL_C_DelegadoOPP'
-            this.xAPI.parametros = ''
-            this.xAPI.valores = JSON.stringify(this.IFormOPP_DelegadoOPP)
-            this.apiService.EjecutarDev(this.xAPI).subscribe(
-              (delegado) => {
-               console.log(representante_legal)
-                this.utilService.alertConfirmMini('success', 'Felicidades! Registro Exitoso')
-                this._router.navigate(['/'])             
-             },
-             (error) => {
-               console.error(error)
-             }
-           )            
-          },
-          (error) => {
-            console.error(error)
-          }
-        )
-       } else {
-        this.utilService.alertConfirmMini('error', 'Oops! Lo sentimos algo salio mal, intente de nuevo.')
-       }
+        if (opp.tipo === 1) {
+          this.sectionBlockUI.start('Guardo Registro, Porfavor Espere!!!');
+          this.IFormOPP_RepresentanteLegal.id_opp = opp.msj
+          this.xAPI.funcion = 'IPOSTEL_C_RepresentanteLegal'
+          this.xAPI.parametros = ''
+          this.xAPI.valores = JSON.stringify(this.IFormOPP_RepresentanteLegal)
+          this.apiService.EjecutarDev(this.xAPI).subscribe(
+            (representante_legal) => {
+              this.IFormOPP_DelegadoOPP.id_opp = opp.msj
+              this.xAPI.funcion = 'IPOSTEL_C_DelegadoOPP'
+              this.xAPI.parametros = ''
+              this.xAPI.valores = JSON.stringify(this.IFormOPP_DelegadoOPP)
+              this.apiService.EjecutarDev(this.xAPI).subscribe(
+                (delegado) => {
+                  this.IConexionFlotaUtilizada.id_opp_sub = opp.msj
+                  this.xAPI.funcion = 'IPOSTEL_C_ConexionFlotaUtilizada'
+                  this.xAPI.parametros = ''
+                  this.xAPI.valores = JSON.stringify(this.IConexionFlotaUtilizada)
+                  this.apiService.EjecutarDev(this.xAPI).subscribe(
+                    (conexion_flota_utilizada) => {
+                      this.sectionBlockUI.stop();
+                      this.utilService.alertConfirmMini('success', 'Felicidades! Registro Exitoso')
+                      this._router.navigate(['/'])
+                    },
+                    (error) => {
+                      console.error(error)
+                    }
+                  )
+                },
+                (error) => {
+                  console.error(error)
+                }
+              )
+            },
+            (error) => {
+              console.error(error)
+            }
+          )
+        } else {
+          this.utilService.alertConfirmMini('error', 'Oops! Lo sentimos algo salio mal, intente de nuevo.')
+        }
       },
       (error) => {
         console.error(error)
@@ -320,30 +382,52 @@ export class AuthRegisterV2Component implements OnInit {
       }
     )
   }
-  async Select_TipologiaEmpresa() {
-    this.xAPI.funcion = 'IPOSTEL_tipologia_empresa'
-    this.xAPI.parametros = ''
-    this.xAPI.valores = ''
-    this.SelectTipologiaEmpresa = []
-    await this.apiService.EjecutarDev(this.xAPI).subscribe(
-      (data) => {
-        this.SelectTipologiaEmpresa = data.Cuerpo.map(e => {
-          return e
-        })
-      },
-      (error) => {
-        console.error(error)
-      }
-    )
+  async Select_TipologiaEmpresa(event : any) {
+    console.log(event.length)
+    switch (event.length) {
+      case 1:
+        this.IFormOPP.tipologia_empresa = 3
+        this.labelTipologiaEmpresa = 'Operador Pequeña Escala'
+        break;
+       case 2:
+        this.IFormOPP.tipologia_empresa = 2
+        this.labelTipologiaEmpresa = 'Operador Mediana Escala'
+        break;
+      case  3:
+        this.IFormOPP.tipologia_empresa = 1
+        this.labelTipologiaEmpresa = 'Operador Gran Escala'
+        break;
+        case  0:
+          this.IFormOPP.tipologia_empresa = 0
+          this.labelTipologiaEmpresa = ''
+          break;
+      default:
+        break;
+    }
+    // this.xAPI.funcion = 'IPOSTEL_tipologia_empresa'
+    // this.xAPI.parametros = ''
+    // this.xAPI.valores = ''
+    // this.SelectTipologiaEmpresa = []
+    // await this.apiService.EjecutarDev(this.xAPI).subscribe(
+    //   (data) => {
+    //     this.SelectTipologiaEmpresa = data.Cuerpo.map(e => {
+    //       return e
+    //     })
+    //   },
+    //   (error) => {
+    //     console.error(error)
+    //   }
+    // )
+    
   }
-  async Select_Especificacion_servicio() {
-    this.xAPI.funcion = 'IPOSTEL_especificacion_servicio'
+  async Select_Tipo_servicio() {
+    this.xAPI.funcion = 'IPOSTEL_tipo_servicio'
     this.xAPI.parametros = ''
     this.xAPI.valores = ''
-    this.SelectEspecificacionServicio = []
+    this.SelectTipoServicio = []
     await this.apiService.EjecutarDev(this.xAPI).subscribe(
       (data) => {
-        this.SelectEspecificacionServicio = data.Cuerpo.map(e => {
+        this.SelectTipoServicio = data.Cuerpo.map(e => {
           return e
         })
       },
@@ -361,13 +445,99 @@ export class AuthRegisterV2Component implements OnInit {
       await this.apiService.EjecutarDev(this.xAPI).subscribe(
         (data) => {
           this.SelectOpp = data.Cuerpo.map(e => {
-            return e
+              return e
           })
         },
         (error) => {
           console.error(error)
         }
       )      
+  }
+  async Select_Tipo_Flota() {
+    this.xAPI.funcion = 'IPOSTEL_tipo_flota'
+    this.xAPI.parametros = ''
+    this.xAPI.valores = ''
+    this.SelectFlotaUtilizada = []
+    await this.apiService.EjecutarDev(this.xAPI).subscribe(
+      (data) => {
+        this.SelectFlotaUtilizada = data.Cuerpo.map(e => {
+          return e
+        })
+      },
+      (error) => {
+        console.error(error)
+      }
+    )
+  }
+
+  async CantidadFlota(event: any) {
+    event.forEach(e => {
+      console.log(e)
+      switch (e.id_flota_utilizada) {
+        case 0:
+          this.vehiculo_liviano = false
+          this.camionetas = false
+          this.camion_350 = false
+          this.camion_750 = false
+          this.camion_3_ejes = false
+          this.camion_4_ejes = false
+          this.camion_5_ejes = false
+          this.camion_6_ejes = false
+          this.buques = false
+          this.aviones = false
+          this.avionetas = false
+          this.containers = false
+          this.motos = false
+          this.bicicletas = false
+          break;
+        case '1':
+          this.vehiculo_liviano = true
+          break;
+        case '2':
+          this.camionetas = true
+          break;
+        case '3':
+          this.camion_350 = true
+          break;
+        case '4':
+          this.camion_750 = true
+          break;
+        case '5':
+          this.camion_3_ejes = true
+          break;
+        case '6':
+          this.camion_4_ejes = true
+          break;
+        case '7':
+          this.camion_5_ejes = true
+          break;
+        case '8':
+          this.camion_6_ejes = true
+          break;
+        case '9':
+          this.buques = true
+          break;
+        case '10':
+          this.aviones = true
+          break;
+        case '11':
+          this.avionetas = true
+          break;
+        case '12':
+          this.containers = true
+          break;
+        case '13':
+          this.motos = true
+          break;
+        case '14':
+          this.bicicletas = true
+          break;
+
+
+        default:
+          break;
+      }
+    });
   }
 
   /**

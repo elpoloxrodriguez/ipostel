@@ -12,31 +12,67 @@ export const menu: CoreMenu[] = [
     type: 'item',
     url: 'home',
   },
-  // Empresa
+    // Empresa
+    {
+      id: 'EmpresaOPP',
+      nombre: 'Empresa',
+      // role: ['0','9'], 
+      icono: 'package',
+      type: 'item',
+      url: 'business/opp',
+    },
+  // Franqueo Postal
   {
-    id: 'RegistroContribuyente',
-    nombre: 'Empresa',
-    title: 'Empresa',
+    id: 'FanqueoPostal',
+    nombre: 'Franqueo Postal',
+    title: 'Franqueo Postal',
     role: ['0'],
     type: 'collapsible',
     icono: 'file-text',
     children: [
       {
-        id: 'GestionInscripcion',
-        nombre: 'Gestion Inscripción',
+        id: 'TablaPrecios',
+        nombre: 'Tabla de Tarifas',
         type: 'item',
         icono: 'circle',
-        url: 'taxpayer-record/registration-management'
+        url: 'postage/price-table'
       },
       {
-        id: 'DeclaracionPagos',
-        nombre: 'Declaracion y Pagos',
+        id: 'MovementOfParts',
+        nombre: 'Declaración de Piezas',
         type: 'item',
         icono: 'circle',
-        url: 'taxpayer-record/declaration-payments'
+        url: 'postage/postage-per-month'
       }
     ]
   },
+      // Subcontratistas Postal
+      {
+        id: 'Subcontratistas',
+        nombre: 'Subcontratistas',
+        // role: ['0','9'], 
+        icono: 'users',
+        type: 'item',
+        url: 'business/subcontractor',
+      },
+    // Pagos Postal
+    {
+      id: 'PagosPostales',
+      nombre: 'Pagos',
+      title: 'Pagos',
+      role: ['0'],
+      type: 'collapsible',
+      icono: 'credit-card',
+      children: [
+        {
+          id: 'TablaPrecios',
+          nombre: 'Pago Postal',
+          type: 'item',
+          icono: 'circle',
+          url: 'payments/payments-list'
+        },
+      ]
+    },
   // Documentacion
   {
     id: 'DocumentacionDigital',
@@ -53,108 +89,8 @@ export const menu: CoreMenu[] = [
         icono: 'circle',
         url: 'digital-documentation/taxpayers'
       },
-      {
-        id: 'comunicaciones',
-        nombre: 'Comunicaciones',
-        type: 'item',
-        icono: 'circle',
-        url: 'digital-documentation/communications'
-      }
     ]
   },
-  // Recaudacion
-  {
-    id: 'Recaudacion',
-    nombre: 'Recaudacion',
-    title: 'Recaudacion',
-    type: 'collapsible',
-    role: ['9'],
-    icono: 'check-circle',
-    children: [
-      {
-        id: 'contribuyentes',
-        nombre: 'Empresas Contribuyentes',
-        type: 'item',
-        icono: 'circle',
-        url: 'financial-collection/contributing-companies'
-      },
-      {
-        id: 'comunicaciones',
-        nombre: 'Pagos Contribuyentes',
-        type: 'item',
-        icono: 'circle',
-        url: 'financial-collection/taxpayer-payments'
-      },
-      {
-        id: 'comunicaciones',
-        nombre: 'Gestión Metas',
-        type: 'item',
-        icono: 'circle',
-        url: 'financial-collection/goal-management'
-      }
-    ]
-  },
-  // Fiscalizacion
-  {
-    id: 'Fiscalizacion',
-    nombre: 'Fiscalización',
-    title: 'Fiscalización',
-    role: ['8', '9'],
-    type: 'collapsible',
-    icono: 'folder',
-    children: [
-      {
-        id: 'contribuyentes',
-        nombre: 'Información de Contribuyentes',
-        type: 'item',
-        icono: 'circle',
-        url: 'inspection/contributing-companies'
-      },
-    ]
-  },
-  // Juridico
-  {
-    id: 'Juridicos',
-    nombre: 'Juridico',
-    title: 'Juridico',
-    role: ['8', '9'],
-    type: 'collapsible',
-    icono: 'folder',
-    children: [
-      {
-        id: 'contribuyentes',
-        nombre: 'Revisión de Contribuyentes',
-        type: 'item',
-        icono: 'circle',
-        url: 'legal/contributing-companies'
-      },
-      {
-        id: 'actasfiscales',
-        nombre: 'Actas Fiscales',
-        type: 'item',
-        icono: 'circle',
-        // url: 'financial-collection/contributing-companies'
-      },
-    ]
-  },
-    // Proyectos
-    // {
-    //   id: 'Proyectos',
-    //   nombre: 'Proyectos',
-    //   title: 'Proyectos',
-    //   role: ['7', '9'],
-    //   type: 'collapsible',
-    //   icono: 'folder',
-    //   children: [
-    //     // {
-    //     //   id: 'contribuyentes',
-    //     //   nombre: 'Contribuyentes',
-    //     //   type: 'item',
-    //     //   icono: 'circle',
-    //     //   url: 'digital-documentation/taxpayers'
-    //     // },
-    //   ]
-    // },
   // Reportes y Alertas
   {
     id: 'reportes-alertas',

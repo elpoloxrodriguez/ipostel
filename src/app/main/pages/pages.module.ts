@@ -13,7 +13,6 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
-
 @NgModule({
   declarations: [
   ],

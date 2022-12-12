@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 've.gob.ipostel.opp',
-  appName: 'ROPP',
+  appName: 'IPOSTEL',
   webDir: 'dist',
   bundledWebRuntime: false
 };

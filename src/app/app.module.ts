@@ -38,7 +38,12 @@ import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.mo
 import { ContentHeaderModule } from './layout/components/content-header/content-header.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { ChartsModule } from 'ng2-charts';
+import { AuthAdminComponent } from './main/pages/authentication/auth-admin/auth-admin.component';
+import { PriceTableComponent } from './main/dashboard/postage/price-table/price-table.component';
+import { StatementOfPartiesComponent } from './main/dashboard/postage/statement-of-parties/statement-of-parties.component';
+import { SubcontractorComponent } from './main/dashboard/business/subcontractor/subcontractor.component';
 //  subir Archivos
+
 
 
 const appRoutes: Routes = [
@@ -53,7 +58,11 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [
+    AppComponent,
+    AuthAdminComponent,
+    PriceTableComponent,
+    StatementOfPartiesComponent,
                           ],
   imports: [
     BrowserModule,

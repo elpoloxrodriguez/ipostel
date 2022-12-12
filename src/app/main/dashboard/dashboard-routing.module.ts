@@ -10,6 +10,8 @@ import { DashboardComponent } from './principal/dashboard.component'
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 import { AuthGuard } from 'app/auth/helpers';
 import { Role } from 'app/auth/models';
+import { PostageRoutingModule } from './postage/postage-routing.module'
+import { BusinessRoutingModule } from './business/business-routing.module'
 
 
 
@@ -34,6 +36,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    PostageRoutingModule,
+    BusinessRoutingModule
   ],
   exports: [RouterModule]
 })

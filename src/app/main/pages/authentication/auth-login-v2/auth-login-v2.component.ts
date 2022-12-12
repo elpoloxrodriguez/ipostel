@@ -12,6 +12,7 @@ import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
 import { UtilService } from '@core/services/util/util.service';
 import jwt_decode from "jwt-decode";
 
+
 @Component({
   selector: 'app-auth-login-v2',
   templateUrl: './auth-login-v2.component.html',
@@ -25,6 +26,11 @@ export class AuthLoginV2Component implements OnInit {
     parametros: '',
     valores : {},
   };
+
+  public fecha = new Date(); 
+  public hora = this.fecha.getHours();
+  public dia = this.fecha.getDay();
+  public btnShow = true
 
   //  Public
   public coreConfig: any;
@@ -121,6 +127,21 @@ export class AuthLoginV2Component implements OnInit {
    * On init
    */
   ngOnInit(): void {
+      if(this.hora >= 20 || this.hora < 7 ){
+        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+        this.btnShow = false
+        this._router.navigate(['login']);
+        sessionStorage.clear();
+        localStorage.clear();
+        }
+      if(this.dia == 6 || this.dia == 0 ){
+        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+        this.btnShow = false
+        this._router.navigate(['login']);
+        sessionStorage.clear();
+        localStorage.clear();
+      }
+
     let urlQR = this._router.url
     if (urlQR  == undefined) {
       this.Qr = ''
@@ -164,7 +185,7 @@ export class AuthLoginV2Component implements OnInit {
           sessionStorage.setItem("token", this.itk.token);
           this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
           // console.log(this.infoUsuario.Usuario[0])
-          this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL ${this.infoUsuario.Usuario[0].Nombres} ${this.infoUsuario.Usuario[0].Apellidos}`);
+          this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL`);
           this._router.navigate(['home'])
             .then(() => {
               window.location.reload();
@@ -184,13 +205,13 @@ export class AuthLoginV2Component implements OnInit {
 
 
   async Certificado(id: string){
-    this.xAPI.funcion = "RECOSUP_R_Certificados";
+    this.xAPI.funcion = "IPOSTEL_R_Certificados";
     this.xAPI.parametros = id
      await this.apiService.EjecutarDev(this.xAPI).subscribe(
       (data) => {
         if (data.Cuerpo.length != 0) {
           this.Qr = ''
-          console.log(data.Cuerpo[0])
+          // console.log(data.Cuerpo[0])
           var cert = data.Cuerpo[0]
           Swal.fire({
             html: `
@@ -199,35 +220,37 @@ export class AuthLoginV2Component implements OnInit {
                       <div class="avatar avatar-xl bg-primary shadow">
                       </div>
                       <div class="text-center">
-                        <h1 class="mb-1 text-white">${cert.razon_social}</h1>
+                        <h1 class="mb-1 text-white">${cert.nombre_empresa}</h1>
                         <p class="card-text m-auto w-50">
                         RIF: ${cert.rif}
                         </p>
                         <p class="card-text m-auto w-100">
-                        DIRECCIÓN: ${cert.direccion}
+                        DIRECCIÓN: ${cert.direccion_empresa}
                         </p>
                         <p class="card-text m-auto w-75">
-                        ${cert.correo_empresa}  | ${cert.web}
+                        ${cert.correo_electronico}
                         </p>
                       </div>
                       <br>
                       <p align="right">
-                      ${this.utilservice.FechaMoment(cert.fecha)}
+                      ${this.utilservice.FechaMoment(cert.created_date)}
                       </p>
                     </div>
                   </div>
             `,
             footer: `
-                      <div class="auth-footer-btn d-flex justify-content-center">
-                          <p class="text-center mt-2">
-                            <small align="center">
-                            <strong>Fondo Nacional Antidrogas - RIF: G-20009057-0</strong>
-                            <br>Av. Francisco de Miranda, Edif. Centro Empresarial Metropolitano de Automoviles 407, PB. Oficina FONA, Los Ruices.
-                           <br> E-MAIL:  <a href="mailto:recaudacion_fona@fona.gob.ve">recaudacion_fona@fona.gob.ve</a> - <a href="mailto:recaudacion_fona@fona.gob.ve">soporteypagos3234@gmail.com</a>
-                            TELF: <a href="Tel:02122329541">0212-2329541 / 2697 / 5522 </a> Ext: 8270-8271 
-                            </small>
-                            </p>
-                      </div>
+            <div class="auth-footer-btn d-flex justify-content-center">
+              <p class="text-center mt-2">
+            <small align="center"><strong>INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA</strong> <br>  RIF G-20000043-0
+            <br>
+            Dirección : Avenida José Ángel Lamas, San Martín, Caracas, edificio Centro Postal Caracas, Distrito Capital
+            <br>
+            E-mail: <a href="mailto:tsuarez@ipostel.gob.ve@fona.gob.ve">tsuarez@ipostel.gob.ve</a>
+            <br>
+            Telf: <a href="Tel:02124053340">0212-405.33.40</a> / 0412-711.08.00 / fax: 0212-405.33.66
+            </small>
+            </p>
+          </div>
             `,
             icon: 'success',
             width: '900px',

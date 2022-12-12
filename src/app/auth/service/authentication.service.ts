@@ -35,7 +35,7 @@ export class AuthenticationService {
     private loginService: LoginService,
     ) {
 
-      if (sessionStorage.getItem('token') != undefined && sessionStorage.getItem('token') != null) {
+      if (sessionStorage.getItem('token') != undefined || sessionStorage.getItem('token') != null) {
         this.token = jwt_decode(sessionStorage.getItem('token')) 
         this.currentUserSubject = new BehaviorSubject(this.token.Usuario[0])
         this.currentUser = this.currentUserSubject.asObservable();

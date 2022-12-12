@@ -17,8 +17,11 @@ import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.mo
 import { AuthLoginV2Component } from 'app/main/pages/authentication/auth-login-v2/auth-login-v2.component';
 import { AuthResetPasswordV2Component } from './auth-reset-password-v2/auth-reset-password-v2.component';
 import { AuthForgotPasswordV2Component } from './auth-forgot-password-v2/auth-forgot-password-v2.component';
-import { AuthRegisterV2Component } from './auth-register-v2/auth-register-v2.component';
-import { CertificatesComponent } from './certificates/certificates.component';
+import { AuthAdminComponent } from './auth-admin/auth-admin.component';
+import { AuthRegisterOppComponent } from './auth-register-opp/auth-register-opp.component';
+import { AuthRegisterSubcontratorComponent } from './auth-register-subcontrator/auth-register-subcontrator.component';
+import { BlockUIModule } from 'ng-block-ui';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -27,39 +30,52 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthLoginV2Component,
+    data: { animation: 'misc' }
   },
   {
-    path: 'login/:id',
-    component: AuthLoginV2Component,
+    path: 'sirp-admin',
+    component: AuthAdminComponent,
+    data: { animation: 'misc' }
   },
   {
     path: '',
     component: AuthLoginV2Component,
+    data: { animation: 'misc' }
   },
   {
     path: 'register-private-post-offices',
-    component: AuthRegisterV2Component,
+    component: AuthRegisterOppComponent,
+    data: { animation: 'misc' }
   },
   {
-    path: 'reset-password',
-    component: AuthResetPasswordV2Component
+    path: 'register-private-post-offices-subcontrator',
+    component: AuthRegisterSubcontratorComponent,
+    data: { animation: 'misc' }
+  },
+  {
+    path: 'reset-password/:id',
+    component: AuthResetPasswordV2Component,
+    data: { animation: 'misc' }
   },
   {
     path: 'forgot-password',
-    component: AuthForgotPasswordV2Component
+    component: AuthForgotPasswordV2Component,
+    data: { animation: 'misc' }
   }
 ];
 
 @NgModule({
   declarations: [
-                          CertificatesComponent,
-                          AuthLoginV2Component,
-                          AuthRegisterV2Component,
-                          AuthResetPasswordV2Component,
-                          AuthForgotPasswordV2Component,
-],
-  imports: [CommonModule, RouterModule.forChild(routes), NgbModule,  NgSelectModule,
+    AuthLoginV2Component,
+    AuthResetPasswordV2Component,
+    AuthForgotPasswordV2Component,
+    AuthRegisterOppComponent,
+    AuthRegisterSubcontratorComponent,
+    FooterComponent,
+  ],
+  imports: [CommonModule, RouterModule.forChild(routes), NgbModule, NgSelectModule,
     FormsModule, ReactiveFormsModule, CoreCommonModule, ContentHeaderModule,
+    BlockUIModule,
     CardSnippetModule]
 })
-export class AuthenticationModule {}
+export class AuthenticationModule { }

@@ -36,6 +36,8 @@ export interface UClave{
 export class LoginService {
  
   public URL : string =  environment.API
+
+  public RUTA : string = environment.Url
   
   public Id : string = ''
   
@@ -61,7 +63,11 @@ export class LoginService {
       "nombre" : user,
       "clave" : clave,
     }
-    var url =  this.URL + 'wusuario/login'
+    if (environment.production === true) {
+      var url = this.RUTA  + this.URL + 'wusuario/login'
+    } else {
+      var url =  this.URL + 'wusuario/login'
+    }
     return this.http.post<IToken>(url, usuario )
   }
 
@@ -77,12 +83,20 @@ export class LoginService {
     //         }
     //     }
     // var url = 'https://recosup.fona.gob.ve' + this.URL + 'wusuario/access'
-    var url = this.URL + 'wusuario/access'
+    if (environment.production === true) {
+      var url = this.RUTA  + this.URL + 'wusuario/access'
+    } else {
+      var url =  this.URL + 'wusuario/access'
+    }
     return this.http.post<IToken>(url, parametro )
   }
   
   makeUser(user: IUsuario): Observable<any>{    
-    var url = this.URL + 'identicacion'   
+    if (environment.production === true) {
+      var url = this.RUTA  + this.URL + 'identicacion'
+    } else {
+      var url =  this.URL + 'identicacion'
+    }
     return this.http.post<any>( url, user )
   }
 
@@ -106,7 +120,7 @@ export class LoginService {
         )
         this.router.navigate(['login']);
         sessionStorage.clear();
-        localStorage.clear();
+        // localStorage.clear();
       }
     })
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
-
+import {Md5} from 'ts-md5/dist/md5';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class UtilService {
    * @param dias sumar dias a la fecha actual 
    * @returns retorna la fecha actual del sistema en formato YYYY-MM-DD
    */
-  FechaActual(dias : number = 0): string {
+  FechaActual(dias: number = 0): string {
     let date = new Date()
 
     if (dias > 0) date.setDate(date.getDate() + dias)
@@ -34,34 +34,46 @@ export class UtilService {
     return fecha.year + '-' + + fecha.month + '-' + fecha.day
   }
 
-  FechaMoment(fecha: any){
+  FechaMoment(fecha: any) {
     moment.locale('es')
     var fech = moment(fecha).format('LLLL')
     return fech
   }
 
-  FechaMomentL(fecha: any){
+  FechaMomentLL(fecha: any) {
+    moment.locale('es')
+    var fech = moment(fecha).format('LL')
+    return fech
+  }
+
+  FechaMomentL(fecha: any) {
     moment.locale('es')
     var fech = moment(fecha).format('L')
     return fech
   }
 
-  FechaMomentLLL(fecha: any){
+  FechaMomentLLL(fecha: any) {
     moment.locale('es')
     var fech = moment(fecha).format('L')
     return fech
+  }
+
+  md5(pwd: any) {
+    const md5 = new Md5();
+    const password =  md5.appendStr(pwd).end()
+    return password
   }
 
   TokenAleatorio(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
-      charactersLength));
-   }
-   return result;
-}
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
 
   ConvertirMoneda(moneda: any) {
     const formatter = new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VEF' }).format(moneda)
@@ -73,7 +85,7 @@ export class UtilService {
     return TotalDevengado
   }
 
-  alertConfirmMini(icon,title){
+  alertConfirmMini(icon, title) {
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -88,6 +100,38 @@ export class UtilService {
     Toast.fire({
       icon: icon,
       title: title
+    })
+  }
+
+
+  alertMessageAutoCloseTimer(timer, title, html) {
+    let timerInterval
+    Swal.fire({
+      title: title,
+      html: html,
+      timer: timer,
+      imageUrl: '../../../../assets/images/logos/ipostel.png',
+      imageWidth: 250,
+      imageHeight: 100,
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer().querySelector('b')
+        timerInterval = setInterval(() => {
+          // b.textContent = Swal.getTimerLeft()
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
     })
   }
 
@@ -130,9 +174,9 @@ export class UtilService {
 
 
 
-diferenciaFecha(fecha1: string, fecha2: string){
-let fecha = moment(fecha2).diff(fecha1, 'days')
-return fecha
-}
+  diferenciaFecha(fecha1: string, fecha2: string) {
+    let fecha = moment(fecha2).diff(fecha1, 'days')
+    return fecha
+  }
 
 }

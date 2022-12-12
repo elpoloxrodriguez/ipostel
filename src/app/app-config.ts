@@ -17,7 +17,7 @@ import { CoreConfig } from '@core/types';
 export const coreConfig: CoreConfig = {
   app: {
     appName     : 'SIRP-IPOSTEL',                                        // App Name
-    appTitle    : 'OPP - IPOSTEL', // App Title
+    appTitle    : 'SIRP - IPOSTEL', // App Title
     appLogoImage: 'assets/images/logo/logo.png',                  // App Logo
     appLanguage : 'es',                                           // App Default Language (en, fr, de, pt etc..)
   },

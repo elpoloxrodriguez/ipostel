@@ -61,7 +61,7 @@ export interface DocumentoAdjunto {
 export class ApiService {
   //Dirección Get para servicios en la página WEB
   URL = environment.API;
-
+  RUTA = environment.Url;
   hash = ':c521f27fb1b3311d686d511b668e5bd4'
 
   httpOptions = {
@@ -95,7 +95,11 @@ export class ApiService {
 
   //Ejecutar Api generales
   Ejecutar(xAPI: IAPICore): Observable<any> {
-    var url =  this.URL + "accion" + this.hash;
+    if (environment.production === true) {
+      var url = this.RUTA  + this.URL + "accion" + this.hash;
+    } else {
+      var url = this.URL + "accion" + this.hash;
+    }
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 
