@@ -22,6 +22,9 @@ import { SubcontractorComponent } from './business/subcontractor/subcontractor.c
 import { PaymentsListComponent } from './payments/payments-list/payments-list.component';
 import { PaymentsRoutingModule } from './payments/payments-routing.module';
 import { PostagePerMonthComponent } from './postage/postage-per-month/postage-per-month.component';
+import { PrivatePostalOperatorComponent } from './management/private-postal-operator/private-postal-operator.component';
+import { ManagementRoutingModule } from './management/management-routing.module';
+import { ReportsAdminComponent } from './admin-reports/reports-admin/reports-admin.component';
 
 
 
@@ -31,7 +34,9 @@ import { PostagePerMonthComponent } from './postage/postage-per-month/postage-pe
       OppComponent,
       SubcontractorComponent,
       PaymentsListComponent,
-      PostagePerMonthComponent
+      PostagePerMonthComponent,
+      PrivatePostalOperatorComponent,
+      ReportsAdminComponent
     ],
   imports: [
     CommonModule,
@@ -39,6 +44,7 @@ import { PostagePerMonthComponent } from './postage/postage-per-month/postage-pe
     BlockUIModule,
     DashboardRoutingModule,
     PaymentsRoutingModule,
+    ManagementRoutingModule,
     CommonModule,
     ContentHeaderModule,
     CoreCommonModule,

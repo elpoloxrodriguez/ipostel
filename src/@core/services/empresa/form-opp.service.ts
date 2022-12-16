@@ -42,6 +42,9 @@ export interface IPOSTEL_C_RepresentanteLegal {
 	n_registro: string
 	fecha_registro: string
 	tomo: string
+	n_registro_contrato: string
+	fecha_registro_contrato: string
+	tomo_contrato: string
 	nombres_representante_legal: string
 	apellidos_representante_legal: string
 	cedula_representante_legal: string
@@ -126,6 +129,7 @@ export interface IPOSTEL_DATA_EMPRESA_ID { // Leer EMpresa OPP segun ID
 	opp: any,
 	direccion_empresa: any,
 	estado_empresa: any,
+	municipio_empresa: any,
 	ciudad_empresa: any,
 	parroquia_empresa: any,
 	correo_electronico: any,
@@ -172,6 +176,9 @@ export interface IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID { // Leer Representante leg
 	telefono_residencial_representante_legal : any
 	tomo : any
 	twitter_representante_legal : any
+	fecha_registro_contrato : any
+	tomo_contrato : any
+	n_registro_contrato : any
 }
 
 export interface IPOSTEL_DATA_DELEGADOP_ID {
@@ -206,6 +213,76 @@ export interface IPOSTEL_C_MovilizacionPiezas { //  insertar movilizacion de pie
 	cantidad_piezas	 :	number
 	monto_causado	 :	any
 	user_created	 :	number
+}
+
+
+export interface IPOSTEL_U_DatosDelegados { // Actualizar Datos de Delegado OPP - SUB
+	nombres_delegado	 :	string
+	apellidos_delegado	 :	string
+	cedula_delegado	 :	string
+	cargo_delegado	 :	string
+	telefono_delegado	 :	string
+	email_delegado	 :	string
+	facebook_delegado	 :	string
+	instagram_delegado	 :	string
+	twitter_delegado	 :	string
+	id_opp	 :	number
+}
+
+export interface IPOSTEL_U_DatosRepresentanteLegal {  // Actualizar Datos de Representante Legal OPP - SUB
+	n_registro	 :	string
+	fecha_registro	 :	string
+	tomo	 :	string
+	n_registro_contrato	 :	string
+	fecha_registro_contrato	 :	string
+	tomo_contrato	 :	string
+	nombres_representante_legal	 :	string
+	apellidos_representante_legal	 :	string
+	cedula_representante_legal	 :	string
+	direccion_representante_legal	 :	string
+	email_representante_legal	 :	string
+	facebook_representante_legal	 :	string
+	instagram_representante_legal	 :	string
+	twitter_representante_legal	 :	string
+	cargo_representante_legal	 :	string
+	telefono_movil_representante_legal	 :	string
+	telefono_residencial_representante_legal	 :	string
+	id_opp	 :	number
+}
+
+
+export interface IPOSTEL_U_OPP_ID { // Actualizar datos generales de OPP
+	nombre_empresa	 :	string
+	rif	 :	string
+	direccion_empresa	 :	string
+	estado_empresa	 :	string
+	ciudad_empresa	 :	string
+	municipio_empresa	 :	string
+	parroquia_empresa	 :	string
+	correo_electronico	 :	string
+	empresa_facebook	 :	string
+	empresa_instagram	 :	string
+	empresa_twitter	 :	string
+	tipo_agencia	 :	number
+	sucursales	 :	number
+	subcontrataciones	 :	number
+	tipologia_empresa	 :	number
+	tipo_servicio	 :	string
+	especificacion_servicio	 :	string
+	licencia_actividades_economicas_municipales	 :	string
+	actividades_economicas_seniat	 :	string
+	certificado_rupdae	 :	string
+	patronal_ivss	 :	string
+	matricula_inces	 :	string
+	identificacion_laboral_ministerio_trabajo	 :	string
+	certificado_eomic		 :	string
+	permiso_bomberos	 :	string
+	registro_sapi	 :	string
+	registro_nacional_contratista	 :	string
+	flota_utilizada	 :	string
+	cantidad_trabajadores	 :	number
+	cantidad_subcontratados	 :	number
+	id_opp	 :	number
 }
 
 

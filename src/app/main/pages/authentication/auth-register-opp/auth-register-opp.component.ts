@@ -74,6 +74,9 @@ export class AuthRegisterOppComponent implements OnInit {
     cargo_representante_legal: '',
     telefono_movil_representante_legal: '',
     telefono_residencial_representante_legal: '',
+    n_registro_contrato: '',
+    fecha_registro_contrato: '',
+    tomo_contrato: ''
   }
 
   public IFormOPP_DelegadoOPP: IPOSTEL_C_DelegadoOPP = {
@@ -130,6 +133,7 @@ export class AuthRegisterOppComponent implements OnInit {
   public motos = false
   public bicicletas = false
 
+  public ErrorRegistro
 
 
   public SelectEstado
@@ -261,6 +265,7 @@ export class AuthRegisterOppComponent implements OnInit {
     this.xAPI.valores = JSON.stringify(this.IFormOPP)
     await this.apiService.EjecutarDev(this.xAPI).subscribe(
       (opp) => {
+        this.ErrorRegistro = opp.msj
         if (opp.tipo === 1) {
           this.sectionBlockUI.start('Guardo Registro, Porfavor Espere!!!');
           this.IFormOPP_RepresentanteLegal.id_opp = opp.msj
@@ -391,7 +396,6 @@ export class AuthRegisterOppComponent implements OnInit {
     )
   }
   async Select_TipologiaEmpresa(event: any) {
-    console.log(event.length)
     switch (event.length) {
       case 1:
         this.IFormOPP.tipologia_empresa = 3
@@ -480,7 +484,6 @@ export class AuthRegisterOppComponent implements OnInit {
 
   async CantidadFlota(event: any) {
     event.forEach(e => {
-      console.log(e)
       switch (e.id_flota_utilizada) {
         case 0:
           this.vehiculo_liviano = false

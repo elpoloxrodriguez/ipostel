@@ -71,6 +71,9 @@ export class AuthRegisterSubcontratorComponent implements OnInit {
     cargo_representante_legal: '',
     telefono_movil_representante_legal: '',
     telefono_residencial_representante_legal: '',
+    n_registro_contrato: '',
+    fecha_registro_contrato: '',
+    tomo_contrato: ''
   }
 
   public IFormOPP_DelegadoOPP : IPOSTEL_C_DelegadoOPP = {
@@ -445,6 +448,7 @@ public passwordConfirm
       await this.apiService.EjecutarDev(this.xAPI).subscribe(
         (data) => {
           this.SelectOpp = data.Cuerpo.map(e => {
+            e.nombre_empresa = e.nombre_empresa.toUpperCase()
               return e
           })
         },

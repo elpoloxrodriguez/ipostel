@@ -4,6 +4,7 @@ import { ICrearCertificados } from '@core/services/empresa/form-opp.service';
 import { PdfService } from '@core/services/pdf/pdf.service';
 import { UtilService } from '@core/services/util/util.service';
 import jwt_decode from "jwt-decode";
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
 @Component({
@@ -12,6 +13,9 @@ import jwt_decode from "jwt-decode";
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+
 
   public xAPI: IAPICore = {
     funcion: '',
@@ -33,9 +37,17 @@ export class DashboardComponent implements OnInit {
   public token
   public empresa = false
   public usuario = false
+  public n_curp
+  public statusEmpresaOPP = false
+  public statusEmpresaSUB = false
+
 
   public empresaOPP = false
   public empresaSUB = false
+
+  public fecha = new Date();
+  public anio = this.fecha.getFullYear();
+
 
   constructor(
     private apiService: ApiService,
@@ -53,31 +65,35 @@ export class DashboardComponent implements OnInit {
     this.EmpresaRIF(this.token.Usuario[0].id_opp)
     switch (this.token.Usuario[0].tipo_registro) {
       case undefined:
-        this.title =  'Administrador'
+        this.title =  'Administrador IPOSTEL'
+        this.usuario = false
+        this.empresa = true
         break;
       case '1':
-        this.title =  'Oficina Privada Postal'
-        break;
+        this.title =  'Operador Postal Privado'
+        this.empresaSUB = false
+        this.empresaOPP = true
+        this.usuario = true
+        this.empresa = false
+      break;
         case '2':
           this.title =  'Sub Contratista'
+          this.empresaSUB = true
+          this.empresaOPP = false  
+          this.usuario = true
+          this.empresa = false
           break;
       default:
         break;
     }
-    if (this.token.Usuario[0].role != "9") {
-      this.usuario = true
-      this.empresa = false
-    } else {
-      this.usuario = false
-      this.empresa = true
-    }
 
-    if (this.token.Usuario[0].tipo_registro != '1') {
-      this.empresaSUB = true
-      this.empresaOPP = false
+
+    if (this.token.Usuario[0].status_curp != null) {
+      this.statusEmpresaOPP = true
+      this.statusEmpresaSUB = true
     } else {
-      this.empresaSUB = false
-      this.empresaOPP = true
+      this.statusEmpresaSUB = false
+      this.statusEmpresaOPP = false
     }
 
   }
@@ -109,6 +125,8 @@ export class DashboardComponent implements OnInit {
     this.xAPI.valores = JSON.stringify(this.CrearCert)
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        this.sectionBlockUI.start('Generando Certificado, Porfavor Espere!!!');
+        this.n_curp = data.msj+'-IP'+this.anio
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');
@@ -118,7 +136,9 @@ export class DashboardComponent implements OnInit {
               this.apiService.LoadQR(id).subscribe(
                 (xdata) => {
                   var sdata = this.DataEmpresa[0]
-                  this.pdf.CertificadoInscripcion(sdata[0], xdata.contenido, this.CrearCert.token)
+                  console.log(sdata)
+                  this.pdf.CertificadoInscripcion(sdata[0], xdata.contenido, this.CrearCert.token, this.n_curp)
+                  this.sectionBlockUI.stop()
                   this.utilService.alertConfirmMini('success', 'Certificado Descagado Exitosamente')
                 },
                 (error) => {
@@ -153,6 +173,8 @@ export class DashboardComponent implements OnInit {
     this.xAPI.valores = JSON.stringify(this.CrearCert)
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        this.sectionBlockUI.start('Generando Autorización, Porfavor Espere!!!');
+        this.n_curp = data.msj+'-IP'+this.anio
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');
@@ -162,7 +184,8 @@ export class DashboardComponent implements OnInit {
               this.apiService.LoadQR(id).subscribe(
                 (xdata) => {
                   var sdata = this.DataEmpresa[0]
-                  this.pdf.AutorizacionInscripcion(sdata[0], xdata.contenido, this.CrearCert.token)
+                  this.pdf.AutorizacionInscripcion(sdata[0], xdata.contenido, this.CrearCert.token, this.n_curp)
+                  this.sectionBlockUI.stop()
                   this.utilService.alertConfirmMini('success', 'Autorización Descagada Exitosamente')
                 },
                 (error) => {

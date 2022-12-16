@@ -13,7 +13,7 @@ export class PdfService {
   ) { }
 
 
-  CertificadoInscripcion(data: any, Qr: any, TokenQr: any) {
+  CertificadoInscripcion(data: any, Qr: any, TokenQr: any, n_curp: any) {
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
@@ -28,12 +28,13 @@ export class PdfService {
 
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
+    doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
     doc.addImage(Qr, "PNG", 170, 255, 30, 30);
 
 
     doc.setFontSize(10);
     doc.setFont(undefined, "bold");
-    doc.text(`N° O-OPP____- IP2022`, pageWidth - 178, pageHeight - 260, { align: 'center' });
+    doc.text(`N° O-OPP${n_curp} `, pageWidth - 178, pageHeight - 260, { align: 'center' });
 
     doc.setFontSize(10);
     doc.setFont(undefined, "bold");
@@ -48,34 +49,7 @@ export class PdfService {
 
     doc.setFont(undefined, "");
     doc.setFontSize(12);
-    doc.text(`    El INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA, ente adscrito al Ministerio del
-Poder Popular para Ciencia y Tecnología, creado mediante Ley Publicada en la Gaceta Oficial de
-la República Bolivariana de Venezuela N° 2.146 Extraordinario, de fecha 28 de enero de 1978,
-reformada parcialmente según Decreto N° 403, de fecha 21 de Octubre de 1999, Publicada en
-la Gaceta Oficial de la República Bolivariana de Venezuela N° 5.398 Extraordinario, de fecha 26
-de Octubre de 1999; el cual en lo sucesivo se denominará IPOSTEL, representado en este acto
-por su Presidenta, Msc. OLGA YOMIRA PEREIRA JAIMES, Venezolana, mayor de edad, de
-este domicilio, titular de la Cédula de Identidad N° V-14.551.754, designada por Decreto
-Presidencial de la República Bolivariana de Venezuela N° 3.877 del 21 de Junio de 2019,
-Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 41.660, de fecha 21
-de Junio de 2019, quien actúa en ejercicio de las atribuciones que le confiere el articulo 17
-literal “e” de la Ley antes citada y bajo Autorización del Directorio de IPOSTEL, según Punto de
-cuenta N° ____ de Fecha ____/ ____/_____, agenda N° _____, en concordancia con el artículo
-1° y 6° numeral “2°” del Reglamento sobre Concesión de los Servicios de Correos, OTORGA
-mediante el presente Acto Unilateral, CONCESIÓN POSTAL N° ___-___ para la Prestación de
-Servicios Postales y Telegráficos, a la Sociedad Mercantil ${data.nombre_empresa}, RIF ${data.rif} 
-debidamente Inscrita por ante el Registro Mercantil ${data.n_registro}, en fecha ${this.utilService.FechaMomentLL(data.fecha_registro)},
-anotado bajo el N° Tomo ${data.tomo} , cumplido como han sido los requisitos formales y 
-sustanciales que para estos casos exigen las Leyes de la República en esta Materia.
-La Presente Concesión solo se perfeccionará con la suscripción del Contrato de Concesión, 
-que para los efectos legales será el Contrato N° ________ para el Período ___________, 
-el cual contiene las condiciones y términos dictadas por IPOSTEL como ente regulador exclusivo
-y excluyente de los servicios postales del Correo de Venezuela. El Lapso para que la 
-Concesionaria suscriba el contrato con IPOSTEL, no podrá exceder de Veinte (20) días hábiles,
-contados a partir del presente Otorgamiento. Transcurrido dicho plazo sin que se perfeccione 
-el mismo, quedara revocada la concesión de pleno Derecho, en salvaguarda de los derechos que 
-le asistan a IPOSTEL en la prestación de un Servicio de carácter público, continuo, seguro y 
-confiable a favor de los Usuarios y Usuarias de los Servicios postales y telegráficos en el País.`,
+    doc.text(`    El INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA, ente adscrito al Ministerio del Poder Popular para Ciencia y Tecnología, creado mediante Ley Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 2.146 Extraordinario, de fecha 28 de enero de 1978, reformada parcialmente según Decreto N° 403, de fecha 21 de Octubre de 1999, Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 5.398 Extraordinario, de fecha 26 de Octubre de 1999; el cual en lo sucesivo se denominará IPOSTEL, representado en este acto por su Presidenta, Msc. OLGA YOMIRA PEREIRA JAIMES, Venezolana, mayor de edad, de este domicilio, titular de la Cédula de Identidad N° V-14.551.754, designada por Decreto Presidencial de la República Bolivariana de Venezuela N° 3.877 del 21 de Junio de 2019, Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 41.660, de fecha 21 de Junio de 2019, quien actúa en ejercicio de las atribuciones que le confiere el articulo 17 literal “e” de la Ley antes citada y bajo Autorización del Directorio de IPOSTEL, según Punto de cuenta N° ${data.punto_cuenta_curp} de Fecha ${this.utilService.FechaMomentLL(data.fecha_punto_cuenta_curp)}, en concordancia con el artículo 1° y 6° numeral “2°” del Reglamento sobre Concesión de los Servicios de Correos, OTORGA mediante el presente Acto Unilateral, CONCESIÓN POSTAL N° ${data.concesion_postal_curp} para la Prestación de Servicios Postales y Telegráficos, a la Sociedad Mercantil ${data.nombre_empresa}, RIF ${data.rif} debidamente Inscrita por ante el Registro Mercantil ${data.n_registro}, en fecha ${this.utilService.FechaMomentLL(data.fecha_registro)}, anotado bajo el N° Tomo ${data.tomo} , cumplido como han sido los requisitos formales y sustanciales que para estos casos exigen las Leyes de la República en esta Materia. La Presente Concesión solo se perfeccionará con la suscripción del Contrato de Concesión, que para los efectos legales será el Contrato N° ${data.n_contrato_curp} para el Período ${data.periodo_contrato_curp}, el cual contiene las condiciones y términos dictadas por IPOSTEL como ente regulador exclusivo y excluyente de los servicios postales del Correo de Venezuela. El Lapso para que la Concesionaria suscriba el contrato con IPOSTEL, no podrá exceder de Veinte (20) días hábiles, contados a partir del presente Otorgamiento. Transcurrido dicho plazo sin que se perfeccione el mismo, quedara revocada la concesión de pleno Derecho, en salvaguarda de los derechos que le asistan a IPOSTEL en la prestación de un Servicio de carácter público, continuo, seguro y confiable a favor de los Usuarios y Usuarias de los Servicios postales y telegráficos en el País.`,
       14,
       70,
       { maxWidth: 185, align: "justify" }
@@ -86,7 +60,7 @@ confiable a favor de los Usuarios y Usuarias de los Servicios postales y telegr�
     doc.setFontSize(12);
     doc.text(`  Queda la Sociedad Mercantil ${data.nombre_empresa} inserta en los Libros de Registro
 del Archivo Postal de Operadoras Privadas llevados por la Dirección de Gestión Postal de
-IPOSTEL bajo el N° _____ Tomo ____ de Fecha __________ a los efectos de Ley.`,
+IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fecha ${this.utilService.FechaMomentLL(data.fecha_archivo_curp)} a los efectos de Ley.`,
       14,
       215,
       { maxWidth: 185, align: "justify" }
@@ -119,7 +93,7 @@ IPOSTEL bajo el N° _____ Tomo ____ de Fecha __________ a los efectos de Ley.`,
     // doc.output("dataurlnewwindow", { filename: 'Certificado Uníco de Inscripción.pdf' });
   }
 
-  AutorizacionInscripcion(data: any, Qr: any, TokenQr: any) {
+  AutorizacionInscripcion(data: any, Qr: any, TokenQr: any,  n_curp: any) {
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
@@ -134,12 +108,14 @@ IPOSTEL bajo el N° _____ Tomo ____ de Fecha __________ a los efectos de Ley.`,
 
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
+    doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
     doc.addImage(Qr, "PNG", 170, 255, 30, 30);
 
 
     doc.setFontSize(10);
     doc.setFont(undefined, "bold");
-    doc.text(`N° O-OPP____- IP2022`, pageWidth - 178, pageHeight - 260, { align: 'center' });
+    doc.text(`N° A-SUB${n_curp} `, pageWidth - 178, pageHeight - 260, { align: 'center' });
+
 
     doc.setFontSize(10);
     doc.setFont(undefined, "bold");

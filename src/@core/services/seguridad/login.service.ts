@@ -72,17 +72,6 @@ export class LoginService {
   }
 
     getLoginExternas(parametro: any) : Observable<IToken>{
-    // const token = localStorage.getItem('token')
-    //     const config = {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Access-Control-Allow-Origin': '*',
-    //             'Access-Control-Allow-Methods': ' GET, POST, OPTIONS',
-    //             'Access-Control-Allow-Headers': 'Origin, Accept, X-Auth-Token',
-    //             'Authorization': 'Bearer ' + token
-    //         }
-    //     }
-    // var url = 'https://recosup.fona.gob.ve' + this.URL + 'wusuario/access'
     if (environment.production === true) {
       var url = this.RUTA  + this.URL + 'wusuario/access'
     } else {

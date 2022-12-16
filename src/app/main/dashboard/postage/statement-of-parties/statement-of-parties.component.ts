@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { ApiService, DocumentoAdjunto, IAPICore } from '@core/services/apicore/api.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UtilService } from '@core/services/util/util.service';
 import { NgbModal, NgbActiveModal, NgbModalConfig, NgbDateStruct, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { IPOSTEL_C_MovilizacionPiezas } from '@core/services/empresa/form-opp.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 export const repeaterAnimation = trigger('heightIn', [
   transition(':enter', [
@@ -55,13 +56,16 @@ export class StatementOfPartiesComponent implements OnInit {
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public searchValue = '';
-
+  public uri
   public token
   public idOPP
   public fechax
   public fecha = new Date();
   public mes = this.fecha.getMonth() + 1;
   public anio = this.fecha.getFullYear();
+  public mesEncode64 = btoa(this.anio+'-'+this.mes)
+  public mesDecode64 = this.anio+'-'+this.mes
+
 
   public montoIVA = 16
   public montoTASA
@@ -95,16 +99,22 @@ export class StatementOfPartiesComponent implements OnInit {
     private utilService: UtilService,
     private modalService: NgbModal,
     private router: Router,
+    private rutaActiva: ActivatedRoute
   ) { }
 
   async ngOnInit() {
     this.token = jwt_decode(sessionStorage.getItem('token'));
     this.idOPP = this.token.Usuario[0].id_opp
+    this.uri = this.rutaActiva.snapshot.params.id
+    if (this.mesEncode64 != this.uri) {
+      this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
+      this.router.navigate(['/postage/postage-per-month'])
+    } else {
+      await this.ListaDeclaracionMovilizacionPiezas()
+    }
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
     await this.ListaServicioFranqueo()
-    await this.ListaDeclaracionMovilizacionPiezas()
-    // this.sectionBlockUI.start('Registrando Movilización de Piezas, Porfavor Espere!!!');
-    // setTimeout(() => this.sectionBlockUI.stop(), 3000)
+    
   }
 
   filterUpdate(event) {
@@ -255,7 +265,7 @@ export class StatementOfPartiesComponent implements OnInit {
     const date = this.anio + '-' + this.mes
     const id = this.ServicioFranqueoID
     this.xAPI.funcion = "IPOSTEL_R_MovilizacionPiezas_date_id"
-    this.xAPI.parametros = this.idOPP + ',' + date  + ',' + id
+    this.xAPI.parametros = this.idOPP + ',' + atob(this.uri)  + ',' + id
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
@@ -344,6 +354,29 @@ export class StatementOfPartiesComponent implements OnInit {
             console.log(error)
           }
         )
+      }
+    })
+  }
+
+
+
+  async DeclararPiezasIPOSTEL(){
+    Swal.fire({
+      title: 'Esta seguro de declarar?',
+      html: "Estimado <strong><font color=red>Operador Postal Privado</font></strong> <br> tenga en cuenta que una vez realice la declaración de piezas no podra revertir los cambios!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Deseo Declarar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.sectionBlockUI.start('Registrando Piezas, Porfavor Espere!!!');
+        setTimeout(() => 
+        // Swal.fire('Felicidades!','Movilización de piezas registradas con exito.','success')
+        this.sectionBlockUI.stop()
+        , 3000)
       }
     })
   }

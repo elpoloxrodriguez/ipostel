@@ -7,26 +7,25 @@ export const menu: CoreMenu[] = [
   {
     id: 'dashboard/home',
     nombre: 'Principal',
-    // role: ['0','9'], 
     icono: 'home',
     type: 'item',
     url: 'home',
   },
-    // Empresa
-    {
-      id: 'EmpresaOPP',
-      nombre: 'Empresa',
-      // role: ['0','9'], 
-      icono: 'package',
-      type: 'item',
-      url: 'business/opp',
-    },
+  // Empresa
+  {
+    id: 'EmpresaOPP',
+    nombre: 'Empresa',
+    role: ['1','2'], 
+    icono: 'package',
+    type: 'item',
+    url: 'business/opp',
+  },
   // Franqueo Postal
   {
     id: 'FanqueoPostal',
     nombre: 'Franqueo Postal',
     title: 'Franqueo Postal',
-    role: ['0'],
+    role: ['1'],
     type: 'collapsible',
     icono: 'file-text',
     children: [
@@ -46,149 +45,69 @@ export const menu: CoreMenu[] = [
       }
     ]
   },
-      // Subcontratistas Postal
-      {
-        id: 'Subcontratistas',
-        nombre: 'Subcontratistas',
-        // role: ['0','9'], 
-        icono: 'users',
-        type: 'item',
-        url: 'business/subcontractor',
-      },
-    // Pagos Postal
-    {
-      id: 'PagosPostales',
-      nombre: 'Pagos',
-      title: 'Pagos',
-      role: ['0'],
-      type: 'collapsible',
-      icono: 'credit-card',
-      children: [
-        {
-          id: 'TablaPrecios',
-          nombre: 'Pago Postal',
-          type: 'item',
-          icono: 'circle',
-          url: 'payments/payments-list'
-        },
-      ]
-    },
-  // Documentacion
+  // Subcontratistas Postal
   {
-    id: 'DocumentacionDigital',
-    nombre: 'Documentacion Digital',
-    title: 'Documentacion Digital',
-    role: ['8', '9'],
+    id: 'Subcontratistas',
+    nombre: 'Subcontratistas',
+    role: ['1'], 
+    icono: 'users',
+    type: 'item',
+    url: 'business/subcontractor',
+  },
+  // Pagos Postal
+  {
+    id: 'PagosPostales',
+    nombre: 'Pagos',
+    title: 'Pagos',
+    role: ['1','2'],
     type: 'collapsible',
-    icono: 'folder-plus',
+    icono: 'credit-card',
     children: [
       {
-        id: 'contribuyentes',
-        nombre: 'Contribuyentes',
+        id: 'TablaPrecios',
+        nombre: 'Pago Postal',
         type: 'item',
         icono: 'circle',
-        url: 'digital-documentation/taxpayers'
+        url: 'payments/payments-list'
       },
     ]
   },
-  // Reportes y Alertas
+  // Reportes
   {
-    id: 'reportes-alertas',
-    nombre: 'Reportes y Alertas',
-    title: 'Reportes y Alertas',
+    id: 'reports',
+    nombre: 'Reportes',
+    role: ['1'], 
+    icono: 'list',
+    type: 'item',
+    url: 'reports/report',
+  },
+
+
+  // MENU ADMINISTRACION
+  {
+    id: 'list-opp',
+    nombre: 'OPP',
+    title: 'OPP',
+    role: ['3'],
     type: 'collapsible',
-    role: ['9'],
-    icono: 'alert-triangle',
+    icono: 'list',
     children: [
       {
-        id: 'gestion-Alertas',
-        nombre: 'Gestión Alertas',
+        id: 'list-opp',
+        nombre: 'Lista OPP',
         type: 'item',
         icono: 'circle',
-        url: 'reports-alerts/alert-management'
+        url: 'management/private-postal-operator'
       },
-      {
-        id: 'definicion-alertas',
-        nombre: 'Definición Alertas',
-        type: 'item',
-        icono: 'circle',
-        url: 'reports-alerts/definition-alerts'
-      },
-      {
-        id: 'configuracion-usuarios-alertados',
-        nombre: 'Configuración Usuarios Alertados',
-        type: 'item',
-        icono: 'circle',
-        url: 'reports-alerts/alerted-users-configuration'
-      },
-      {
-        id: 'reportes-dinamicos',
-        nombre: 'Reportes Dinamicos',
-        type: 'item',
-        icono: 'circle',
-        url: 'reports-alerts/dinamic-reports'
-      },
-      {
-        id: 'reportes-estaticos',
-        nombre: 'Reportes Estaticos',
-        type: 'item',
-        icono: 'circle',
-        url: 'reports-alerts/static-reports'
-      }
     ]
   },
-  // Soporte
+  //  REPORTES
   {
-    id: 'soporte',
-    nombre: 'Soporte',
-    title: 'Soporte',
-    type: 'collapsible',
-    icono: 'tool',
-    // hidden: true,
-    role: ['9'],
-    children: [
-      // {
-      //   id: 'modulosmenus',
-      //   nombre: 'Modulos Menus',
-      //   type: 'item',
-      //   icono: 'circle',
-      //   url: 'support/menu-module',
-      // },
-      {
-        id: 'rolesusuarios',
-        nombre: 'Roles de Usuarios',
-        type: 'item',
-        icono: 'circle',
-        url: 'support/role-user'
-      },
-      {
-        id: 'permisosusuarios',
-        nombre: 'Permisos de Usuarios',
-        type: 'item',
-        icono: 'circle',
-        url: 'support/permissions-user'
-      },
-      {
-        id: 'gestiontablas',
-        nombre: 'Gestion Tablas',
-        type: 'item',
-        icono: 'circle',
-        url: 'support/table-management'
-      },
-      {
-        id: 'cambiarcontraseña',
-        nombre: 'Cambiar Contraseña',
-        type: 'item',
-        icono: 'circle',
-        url: 'support/change-password'
-      },
-      {
-        id: 'backups',
-        nombre: 'Copias de Seguridad',
-        type: 'item',
-        icono: 'circle',
-        url: 'support/backups'
-      }
-    ]
+    id: 'reports',
+    nombre: 'Reportes',
+    icono: 'bar-chart-2',
+    type: 'item',
+    role: ['3'],
+    url: 'admin-reports/admin-reports',
   },
 ];

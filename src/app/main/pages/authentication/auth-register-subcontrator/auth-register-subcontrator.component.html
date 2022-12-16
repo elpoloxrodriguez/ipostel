@@ -546,6 +546,50 @@
 
               </div>
             </div>
+
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">Nro. de Contrato</label>
+                <input required  type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.n_registro_contrato"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Registro Nro."
+                #RegistroRepresentante="ngModel"
+                [class.error]="!RegistroRepresentante.valid && formUsersRegister.submitted"  
+                />
+                <span *ngIf="formUsersRegister.submitted && RegistroRepresentante.invalid" class="invalid-form">
+                  <small class="form-text text-danger" *ngIf="RegistroRepresentante.errors.required">Registro es requerido!</small>
+                </span>
+
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">Fecha del Contrato</label>
+                <input required  type="date" [(ngModel)]="IFormOPP_RepresentanteLegal.fecha_registro_contrato"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Fecha"
+                #FechaRepresentante="ngModel"
+                [class.error]="!FechaRepresentante.valid && formUsersRegister.submitted"  
+                />
+                <span *ngIf="formUsersRegister.submitted && FechaRepresentante.invalid" class="invalid-form">
+                  <small class="form-text text-danger" *ngIf="FechaRepresentante.errors.required">Fecha es requerido!</small>
+                </span>
+
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="form-label">Tomo del Contrato</label>
+                <input required  type="text" [(ngModel)]="IFormOPP_RepresentanteLegal.tomo_contrato"
+                [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Tomo"
+                #TomoRepresentante="ngModel"
+                [class.error]="!TomoRepresentante.valid && formUsersRegister.submitted"  
+                />
+                <span *ngIf="formUsersRegister.submitted && TomoRepresentante.invalid" class="invalid-form">
+                  <small class="form-text text-danger" *ngIf="TomoRepresentante.errors.required">Tomo es requerido!</small>
+                </span>
+
+              </div>
+            </div>
+
             <div class="col-md-3 col-12">
               <div class="form-group">
                 <label class="form-label" for="email">Nombres</label>

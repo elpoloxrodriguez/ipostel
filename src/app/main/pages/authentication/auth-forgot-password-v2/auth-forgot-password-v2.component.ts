@@ -134,6 +134,7 @@ export class AuthForgotPasswordV2Component implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
 
+
     await this.Select_TipoAgencia()
     await this.Select_TipologiaEmpresa()
 

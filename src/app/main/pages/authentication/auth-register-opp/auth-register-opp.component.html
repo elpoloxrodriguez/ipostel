@@ -444,7 +444,7 @@
                   <input required  type="text" [(ngModel)]="IFormOPP.password" [ngModelOptions]="{standalone: true}"
                   #password="ngModel"
                   [class.error]="!password.valid && formUsersRegister.submitted"
-                    class="form-control" placeholder="Numero de RIF" />
+                    class="form-control" placeholder="Ingrese Contraseña de Acceso" />
                     <span *ngIf="formUsersRegister.submitted && password.invalid" class="invalid-form">
                     <small class="form-text text-danger" *ngIf="password.errors.required"
                       >Contraseña es requerido!</small
@@ -459,7 +459,7 @@
                   <input required  type="text" [(ngModel)]="passwordConfirm" [ngModelOptions]="{standalone: true}"
                   #passwordConfirmX="ngModel"
                   [class.error]="!passwordConfirmX.valid && formUsersRegister.submitted"
-                    class="form-control" placeholder="Numero de RIF" />
+                    class="form-control" placeholder="Confirme la Contraseña" />
                     <span *ngIf="formUsersRegister.submitted && passwordConfirmX.invalid" class="invalid-form">
                     <small class="form-text text-danger" *ngIf="passwordConfirmX.errors.required"
                       >Confirmar  contraseñas requerido!</small

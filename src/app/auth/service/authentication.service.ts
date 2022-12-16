@@ -40,11 +40,9 @@ export class AuthenticationService {
         this.currentUserSubject = new BehaviorSubject(this.token.Usuario[0])
         this.currentUser = this.currentUserSubject.asObservable();
       }  else {        
-        this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
-    // console.log(this.token.Usuario[0])
-    // console.log(JSON.parse(localStorage.getItem('currentUser')))
   }
   
   // getter: currentUserValue
@@ -55,18 +53,18 @@ export class AuthenticationService {
   /**
    *  Confirms if user is admin
    */
-  get isAdmin() {
-     return this.currentUser && this.currentUserSubject.value.role === Role.Administrador;
+  // get isAdmin() {
+    //  return this.currentUser && this.currentUserSubject.value.role === Role.Administrador;
   //   return this.currentUser && this.token=== Role.Administrador;
-  }
+  // }
   
   /**
    *  Confirms if user is client
    */
-  get isClient() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Usuario;
+  // get isClient() {
+    // return this.currentUser && this.currentUserSubject.value.role === Role.Usuario;
     // return this.currentUser && this.token === Role.Usuario;
-  }
+  // }
 
   /**
    * User login

@@ -43,6 +43,8 @@ export class AuthLoginV2Component implements OnInit {
   public usuario: string;
   public clave: string;
 
+  public sessionTOKEN
+
   //  QR certifucado
   public Qr
 
@@ -126,22 +128,8 @@ export class AuthLoginV2Component implements OnInit {
   /**
    * On init
    */
-  ngOnInit(): void {
-      if(this.hora >= 20 || this.hora < 7 ){
-        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
-        this.btnShow = false
-        this._router.navigate(['login']);
-        sessionStorage.clear();
-        localStorage.clear();
-        }
-      if(this.dia == 6 || this.dia == 0 ){
-        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
-        this.btnShow = false
-        this._router.navigate(['login']);
-        sessionStorage.clear();
-        localStorage.clear();
-      }
-
+  async ngOnInit() {
+    await this.BloqueoSystem()
     let urlQR = this._router.url
     if (urlQR  == undefined) {
       this.Qr = ''
@@ -179,30 +167,70 @@ export class AuthLoginV2Component implements OnInit {
     }
     this.loginService.getLoginExternas(Xapi).subscribe(
       (data) => {
-        // console.log(data)
-        if (sessionStorage.getItem("token") != '') {
+        const stoken = jwt_decode(data.token)
+        this.sessionTOKEN = stoken 
+        const tokenSession = this.sessionTOKEN.Usuario[0].status_empresa
+
+        if (tokenSession != '0') {
           this.itk = data;
           sessionStorage.setItem("token", this.itk.token);
           this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
-          // console.log(this.infoUsuario.Usuario[0])
           this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL`);
-          this._router.navigate(['home'])
-            .then(() => {
-              window.location.reload();
-            });
+          this._router.navigate(['']).then(() => {window.location.reload()});
           return;
         } else {
-          this.utilservice.alertConfirmMini('error', 'Errorr');
+          this.loading = false;
+          this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta aun no se encuentra validada por <strong><font color="red">IPOSTEL</font></strong>, porfavor intente de nuevo mas tarde.');
         }
       },
       (error) => {
         this.loading = false;
         this._router.navigate(['login'])
-        this.utilservice.alertConfirmMini('error','Verifique los dastos, e intente nuevamente')
+        this.utilservice.alertConfirmMini('error','Verifique los datos, e intente nuevamente')
       }
     );
   }
 
+  async BloqueoSystem(){
+    this.xAPI.funcion = "IPOSTEL_R_Settings_Initials"
+    this.xAPI.parametros = ''
+    await this.apiService.EjecutarDev(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map(e => {
+          if (e.status_hora == '1') {
+            if(this.hora >= e.hora_desde || this.hora < e.hora_hasta ){
+              this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+              this.btnShow = false
+              this._router.navigate(['login']);
+              sessionStorage.clear();
+              localStorage.clear();
+              }
+          }
+          if (e.status_dia == '1') {
+            if(this.dia == e.dia_desde || this.dia == e.dia_hasta ){
+              this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+              this.btnShow = false
+              this._router.navigate(['login']);
+              sessionStorage.clear();
+              localStorage.clear();
+            }
+          }
+          if (e.app_status == '1') {
+            if(this.dia > e.app_dia ){
+              this.utilservice.alertMessageAutoCloseTimer(10000,'<h5><font color="red"><strong>Estimados Operadores Postales Privados</strong></font></h5>', '<strong><h5>En este momento nos encontramos en desarrollo de los modulos consiguientes, para la entrada en vigencia del  <strong>SIRPV-IPOSTEL</strong><br><br><strong><font color="red">Sistema Integrado de Regulación Postal Privado Venezolano 🇻🇪</font></strong></h5></strong>')
+              this.btnShow = false
+              this._router.navigate(['login']);
+              sessionStorage.clear();
+              localStorage.clear();
+            }
+          }
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 
   async Certificado(id: string){
     this.xAPI.funcion = "IPOSTEL_R_Certificados";

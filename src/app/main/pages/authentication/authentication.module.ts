@@ -33,7 +33,7 @@ const routes: Routes = [
     data: { animation: 'misc' }
   },
   {
-    path: 'sirp-admin',
+    path: 'sirpv-admin',
     component: AuthAdminComponent,
     data: { animation: 'misc' }
   },

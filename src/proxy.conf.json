@@ -1,6 +1,6 @@
 {
     "/v1/api/*": {
-        "target": "https://sirp.ipostel.gob.ve",
+        "target": "https://localhost",
         "secure": false,
         "logLevel": "debug"
     },

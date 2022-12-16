@@ -24,21 +24,23 @@ export class AuthGuardGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {     
     
-      if(this.hora >= 20 || this.hora < 7 ){
-        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
-        this.btnShow = false
-        this.router.navigate(['login']);
-        sessionStorage.clear();
-        localStorage.clear();
-        }
-      if(this.dia == 6 || this.dia == 0 ){
-        this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
-        this.btnShow = false
-        this.router.navigate(['login']);
-        sessionStorage.clear();
-        localStorage.clear();
-      }
+      // if(this.hora >= 20 || this.hora < 7 ){
+      //   this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+      //   this.btnShow = false
+      //   this.router.navigate(['login']);
+      //   sessionStorage.clear();
+      //   localStorage.clear();
+      //   }
+      // if(this.dia == 6 || this.dia == 0 ){
+      //   this.utilservice.alertMessageAutoCloseTimer(5000,'<font color="red">Estimado Usuario</font>', '<strong><h4>El sistema estará operativo de Lunes a Viernes de 7:00AM hasta las 8:00PM.</h4></strong>')
+      //   this.btnShow = false
+      //   this.router.navigate(['login']);
+      //   sessionStorage.clear();
+      //   localStorage.clear();
+      // }
 
+
+      
       if (sessionStorage.getItem("token") != undefined ){
         return true;
       }else{

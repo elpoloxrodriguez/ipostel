@@ -15,14 +15,11 @@
           <h1 class="mb-1 fondo-negro"><strong><font color="#ffffff">SISTEMA INTEGRADO DE REGULACIÓN <br> POSTAL VENEZOLANO 🇻🇪 </font></strong></h1>
           <img
           class="img-fluid drop"
-          [src]="
-            coreConfig.layout.skin === 'dark'
-              ? 'assets/images/logos/ipostel.png'
-              : 'assets/images/logos/ipostel.png'
-          "
+          [src]="coreConfig.layout.skin === 'dark' ? 'assets/images/logos/ipostel.png' : 'assets/images/logos/ipostel.png'"
           alt="Login"
           width="450px"
         />
+
           <h2 class="mb-1 drop"><strong><font color="#ffffff">Validación de Certificados ✅</font></strong></h2>
           <p class="mb-3 drop"><font color="#ffffff">Ingrese el codigo QR del certificado.</font></p>
           <form class="form-inline justify-content-center row m-0 mb-2" action="javascript:void(0);">
@@ -47,7 +44,8 @@
           <!-- <a class="brand-logo" href="/" align="center"> -->
             <h1 class="card-title font-weight-bold mb-1 text-primary" align="center">
               <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
-              <strong>{{ coreConfig.app.appName }}</strong></h1>
+              <strong>{{ coreConfig.app.appName }}</strong>
+            </h1>
           <!-- </a> -->
           <h4><p class="card-text mb-2" align="center">Sistema Integrado de Regulación Postal Venezolano 🇻🇪</p></h4>
 
@@ -101,11 +99,21 @@
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Iniciar Sesión
             </button>
           </form>
-          <p class="text-center mt-2">
-        <a class="btn btn-warning btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices"><span>&nbsp;Crear nueva cuenta OPP</span></a>
-        <a class="btn btn-success btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices-subcontrator"><span>&nbsp;Crear nueva cuenta Subcontratista</span></a>
+          <p class="text-center mt-2"></p>
+          
+          <div class="row">
+                
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <a class="btn btn-warning btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices"><span>&nbsp;Crear nueva cuenta OPP</span></a>
+              </div>
+            </div>
 
-        </p>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <a class="btn btn-success btn-block"  *ngIf="btnShow" routerLink="/register-private-post-offices-subcontrator"><span>&nbsp;Crear nueva cuenta Subcontratista</span></a>
+              </div>
+            </div>
 
         <app-footer></app-footer>
 
