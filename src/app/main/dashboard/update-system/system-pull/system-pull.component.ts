@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SystemPullComponent implements OnInit {
 
+  public log = ''
   constructor() { }
 
   ngOnInit(): void {

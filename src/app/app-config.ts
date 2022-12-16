@@ -16,8 +16,8 @@ import { CoreConfig } from '@core/types';
 // prettier-ignore
 export const coreConfig: CoreConfig = {
   app: {
-    appName     : 'SIRPV-IPOSTEL',                                        // App Name
-    appTitle    : 'SIRPV - IPOSTEL', // App Title
+    appName     : 'SIRPVEN',                                        // App Name
+    appTitle    : 'SIRPVEN', // App Title
     appLogoImage: 'assets/images/logo/logo.png',                  // App Logo
     appLanguage : 'es',                                           // App Default Language (en, fr, de, pt etc..)
   },

@@ -82,7 +82,6 @@ export const menu: CoreMenu[] = [
     url: 'reports/report',
   },
 
-
   // MENU ADMINISTRACION
   {
     id: 'list-opp',
