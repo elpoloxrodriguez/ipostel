@@ -87,24 +87,28 @@
               </ng-template>
             </ngx-datatable-column> 
             
-            
-            <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
-              <ng-template  ngx-datatable-cell-template let-row="row">
-                <div ngbDropdown container="body">
-                  <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
-                    <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
-                  </button>
-                  <div ngbDropdownMenu>
-                    <div>
-                    <a (click)="DetallesOPP(ModalDetailsOPP,row)" ngbDropdownItem><span
-                      [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span> Detalles</a>
-                      <a (click)="CambiarStatusSubcontratista(ModalCambiarStatus,row)" ngbDropdownItem><span
-                        [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span> Cambiar Status</a>
-                  </div>
-                </div>
-                </div>  
-                  </ng-template>
-                </ngx-datatable-column>
+                <ngx-datatable-column name="Accion" [width]="20" [sortable]="false">
+                  <ng-template  ngx-datatable-cell-template let-row="row">
+                    <div ngbDropdown container="body">
+                      <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
+                        <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
+                      </button>
+                      <div ngbDropdownMenu>
+                          <div *ngIf="row.status_empresa != 1; else nonStatus">
+                            <a (click)="DetallesOPP(ModalDetailsOPP,row)" ngbDropdownItem><span
+                              [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span> Detalles</a>
+                              <a (click)="CambiarStatusSubcontratista(ModalCambiarStatus,row)" ngbDropdownItem><span
+                                [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span> Cambiar Status</a>
+                          </div>
+                    </div>
+                      <ng-template  #nonStatus>
+                            <a (click)="DetallesOPP(ModalDetailsOPP,row)" ngbDropdownItem><span
+                              [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span> Detalles</a>
+                            </ng-template>
+                    </div>  
+                      </ng-template>
+                    </ngx-datatable-column>
+      
   
           </ngx-datatable>
   
