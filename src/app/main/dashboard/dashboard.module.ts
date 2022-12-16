@@ -25,6 +25,8 @@ import { PostagePerMonthComponent } from './postage/postage-per-month/postage-pe
 import { PrivatePostalOperatorComponent } from './management/private-postal-operator/private-postal-operator.component';
 import { ManagementRoutingModule } from './management/management-routing.module';
 import { ReportsAdminComponent } from './admin-reports/reports-admin/reports-admin.component';
+import { SystemPullComponent } from './update-system/system-pull/system-pull.component';
+import { UpdateSystemRoutingModule } from './update-system/update-system-routing.module';
 
 
 
@@ -36,7 +38,8 @@ import { ReportsAdminComponent } from './admin-reports/reports-admin/reports-adm
       PaymentsListComponent,
       PostagePerMonthComponent,
       PrivatePostalOperatorComponent,
-      ReportsAdminComponent
+      ReportsAdminComponent,
+      SystemPullComponent
     ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { ReportsAdminComponent } from './admin-reports/reports-admin/reports-adm
     FormsModule,
     ReactiveFormsModule,
     MiscellaneousModule,
+    UpdateSystemRoutingModule
   ],
   exports: [],
   providers: [DatePipe]

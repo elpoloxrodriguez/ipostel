@@ -110,4 +110,13 @@ export const menu: CoreMenu[] = [
     role: ['3'],
     url: 'admin-reports/admin-reports',
   },
+    //  ACTUALIZACION DE SISTEMA
+    {
+      id: 'update-system',
+      nombre: 'Actualizar SIRPV',
+      icono: 'refresh-ccw',
+      type: 'item',
+      role: ['3'],
+      url: 'update-system/system-pull',
+    },
 ];
