@@ -757,7 +757,7 @@ export class OppComponent implements OnInit {
   fileSelected(e) {
     this.archivos.push(e.target.files[0])
   }
-  async subirArchivo(e) {
+   subirArchivo(e) {
     this.sectionBlockUI.start('Subiendo Archivo, Porfavor Espere!!!');
     this.token = jwt_decode(sessionStorage.getItem('token'));
     this.DocAdjunto.nombre = this.archivos[0].name
@@ -768,7 +768,7 @@ export class OppComponent implements OnInit {
     this.DocAdjunto.vencimiento = this.datetime1.year+'-'+this.datetime1.month+'-'+this.datetime1.day 
     var frm = new FormData(document.forms.namedItem("forma"))
     try {
-      await this.apiService.EnviarArchivos(frm).subscribe(
+       this.apiService.EnviarArchivos(frm).subscribe(
         (data) => {
           this.rowsDocumentosAdjuntosEmpresa.push(this.EmpresaDocumentosAdjuntos)
           this.xAPI.funcion = 'IPOSTEL_I_ArchivoDigital'
@@ -800,7 +800,7 @@ export class OppComponent implements OnInit {
     }
 
   }
-   DescargarADP(ncontrol: string, archivo: string) {
+   DescargarADP(ncontrol: string, archivo: string): string {
     // this.utilService.alertConfirmMini('success', 'Archivo Digital Postal Descargado Exitosamente!')
     // this.sectionBlockUI.start('Descargando Archivo Digital Postal, Porfavor Espere!!!');
     // this.sectionBlockUI.stop()
