@@ -34,6 +34,12 @@ export class UtilService {
     return fecha.year + '-' + + fecha.month + '-' + fecha.day
   }
 
+  FechaMomentActual(){
+    moment.locale('es')
+    var fech = moment().format('DD MMMM YYYY  hh:mm:ss a')
+    return fech
+  }
+
   FechaMoment(fecha: any) {
     moment.locale('es')
     var fech = moment(fecha).format('LLLL')

@@ -9,22 +9,18 @@ import { TranslateModule } from '@ngx-translate/core'
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 import { AuthGuard } from 'app/auth/helpers';
 import { Role } from 'app/auth/models';
-
-import { DashboardComponent } from './principal/dashboard.component'
-
+import { ListPaymentsComponent } from './list-payments/list-payments.component'
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: DashboardComponent,
-    // canActivate:[AuthGuardGuard],
+    path: 'takings/list-payments',
+    component: ListPaymentsComponent,
     canActivate: [AuthGuard,AuthGuardGuard],
-    // data: { roles: ['0','1','2','3','4','5','6','7','8','9'] },
+    data: { roles: ['3','4'] },
   },
-]
+];
 
 @NgModule({
-  declarations: [],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -37,7 +33,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { 
-  
-
-}
+export class TrakingsRoutingModule { }

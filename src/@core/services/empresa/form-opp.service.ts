@@ -286,6 +286,36 @@ export interface IPOSTEL_U_OPP_ID { // Actualizar datos generales de OPP
 }
 
 
+
+export interface IPOSTEL_C_PagosDeclaracionOPP_SUB { // INSERTAR PAGO EN RECAUDACION
+	id_opp	 :	number
+	status_pc	 :	number
+	tipo_pago_pc	 :	number
+	monto_pc	 :	string
+	monto_pagar	 :	string
+	dolar_dia	 :	string
+	petro_dia	 :	string
+	archivo_adjunto	 :	any
+	user_created	 :	number
+}
+
+export interface IPOSTEL_U_PagosDeclaracionOPP_SUB { // ACTUALIZA PAGO EN RECAUDACION
+	status_pc	 :	any
+	fecha_pc	 :	string
+	id_banco_pc	 :	any
+	referencia_bancaria	 :	string
+	monto_pc	 :	any
+	monto_pagar	 :	any
+	dolar_dia	 :	string
+	petro_dia	 :	string
+	archivo_adjunto	 :	any
+	observacion_pc	 :	string
+	user_created	 :	any
+	user_updated	 :	any
+	id_pc	 :	number
+}
+
+
 @Injectable({
 	providedIn: 'root'
 })

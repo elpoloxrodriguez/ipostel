@@ -58,19 +58,10 @@ export const menu: CoreMenu[] = [
   {
     id: 'PagosPostales',
     nombre: 'Pagos',
-    title: 'Pagos',
-    role: ['1','2'],
-    type: 'collapsible',
+    role: ['1','2'], 
     icono: 'credit-card',
-    children: [
-      {
-        id: 'TablaPrecios',
-        nombre: 'Pago Postal',
-        type: 'item',
-        icono: 'circle',
-        url: 'payments/payments-list'
-      },
-    ]
+    type: 'item',
+    url: 'payments/payments-list',
   },
   // Reportes
   {
@@ -79,26 +70,18 @@ export const menu: CoreMenu[] = [
     role: ['1'], 
     icono: 'list',
     type: 'item',
-    url: 'reports/report',
+    url: 'opp-reports/reports-ranking',
   },
+
 
   // MENU ADMINISTRACION
   {
     id: 'list-opp',
-    nombre: 'OPP',
-    title: 'OPP',
-    role: ['3'],
-    type: 'collapsible',
+    nombre: 'OPP-SUB',
     icono: 'list',
-    children: [
-      {
-        id: 'list-opp',
-        nombre: 'Lista OPP',
-        type: 'item',
-        icono: 'circle',
-        url: 'management/private-postal-operator'
-      },
-    ]
+    type: 'item',
+    role: ['3'],
+    url: 'management/private-postal-operator',
   },
   //  REPORTES
   {
@@ -109,6 +92,24 @@ export const menu: CoreMenu[] = [
     role: ['3'],
     url: 'admin-reports/admin-reports',
   },
+    //  RECAUDACION
+    {
+      id: 'takings',
+      nombre: 'Recaudacion',
+      icono: 'credit-card',
+      type: 'item',
+      role: ['3'],
+      url: 'takings/list-payments',
+    },
+        //  ARCHIVO DIGITAL POSTAL
+        {
+          id: 'digital-file-opp',
+          nombre: 'Archivo Digital P',
+          icono: 'folder-plus',
+          type: 'item',
+          role: ['3','4','5'],
+          url: 'digital-file-opp/private-postal-operator',
+        },
     //  ACTUALIZACION DE SISTEMA
     {
       id: 'update-system',

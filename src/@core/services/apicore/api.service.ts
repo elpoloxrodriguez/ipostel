@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { UtilService } from '../util/util.service';
 
 
 export interface IAPICore {
@@ -46,7 +47,7 @@ export interface ObjectoGenerico {
   obse: string
 }
 
-export interface DocumentoAdjunto {
+export interface IPOSTEL_I_ArchivoDigital {
 	usuario	 ?:	string //CodeEncrypt
 	nombre	 ?:	string
 	empresa	?:	string
@@ -78,7 +79,7 @@ export class ApiService {
       })
   };
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private utilservice: UtilService) {
 
   }
 
@@ -95,11 +96,12 @@ export class ApiService {
 
   //Ejecutar Api generales
   Ejecutar(xAPI: IAPICore): Observable<any> {
-    if (environment.production === true) {
-      var url = this.RUTA  + this.URL + "accion" + this.hash;
-    } else {
-      var url = this.URL + "accion" + this.hash;
-    }
+    var url = this.URL + "accion" + this.hash;
+    // if (environment.production === true) {
+    //   var url = this.RUTA  + this.URL + "accion" + this.hash;
+    // } else {
+    //   var url = this.URL + "accion" + this.hash;
+    // }
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 
@@ -140,7 +142,8 @@ export class ApiService {
   }
 
 
-  Dws( peticion : string ) : string {
+  Dws( peticion : string ) {
+    this.utilservice.alertConfirmMini('success', 'Archivo Digital Postal Descargado Exitosamente!')
     return this.URL + 'dw/' + peticion
   }
 

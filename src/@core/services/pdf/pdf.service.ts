@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable'
 import { UtilService } from '../util/util.service';
 
 
@@ -210,6 +211,53 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     );
 
     doc.save("Autorizacion de Inscripción.pdf");
+    doc.autoPrint();
+    // doc.output("dataurlnewwindow", { filename: 'Certificado Uníco de Inscripción.pdf' });
+  }
+
+  GenerarFactura(data: any){
+    const fecha = this.utilService.FechaActual()
+    const doc = new jsPDF();
+    const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    doc.setProperties({
+      title: "FACTURA SIRP-IPOSTEL",
+      subject: "https://github.com/elpoloxrodriguez",
+      author: "SIRP-IPOSTEL",
+      keywords: "generated, javascript, web 2.0, ajax",
+      creator: "CAP. ANDRÉS RICARDO RODRÍGUEZ DURÁN",
+    });
+
+    doc.addImage('assets/images/pdf/cintillo-ipostel.png', "PNG", 5, 5, 200, 15);
+    doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
+
+
+    autoTable(doc, { html: '#my-table' })
+
+      // Or use javascript directly:
+      autoTable(doc, {
+        head: [['Name', 'Email', 'Country']],
+        body: [
+          ['David', 'david@example.com', 'Sweden'],
+          ['Castille', 'castille@example.com', 'Spain'],
+          // ...
+        ],
+      })
+
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    doc.text("Msc. OLGA YOMIRA PEREIRA JAIMES", 105, 275, { align: "center" });
+    doc.setFontSize(10);
+    doc.setFont(undefined, "");
+    doc.text("PRESIDENTA (E) del Instituto Postal Telegráfico de Venezuela IPOSTEL", 105, 280, { align: "center" });
+    doc.setFontSize(9);
+    doc.text("Según Decreto Presidencial N° 3.877 del 21/06/2019,", 105, 285, { align: "center" });
+    doc.setFontSize(9);
+    doc.text("Publicada en la Gaceta Oficial N° 41.660, de fecha 21 de Junio de 2019.", 105, 290, { align: "center" });
+
+
+    doc.save(`Factura ${fecha}`+".pdf");
     doc.autoPrint();
     // doc.output("dataurlnewwindow", { filename: 'Certificado Uníco de Inscripción.pdf' });
   }

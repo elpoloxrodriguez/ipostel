@@ -39,9 +39,10 @@ import { ContentHeaderModule } from './layout/components/content-header/content-
 import { BlockUIModule } from 'ng-block-ui';
 import { ChartsModule } from 'ng2-charts';
 import { AuthAdminComponent } from './main/pages/authentication/auth-admin/auth-admin.component';
-import { PriceTableComponent } from './main/dashboard/postage/price-table/price-table.component';
-import { StatementOfPartiesComponent } from './main/dashboard/postage/statement-of-parties/statement-of-parties.component';
-import { SubcontractorComponent } from './main/dashboard/business/subcontractor/subcontractor.component';
+import { PriceTableComponent } from './main/dashboard/module-opp-sub/postage/price-table/price-table.component';
+import { StatementOfPartiesComponent } from './main/dashboard/module-opp-sub/postage/statement-of-parties/statement-of-parties.component';
+import { SubcontractorComponent } from './main/dashboard/module-opp-sub/business/subcontractor/subcontractor.component';
+import { ReportsRankingComponent } from './main/dashboard/module-opp-sub/opp-reports/reports-ranking/reports-ranking.component';
 //  subir Archivos
 
 
@@ -63,6 +64,7 @@ const appRoutes: Routes = [
     AuthAdminComponent,
     PriceTableComponent,
     StatementOfPartiesComponent,
+    ReportsRankingComponent,
                           ],
   imports: [
     BrowserModule,

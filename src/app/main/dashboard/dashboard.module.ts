@@ -8,6 +8,8 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { AngularFileUploaderModule } from "angular-file-uploader";
+
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -16,17 +18,25 @@ import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module
 import { BlockUIModule } from 'ng-block-ui';
 
 import { DashboardComponent } from './principal/dashboard.component';
-import { OppComponent } from './business/opp/opp.component';
-import { SubcontractorComponent } from './business/subcontractor/subcontractor.component';
+import { OppComponent } from './module-opp-sub/business/opp/opp.component';
+import { SubcontractorComponent } from './module-opp-sub/business/subcontractor/subcontractor.component';
 
-import { PaymentsListComponent } from './payments/payments-list/payments-list.component';
-import { PaymentsRoutingModule } from './payments/payments-routing.module';
-import { PostagePerMonthComponent } from './postage/postage-per-month/postage-per-month.component';
-import { PrivatePostalOperatorComponent } from './management/private-postal-operator/private-postal-operator.component';
-import { ManagementRoutingModule } from './management/management-routing.module';
-import { ReportsAdminComponent } from './admin-reports/reports-admin/reports-admin.component';
-import { SystemPullComponent } from './update-system/system-pull/system-pull.component';
-import { UpdateSystemRoutingModule } from './update-system/update-system-routing.module';
+import { PaymentsListComponent } from './module-opp-sub/payments/payments-list/payments-list.component';
+import { PaymentsRoutingModule } from './module-opp-sub/payments/payments-routing.module';
+import { PostagePerMonthComponent } from './module-opp-sub/postage/postage-per-month/postage-per-month.component';
+import { PrivatePostalOperatorComponent } from './module-admin/management/private-postal-operator/private-postal-operator.component';
+import { ManagementRoutingModule } from './module-admin/management/management-routing.module';
+import { ReportsAdminComponent } from './module-admin/admin-reports/reports-admin/reports-admin.component';
+import { SystemPullComponent } from './module-admin/update-system/system-pull/system-pull.component';
+import { UpdateSystemRoutingModule } from './module-admin/update-system/update-system-routing.module';
+import { ReportsRankingComponent } from './module-opp-sub/opp-reports/reports-ranking/reports-ranking.component';
+import { OppReportsRoutingModule } from './module-opp-sub/opp-reports/opp-reports-routing.module';
+import { ListPaymentsComponent } from './module-admin/trakings/list-payments/list-payments.component';
+import { PostageRoutingModule } from './module-opp-sub/postage/postage-routing.module';
+import { BusinessRoutingModule } from './module-opp-sub/business/business-routing.module';
+import { AdminReportsRoutingModule } from './module-admin/admin-reports/admin-reports-routing.module';
+import { TrakingsRoutingModule } from './module-admin/trakings/trakings-routing.module';
+import { DigitalFileOppRoutingModule } from './module-admin/digital-file-opp/digital-file-opp-routing.module';
 
 
 
@@ -39,10 +49,12 @@ import { UpdateSystemRoutingModule } from './update-system/update-system-routing
       PostagePerMonthComponent,
       PrivatePostalOperatorComponent,
       ReportsAdminComponent,
-      SystemPullComponent
+      SystemPullComponent,
+      ListPaymentsComponent,
     ],
   imports: [
     CommonModule,
+    AngularFileUploaderModule,
     NgxDatatableModule,
     BlockUIModule,
     DashboardRoutingModule,
@@ -56,7 +68,13 @@ import { UpdateSystemRoutingModule } from './update-system/update-system-routing
     FormsModule,
     ReactiveFormsModule,
     MiscellaneousModule,
-    UpdateSystemRoutingModule
+    UpdateSystemRoutingModule,
+    OppReportsRoutingModule,
+    PostageRoutingModule,
+    BusinessRoutingModule,
+    AdminReportsRoutingModule,
+    TrakingsRoutingModule,
+    DigitalFileOppRoutingModule
   ],
   exports: [],
   providers: [DatePipe]

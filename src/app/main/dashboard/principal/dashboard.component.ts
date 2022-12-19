@@ -1,21 +1,24 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable } from '@angular/core';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
 import { ICrearCertificados } from '@core/services/empresa/form-opp.service';
 import { PdfService } from '@core/services/pdf/pdf.service';
 import { UtilService } from '@core/services/util/util.service';
 import jwt_decode from "jwt-decode";
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import puppeteer from 'puppeteer';
 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
+
 export class DashboardComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-
+  
 
   public xAPI: IAPICore = {
     funcion: '',
@@ -29,8 +32,6 @@ export class DashboardComponent implements OnInit {
     type: 0,
     created_user: 0
   }
-
-
   public title
   
   public DataEmpresa
@@ -45,14 +46,17 @@ export class DashboardComponent implements OnInit {
   public empresaOPP = false
   public empresaSUB = false
 
-  public fecha = new Date();
+  public fecha = new Date('yyyy-MM-dd HH:mm:ss');
   public anio = this.fecha.getFullYear();
-
+  public hora
+  public fecha_Actual_convert
+  public hora_Actual_convert
 
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
     private pdf: PdfService,
+    private httpClient: HttpClient
   ) { }
 
   // Lifecycle Hooks
@@ -61,6 +65,8 @@ export class DashboardComponent implements OnInit {
    * On init
    */
   async ngOnInit() {
+    this.fecha_Actual_convert = this.utilService.FechaMomentActual()
+    console.log(this.hora)
     this.token =  jwt_decode(sessionStorage.getItem('token'));
     this.EmpresaRIF(this.token.Usuario[0].id_opp)
     switch (this.token.Usuario[0].tipo_registro) {
@@ -96,6 +102,14 @@ export class DashboardComponent implements OnInit {
       this.statusEmpresaOPP = false
     }
 
+  }
+
+  GenerarReporteLiquidacionFPO(){
+    this.sectionBlockUI.start('Generando Reporte de Liquidación P.F.O, Porfavor Espere!!!');
+    setTimeout(() => {
+      this.sectionBlockUI.stop()
+      this.utilService.alertConfirmMini('success', 'Reporte de Liquidacion P.P.O Descagado Exitosamente')
+    }, 2000);
   }
 
   async EmpresaRIF(id: any) {
