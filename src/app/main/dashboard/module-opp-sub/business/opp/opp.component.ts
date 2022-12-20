@@ -800,11 +800,7 @@ export class OppComponent implements OnInit {
     }
 
   }
-   DescargarADP(ncontrol: string, archivo: string): string {
-    // this.utilService.alertConfirmMini('success', 'Archivo Digital Postal Descargado Exitosamente!')
-    // this.sectionBlockUI.start('Descargando Archivo Digital Postal, Porfavor Espere!!!');
-    // this.sectionBlockUI.stop()
-    // this.router.navigate(['']).then(() => {window.location.reload()})
+   DescargarADP(ncontrol: string, archivo: string) {
     return  this.apiService.Dws(btoa("D" + ncontrol) + '/' + archivo)
   }
 

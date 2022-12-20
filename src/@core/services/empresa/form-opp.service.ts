@@ -316,6 +316,21 @@ export interface IPOSTEL_U_PagosDeclaracionOPP_SUB { // ACTUALIZA PAGO EN RECAUD
 }
 
 
+export interface IPOSTEL_I_OtorgamientoConcesion { // INSERTAR REGISTRO PARA OTORGAMIENTO POSTAL
+	id_opp	 :	any
+	status_curp	 :	any
+	punto_cuenta_curp	 :	any
+	fecha_punto_cuenta_curp	 :	any
+	concesion_postal_curp	 :	any
+	n_contrato_curp	 :	any
+	periodo_contrato_curp	 :	any
+	n_archivo_curp	 :	any
+	tomo_archivo_curp	 :	any
+	fecha_archivo_curp	 :	any
+	user_created	 :	any
+}
+
+
 @Injectable({
 	providedIn: 'root'
 })

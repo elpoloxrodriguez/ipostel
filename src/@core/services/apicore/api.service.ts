@@ -142,8 +142,7 @@ export class ApiService {
   }
 
 
-  Dws( peticion : string ) {
-    this.utilservice.alertConfirmMini('success', 'Archivo Digital Postal Descargado Exitosamente!')
+  Dws( peticion : any ) {
     return this.URL + 'dw/' + peticion
   }
 

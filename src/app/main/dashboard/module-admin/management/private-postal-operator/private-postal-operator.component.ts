@@ -1,19 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
-import { IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_I_OtorgamientoConcesion, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
 import { UtilService } from '@core/services/util/util.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import jwt_decode from "jwt-decode";
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { FormBuilder } from '@angular/forms';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-private-postal-operator',
   templateUrl: './private-postal-operator.component.html',
-  styleUrls: ['./private-postal-operator.component.scss']
+  styleUrls: ['./private-postal-operator.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PrivatePostalOperatorComponent implements OnInit {
 
@@ -27,7 +28,33 @@ export class PrivatePostalOperatorComponent implements OnInit {
     valores: {},
   };
 
-  public DataEmpresa : IPOSTEL_DATA_EMPRESA_ID = {
+  public ICrearConcesion: IPOSTEL_I_OtorgamientoConcesion = {
+    id_opp: undefined,
+    status_curp: undefined,
+    punto_cuenta_curp: undefined,
+    fecha_punto_cuenta_curp: undefined,
+    concesion_postal_curp: undefined,
+    n_contrato_curp: undefined,
+    periodo_contrato_curp: undefined,
+    n_archivo_curp: undefined,
+    tomo_archivo_curp: undefined,
+    fecha_archivo_curp: undefined,
+    user_created: undefined
+  }
+
+  public IpagarRecaudacion: IPOSTEL_C_PagosDeclaracionOPP_SUB = {
+    id_opp: 0,
+    status_pc: 0,
+    tipo_pago_pc: 0,
+    monto_pc: '',
+    monto_pagar: '',
+    dolar_dia: '',
+    petro_dia: '',
+    archivo_adjunto: undefined,
+    user_created: 0
+  }
+
+  public DataEmpresa: IPOSTEL_DATA_EMPRESA_ID = {
     id_opp: undefined,
     nombre_empresa: undefined,
     rif: undefined,
@@ -66,8 +93,8 @@ export class PrivatePostalOperatorComponent implements OnInit {
     cantidad_subcontratados: undefined,
     municipio_empresa: undefined
   }
-  
-  public DataRepresentanteLegal : IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID = {
+
+  public DataRepresentanteLegal: IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID = {
     apellidos_representante_legal: undefined,
     cargo_representante_legal: undefined,
     cedula_representante_legal: undefined,
@@ -88,8 +115,8 @@ export class PrivatePostalOperatorComponent implements OnInit {
     tomo_contrato: undefined,
     n_registro_contrato: undefined
   }
-  
-  public DataDelegado : IPOSTEL_DATA_DELEGADOP_ID = {
+
+  public DataDelegado: IPOSTEL_DATA_DELEGADOP_ID = {
     apellidos_delegado: undefined,
     cargo_delegado: undefined,
     cedula_delegado: undefined,
@@ -107,7 +134,15 @@ export class PrivatePostalOperatorComponent implements OnInit {
   public ColumnMode = ColumnMode;
   public searchValue = '';
 
+  public passwordTextType: boolean;
+  public passwordTextTypeX: boolean;
+
+
   public token
+  public idOPP
+  public NewPassword
+  public ConfirmNewPassword
+  public idOPPSelected
   public n_opp = '1'
   public rowsOPP_SUB
   public tempDataOPP_SUB = []
@@ -130,6 +165,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
 
   async ngOnInit() {
     this.token = jwt_decode(sessionStorage.getItem('token'));
+    this.idOPP = this.token.Usuario[0].id_opp
     await this.ListaOPP_SUB()
   }
 
@@ -171,12 +207,12 @@ export class PrivatePostalOperatorComponent implements OnInit {
       (data) => {
         data.Cuerpo.map(e => {
           if (this.n_opp != '2') {
-            e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
-            this.List_OPP_SUB.push(e)  
+            // e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
+            this.List_OPP_SUB.push(e)
           } else {
             if (e.status_empresa == 1) {
-              e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
-              this.List_OPP_SUB.push(e)    
+              // e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
+              this.List_OPP_SUB.push(e)
             }
           }
         });
@@ -189,7 +225,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
     )
   }
 
-  AddMovilizacionPiezas(modal){
+  AddMovilizacionPiezas(modal) {
     this.modalService.open(modal, {
       centered: true,
       size: 'lg',
@@ -199,53 +235,53 @@ export class PrivatePostalOperatorComponent implements OnInit {
     });
   }
 
-  async EmpresaOPP(id: any){
+  async EmpresaOPP(id: any) {
     this.xAPI.funcion = "IPOSTEL_R_OPP_ID"
     this.xAPI.parametros = id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-             data.Cuerpo.map(e => {
-              this.DataEmpresa.id_opp = e.id_opp
-              this.DataEmpresa.nombre_empresa = e.nombre_empresa
-              this.DataEmpresa.rif = e.rif
-               this.DataEmpresa.role = e.role
-               this.DataEmpresa.status_empresa = e.status_empresa
-               if (e.tipo_registro == '1') {
-                this.DataEmpresa.tipo_registro = 'Oficina Postal Privada'
-               } else {
-                this.DataEmpresa.tipo_registro = 'Subcontratista'
-               }
-               this.DataEmpresa.opp  = e.opp
-               this.DataEmpresa.direccion_empresa  = e.direccion_empresa
-               this.DataEmpresa.estado_empresa  = e.estado_empresa
-               this.DataEmpresa.ciudad_empresa  = e.ciudad_empresa
-               this.DataEmpresa.parroquia_empresa  = e.parroquia_empresa
-               this.DataEmpresa.correo_electronico  = e.correo_electronico
-               this.DataEmpresa.empresa_facebook  = e.empresa_facebook
-               this.DataEmpresa.empresa_instagram  = e.empresa_instagram
-               this.DataEmpresa.empresa_twitter  = e.empresa_twitter
-               this.DataEmpresa.tipo_agencia  = e.tipo_agencia
-               this.DataEmpresa.nombre_tipo_agencia  = e.nombre_tipo_agencia
-               this.DataEmpresa.sucursales  = e.sucursales
-               this.DataEmpresa.subcontrataciones  = e.subcontrataciones
-               this.DataEmpresa.tipologia_empresa  = e.tipologia_empresa
-              this.DataEmpresa.nombre_tipologia  = e.nombre_tipologia
-               this.DataEmpresa.tipo_servicio = JSON.parse(e.tipo_servicio)
-               this.DataEmpresa.especificacion_servicio = e.especificacion_servicio
-               this.DataEmpresa.licencia_actividades_economicas_municipales = e.licencia_actividades_economicas_municipales
-               this.DataEmpresa.actividades_economicas_seniat = e.actividades_economicas_seniat
-               this.DataEmpresa.certificado_rupdae = e.certificado_rupdae
-               this.DataEmpresa.patronal_ivss = e.patronal_ivss
-               this.DataEmpresa.matricula_inces = e.matricula_inces
-               this.DataEmpresa.identificacion_laboral_ministerio_trabajo = e.identificacion_laboral_ministerio_trabajo
-               this.DataEmpresa.certificado_eomic = e.certificado_eomic
-               this.DataEmpresa.permiso_bomberos = e.permiso_bomberos
-               this.DataEmpresa.registro_sapi = e.registro_sapi
-               this.DataEmpresa.registro_nacional_contratista = e.registro_nacional_contratista
-               this.DataEmpresa.flota_utilizada = JSON.parse(e.flota_utilizada)
-               this.DataEmpresa.cantidad_trabajadores = e.cantidad_trabajadores
-               this.DataEmpresa.cantidad_subcontratados = e.cantidad_subcontratados
-        });   
+        data.Cuerpo.map(e => {
+          this.DataEmpresa.id_opp = e.id_opp
+          this.DataEmpresa.nombre_empresa = e.nombre_empresa
+          this.DataEmpresa.rif = e.rif
+          this.DataEmpresa.role = e.role
+          this.DataEmpresa.status_empresa = e.status_empresa
+          if (e.tipo_registro == '1') {
+            this.DataEmpresa.tipo_registro = 'Oficina Postal Privada'
+          } else {
+            this.DataEmpresa.tipo_registro = 'Subcontratista'
+          }
+          this.DataEmpresa.opp = e.opp
+          this.DataEmpresa.direccion_empresa = e.direccion_empresa
+          this.DataEmpresa.estado_empresa = e.estado_empresa
+          this.DataEmpresa.ciudad_empresa = e.ciudad_empresa
+          this.DataEmpresa.parroquia_empresa = e.parroquia_empresa
+          this.DataEmpresa.correo_electronico = e.correo_electronico
+          this.DataEmpresa.empresa_facebook = e.empresa_facebook
+          this.DataEmpresa.empresa_instagram = e.empresa_instagram
+          this.DataEmpresa.empresa_twitter = e.empresa_twitter
+          this.DataEmpresa.tipo_agencia = e.tipo_agencia
+          this.DataEmpresa.nombre_tipo_agencia = e.nombre_tipo_agencia
+          this.DataEmpresa.sucursales = e.sucursales
+          this.DataEmpresa.subcontrataciones = e.subcontrataciones
+          this.DataEmpresa.tipologia_empresa = e.tipologia_empresa
+          this.DataEmpresa.nombre_tipologia = e.nombre_tipologia
+          this.DataEmpresa.tipo_servicio = JSON.parse(e.tipo_servicio)
+          this.DataEmpresa.especificacion_servicio = e.especificacion_servicio
+          this.DataEmpresa.licencia_actividades_economicas_municipales = e.licencia_actividades_economicas_municipales
+          this.DataEmpresa.actividades_economicas_seniat = e.actividades_economicas_seniat
+          this.DataEmpresa.certificado_rupdae = e.certificado_rupdae
+          this.DataEmpresa.patronal_ivss = e.patronal_ivss
+          this.DataEmpresa.matricula_inces = e.matricula_inces
+          this.DataEmpresa.identificacion_laboral_ministerio_trabajo = e.identificacion_laboral_ministerio_trabajo
+          this.DataEmpresa.certificado_eomic = e.certificado_eomic
+          this.DataEmpresa.permiso_bomberos = e.permiso_bomberos
+          this.DataEmpresa.registro_sapi = e.registro_sapi
+          this.DataEmpresa.registro_nacional_contratista = e.registro_nacional_contratista
+          this.DataEmpresa.flota_utilizada = JSON.parse(e.flota_utilizada)
+          this.DataEmpresa.cantidad_trabajadores = e.cantidad_trabajadores
+          this.DataEmpresa.cantidad_subcontratados = e.cantidad_subcontratados
+        });
       },
       (error) => {
         console.log(error)
@@ -253,19 +289,19 @@ export class PrivatePostalOperatorComponent implements OnInit {
     )
   }
 
-  async Subcontratistas(id: any){
+  async Subcontratistas(id: any) {
     this.xAPI.funcion = "IPOSTEL_R_Subcontratista_ID"
     this.xAPI.parametros = id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-             data.Cuerpo.map(e => {
-              if (e.tipo_registro == '1') {
-                e.tipo_registro = 'Oficina Postal Privada'
-              } else {
-                e.tipo_registro = 'Subcontratista'
-              }
-              this.Subcontratista.push(e)
-        });   
+        data.Cuerpo.map(e => {
+          if (e.tipo_registro == '1') {
+            e.tipo_registro = 'Oficina Postal Privada'
+          } else {
+            e.tipo_registro = 'Subcontratista'
+          }
+          this.Subcontratista.push(e)
+        });
         this.rowsSubcontratistas = this.Subcontratista;
         this.tempDataSubcontratas = this.rowsSubcontratistas
       },
@@ -275,30 +311,30 @@ export class PrivatePostalOperatorComponent implements OnInit {
     )
   }
 
-  async RepresentanteLegal(id: any){
+  async RepresentanteLegal(id: any) {
     this.xAPI.funcion = "IPOSTEL_R_RepresentanteLegal_ID"
     this.xAPI.parametros = id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-             data.Cuerpo.map(e => {
-              this.DataRepresentanteLegal.apellidos_representante_legal = e.apellidos_representante_legal
-              this.DataRepresentanteLegal.cargo_representante_legal = e.cargo_representante_legal
-              this.DataRepresentanteLegal.cedula_representante_legal = e.cedula_representante_legal
-              this.DataRepresentanteLegal.direccion_representante_legal = e.direccion_representante_legal
-              this.DataRepresentanteLegal.email_representante_legal = e.email_representante_legal
-              this.DataRepresentanteLegal.facebook_representante_legal = e.facebook_representante_legal
-              this.DataRepresentanteLegal.fecha_registro = this.utilService.FechaMomentL(e.fecha_registro)
-              this.DataRepresentanteLegal.id_opp = e.id_opp
-              this.DataRepresentanteLegal.id_representante_legal = e.id_representante_legal
-              this.DataRepresentanteLegal.instagram_representante_legal = e.instagram_representante_legal
-              this.DataRepresentanteLegal.n_registro = e.n_registro
-              this.DataRepresentanteLegal.nombres_representante_legal = e.nombres_representante_legal
-              this.DataRepresentanteLegal.telefono_movil_representante_legal = e.telefono_movil_representante_legal
-              this.DataRepresentanteLegal.telefono_residencial_representante_legal = e.telefono_residencial_representante_legal
-              this.DataRepresentanteLegal.tomo = e.tomo
-              this.DataRepresentanteLegal.twitter_representante_legal = e.twitter_representante_legal
+        data.Cuerpo.map(e => {
+          this.DataRepresentanteLegal.apellidos_representante_legal = e.apellidos_representante_legal
+          this.DataRepresentanteLegal.cargo_representante_legal = e.cargo_representante_legal
+          this.DataRepresentanteLegal.cedula_representante_legal = e.cedula_representante_legal
+          this.DataRepresentanteLegal.direccion_representante_legal = e.direccion_representante_legal
+          this.DataRepresentanteLegal.email_representante_legal = e.email_representante_legal
+          this.DataRepresentanteLegal.facebook_representante_legal = e.facebook_representante_legal
+          this.DataRepresentanteLegal.fecha_registro = this.utilService.FechaMomentL(e.fecha_registro)
+          this.DataRepresentanteLegal.id_opp = e.id_opp
+          this.DataRepresentanteLegal.id_representante_legal = e.id_representante_legal
+          this.DataRepresentanteLegal.instagram_representante_legal = e.instagram_representante_legal
+          this.DataRepresentanteLegal.n_registro = e.n_registro
+          this.DataRepresentanteLegal.nombres_representante_legal = e.nombres_representante_legal
+          this.DataRepresentanteLegal.telefono_movil_representante_legal = e.telefono_movil_representante_legal
+          this.DataRepresentanteLegal.telefono_residencial_representante_legal = e.telefono_residencial_representante_legal
+          this.DataRepresentanteLegal.tomo = e.tomo
+          this.DataRepresentanteLegal.twitter_representante_legal = e.twitter_representante_legal
 
-        });   
+        });
       },
       (error) => {
         console.log(error)
@@ -306,29 +342,36 @@ export class PrivatePostalOperatorComponent implements OnInit {
     )
   }
 
-  async Delegado(id: any){
+  async Delegado(id: any) {
     this.xAPI.funcion = "IPOSTEL_R_Delegado_ID"
     this.xAPI.parametros = id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-             data.Cuerpo.map(e => {
-              this.DataDelegado.apellidos_delegado = e.apellidos_delegado
-              this.DataDelegado.cargo_delegado = e.cargo_delegado
-              this.DataDelegado.cedula_delegado = e.cedula_delegado
-              this.DataDelegado.email_delegado = e.email_delegado
-              this.DataDelegado.facebook_delegado = e.facebook_delegado
-              this.DataDelegado.id_delegado = e.id_delegado
-              this.DataDelegado.id_opp = e.id_opp
-              this.DataDelegado.instagram_delegado = e.instagram_delegado
-              this.DataDelegado.nombres_delegado = e.nombres_delegado
-              this.DataDelegado.telefono_delegado = e.telefono_delegado
-              this.DataDelegado.twitter_delegado = e.twitter_delegado
-        });   
+        data.Cuerpo.map(e => {
+          this.DataDelegado.apellidos_delegado = e.apellidos_delegado
+          this.DataDelegado.cargo_delegado = e.cargo_delegado
+          this.DataDelegado.cedula_delegado = e.cedula_delegado
+          this.DataDelegado.email_delegado = e.email_delegado
+          this.DataDelegado.facebook_delegado = e.facebook_delegado
+          this.DataDelegado.id_delegado = e.id_delegado
+          this.DataDelegado.id_opp = e.id_opp
+          this.DataDelegado.instagram_delegado = e.instagram_delegado
+          this.DataDelegado.nombres_delegado = e.nombres_delegado
+          this.DataDelegado.telefono_delegado = e.telefono_delegado
+          this.DataDelegado.twitter_delegado = e.twitter_delegado
+        });
       },
       (error) => {
         console.log(error)
       }
     )
+  }
+
+  togglePasswordTextType() {
+    this.passwordTextType = !this.passwordTextType;
+  }
+  togglePasswordTextTypeX() {
+    this.passwordTextTypeX = !this.passwordTextTypeX;
   }
 
   filterUpdateSubcontratistas(event) {
@@ -344,7 +387,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  async DetallesOPP(modal, data){
+  async DetallesOPP(modal, data) {
     this.TipoRegistro = data.tipo_registro
     await this.EmpresaOPP(data.id_opp)
     await this.Subcontratistas(data.id_opp)
@@ -359,8 +402,78 @@ export class PrivatePostalOperatorComponent implements OnInit {
     });
   }
 
+  async GenerarConcesionPostalPrivada() {
+    this.xAPI.funcion = "IPOSTEL_I_OtorgamientoConcesion"
+    this.xAPI.parametros = ''
+    this.xAPI.valores = JSON.stringify(this.ICrearConcesion)
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.sectionBlockUI.start('Generando Concesión Postal, Porfavor Espere!!!');
+        this.rowsOPP_SUB.push(this.List_OPP_SUB)
+        if (data.tipo === 1) {
+          this.List_OPP_SUB = []
+          this.ListaOPP_SUB()
+          this.modalService.dismissAll('Close')
+          this.sectionBlockUI.stop()
+          this.utilService.alertConfirmMini('success', 'Concesión Generada Exitosamente!')
+        } else {
+          this.sectionBlockUI.stop();
+          this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
+        }
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
 
-  async AprobarEmpresaOPP(modal, data){
+  }
+
+  async DeleteConcesionPostalPrivada(id: any) {
+    console.log(id)
+    this.xAPI.funcion = "IPOSTEL_D_OtorgamientoConcesion"
+    this.xAPI.parametros = id.id_curp
+    this.xAPI.valores = ''
+    Swal.fire({
+      title: 'Esta seguro de revocar esta concesión?',
+      text: "Tenga en cuenta que este cambio es irreversible !",
+      icon: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Deseo Revocar esta Concesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.Ejecutar(this.xAPI).subscribe(
+          (data) => {
+            console.log(data)
+            // this.sectionBlockUI.start('Generando Concesión Postal, Porfavor Espere!!!');
+            this.rowsOPP_SUB.push(this.List_OPP_SUB)
+            if (data.tipo === 1) {
+              this.List_OPP_SUB = []
+              this.ListaOPP_SUB()
+              this.modalService.dismissAll('Close')
+              // this.sectionBlockUI.stop()
+              this.utilService.alertConfirmMini('success', 'Concesión Revocada Exitosamente!')
+            } else {
+              this.sectionBlockUI.stop();
+              this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
+            }
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+      }
+    })
+
+
+  }
+
+  async AprobarEmpresaOPP(modal, data) {
     this.title_modal = data.nombre_empresa
     this.modalService.open(modal, {
       centered: true,
@@ -370,6 +483,88 @@ export class PrivatePostalOperatorComponent implements OnInit {
       windowClass: 'fondo-modal',
     });
   }
+
+  async ModalAprobarConcesionPostal(modal, data) {
+    this.ICrearConcesion.id_opp = data.id_opp
+    this.ICrearConcesion.status_curp = 1
+    // this.ICrearConcesion.punto_cuenta_curp = '4234'
+    // this.ICrearConcesion.fecha_punto_cuenta_curp = '2022-11-11'
+    // this.ICrearConcesion.concesion_postal_curp = 'CCS-4535'
+    // this.ICrearConcesion.n_contrato_curp = '42343'
+    // this.ICrearConcesion.periodo_contrato_curp = '2024'
+    // this.ICrearConcesion.n_archivo_curp = '34244324'
+    // this.ICrearConcesion.tomo_archivo_curp = '423423'
+    // this.ICrearConcesion.fecha_archivo_curp = '2022-11-11'
+    this.ICrearConcesion.user_created = this.idOPP
+
+    this.IpagarRecaudacion.id_opp = data.id_opp
+    this.IpagarRecaudacion.status_pc =
+      this.IpagarRecaudacion.tipo_pago_pc
+    this.IpagarRecaudacion.monto_pc
+    this.IpagarRecaudacion.monto_pagar
+    this.IpagarRecaudacion.dolar_dia
+    this.IpagarRecaudacion.petro_dia
+    this.IpagarRecaudacion.archivo_adjunto
+    this.IpagarRecaudacion.user_created
+
+    this.title_modal = data.nombre_empresa
+    this.modalService.open(modal, {
+      centered: true,
+      size: 'lg',
+      backdrop: false,
+      keyboard: false,
+      windowClass: 'fondo-modal',
+    });
+  }
+
+  async CambiarStatusOPP(modal, data) {
+    this.title_modal = data.nombre_empresa
+    this.modalService.open(modal, {
+      centered: true,
+      size: 'lg',
+      backdrop: false,
+      keyboard: false,
+      windowClass: 'fondo-modal',
+    });
+  }
+
+  async CambiarContrasena(modal, data) {
+    this.title_modal = data.nombre_empresa
+    this.idOPPSelected = data.id_opp
+    this.modalService.open(modal, {
+      centered: true,
+      size: 'lg',
+      backdrop: false,
+      keyboard: false,
+      windowClass: 'fondo-modal',
+    });
+  }
+  async ResetPassword(){
+    if (this.ConfirmNewPassword != this.NewPassword) {
+      this.utilService.alertConfirmMini('error','<font color="red">Oops Lo sentimos!</font> <br> Las Contraseñas deben ser iguales!, Verifique e intente de nuevo')
+    } else {
+    const pwd = this.NewPassword
+    this.xAPI.funcion = 'IPOSTEL_U_CambiarPasswordOPPSUB'
+    this.xAPI.parametros = this.idOPPSelected+','+this.utilService.md5(pwd)
+    this.xAPI.valores = ''
+    await this.apiService.EjecutarDev(this.xAPI).subscribe(
+      (data) => {
+        if (data.tipo == 1) {
+          this.modalService.dismissAll('Close')
+          this.utilService.alertConfirmMini('success','Felicidades<br>La Contraseña fue actualizada satisfactoriamente!')
+        } else {
+          this.utilService.alertConfirmMini('error','<font color="red">Oops Lo sentimos!</font> <br> Algo salio mal!, Verifique e intente de nuevo')
+        }
+      },
+      (error) => {
+        console.error(error)
+      }
+    )
+    }
+  }
+
+  
+
 
 }
 
