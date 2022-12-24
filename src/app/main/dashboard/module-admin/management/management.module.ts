@@ -28,7 +28,9 @@ import { ManagementRoutingModule } from './management-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   imports: [
     CommonModule,
     ManagementRoutingModule,

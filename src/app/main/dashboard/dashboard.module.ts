@@ -24,12 +24,10 @@ import { SubcontractorComponent } from './module-opp-sub/business/subcontractor/
 import { PaymentsListComponent } from './module-opp-sub/payments/payments-list/payments-list.component';
 import { PaymentsRoutingModule } from './module-opp-sub/payments/payments-routing.module';
 import { PostagePerMonthComponent } from './module-opp-sub/postage/postage-per-month/postage-per-month.component';
-import { PrivatePostalOperatorComponent } from './module-admin/management/private-postal-operator/private-postal-operator.component';
 import { ManagementRoutingModule } from './module-admin/management/management-routing.module';
 import { ReportsAdminComponent } from './module-admin/admin-reports/reports-admin/reports-admin.component';
 import { SystemPullComponent } from './module-admin/update-system/system-pull/system-pull.component';
 import { UpdateSystemRoutingModule } from './module-admin/update-system/update-system-routing.module';
-import { ReportsRankingComponent } from './module-opp-sub/opp-reports/reports-ranking/reports-ranking.component';
 import { OppReportsRoutingModule } from './module-opp-sub/opp-reports/opp-reports-routing.module';
 import { ListPaymentsComponent } from './module-admin/trakings/list-payments/list-payments.component';
 import { PostageRoutingModule } from './module-opp-sub/postage/postage-routing.module';
@@ -37,6 +35,7 @@ import { BusinessRoutingModule } from './module-opp-sub/business/business-routin
 import { AdminReportsRoutingModule } from './module-admin/admin-reports/admin-reports-routing.module';
 import { TrakingsRoutingModule } from './module-admin/trakings/trakings-routing.module';
 import { DigitalFileOppRoutingModule } from './module-admin/digital-file-opp/digital-file-opp-routing.module';
+import { PrivatePostalOperatorComponent } from './module-admin/management/private-postal-operator/private-postal-operator.component';
 
 
 
@@ -47,10 +46,10 @@ import { DigitalFileOppRoutingModule } from './module-admin/digital-file-opp/dig
       SubcontractorComponent,
       PaymentsListComponent,
       PostagePerMonthComponent,
-      PrivatePostalOperatorComponent,
       ReportsAdminComponent,
       SystemPullComponent,
       ListPaymentsComponent,
+      PrivatePostalOperatorComponent,
     ],
   imports: [
     CommonModule,

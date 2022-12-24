@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
-import { IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_I_OtorgamientoConcesion, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_I_OtorgamientoConcesion, IPOSTEL_U_CambiarStatusOPPSUB, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
 import { UtilService } from '@core/services/util/util.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import jwt_decode from "jwt-decode";
@@ -51,7 +51,8 @@ export class PrivatePostalOperatorComponent implements OnInit {
     dolar_dia: '',
     petro_dia: '',
     archivo_adjunto: undefined,
-    user_created: 0
+    user_created: 0,
+    fecha_pc: ''
   }
 
   public DataEmpresa: IPOSTEL_DATA_EMPRESA_ID = {
@@ -130,6 +131,12 @@ export class PrivatePostalOperatorComponent implements OnInit {
     twitter_delegado: undefined
   }
 
+  public IUpdateStatusEmpresa : IPOSTEL_U_CambiarStatusOPPSUB = {
+    status_empresa: undefined,
+    observacion: '',
+    id_opp: 0
+  }
+
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public searchValue = '';
@@ -137,7 +144,15 @@ export class PrivatePostalOperatorComponent implements OnInit {
   public passwordTextType: boolean;
   public passwordTextTypeX: boolean;
 
+  public SelectStatus = [
+    { id: '0', name: 'Inactivo'},
+    { id: '1', name: 'Activo'},
+    { id: '2', name: 'Revocatoria'},
+    { id: '3', name: 'Finiquito'},
+    { id: '4', name: 'No Movilización de Piezas'},
+  ]
 
+  public IDResetStatus
   public token
   public idOPP
   public NewPassword
@@ -429,7 +444,6 @@ export class PrivatePostalOperatorComponent implements OnInit {
   }
 
   async DeleteConcesionPostalPrivada(id: any) {
-    console.log(id)
     this.xAPI.funcion = "IPOSTEL_D_OtorgamientoConcesion"
     this.xAPI.parametros = id.id_curp
     this.xAPI.valores = ''
@@ -449,7 +463,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
       if (result.isConfirmed) {
         this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
-            console.log(data)
+            // console.log(data)
             // this.sectionBlockUI.start('Generando Concesión Postal, Porfavor Espere!!!');
             this.rowsOPP_SUB.push(this.List_OPP_SUB)
             if (data.tipo === 1) {
@@ -518,7 +532,11 @@ export class PrivatePostalOperatorComponent implements OnInit {
   }
 
   async CambiarStatusOPP(modal, data) {
+    // console.log(data);
     this.title_modal = data.nombre_empresa
+    this.IDResetStatus = data.id_opp
+    this.IUpdateStatusEmpresa.status_empresa = data.status_empresa
+    this.IUpdateStatusEmpresa.observacion = data.observacion
     this.modalService.open(modal, {
       centered: true,
       size: 'lg',
@@ -526,6 +544,45 @@ export class PrivatePostalOperatorComponent implements OnInit {
       keyboard: false,
       windowClass: 'fondo-modal',
     });
+  }
+
+  async ResetStatus(){
+    Swal.fire({
+      title: 'Esta seguro de cambiar el estatus ?',
+      text: "Tenga en cuenta que este cambio afectara al usuario!",
+      icon: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Deseo Actualizar el Estatus',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+    this.IUpdateStatusEmpresa.id_opp = this.IDResetStatus
+    this.xAPI.funcion = 'IPOSTEL_U_CambiarStatusOPPSUB'
+    this.xAPI.parametros = ''
+    this.xAPI.valores = JSON.stringify(this.IUpdateStatusEmpresa)
+     this.apiService.EjecutarDev(this.xAPI).subscribe(
+      (data) => {
+          this.rowsOPP_SUB.push(this.List_OPP_SUB)
+          if (data.tipo == 1) {
+          this.List_OPP_SUB = []
+          this.ListaOPP_SUB()
+          this.modalService.dismissAll('Close')
+          this.utilService.alertConfirmMini('success','Felicidades<br>El Estatus fue actualizada satisfactoriamente!')
+        } else {
+          this.utilService.alertConfirmMini('error','<font color="red">Oops Lo sentimos!</font> <br> Algo salio mal!, Verifique e intente de nuevo')
+        }
+      },
+      (error) => {
+        console.error(error)
+      }
+    )
+      }
+     })
   }
 
   async CambiarContrasena(modal, data) {
@@ -540,16 +597,21 @@ export class PrivatePostalOperatorComponent implements OnInit {
     });
   }
   async ResetPassword(){
+    this.rowsOPP_SUB.push(this.List_OPP_SUB)
     if (this.ConfirmNewPassword != this.NewPassword) {
       this.utilService.alertConfirmMini('error','<font color="red">Oops Lo sentimos!</font> <br> Las Contraseñas deben ser iguales!, Verifique e intente de nuevo')
+      this.List_OPP_SUB = []
+      this.ListaOPP_SUB()
     } else {
-    const pwd = this.NewPassword
-    this.xAPI.funcion = 'IPOSTEL_U_CambiarPasswordOPPSUB'
-    this.xAPI.parametros = this.idOPPSelected+','+this.utilService.md5(pwd)
-    this.xAPI.valores = ''
-    await this.apiService.EjecutarDev(this.xAPI).subscribe(
-      (data) => {
-        if (data.tipo == 1) {
+      const pwd = this.NewPassword
+      this.xAPI.funcion = 'IPOSTEL_U_CambiarPasswordOPPSUB'
+      this.xAPI.parametros = this.idOPPSelected+','+this.utilService.md5(pwd)
+      this.xAPI.valores = ''
+      await this.apiService.EjecutarDev(this.xAPI).subscribe(
+        (data) => {
+          if (data.tipo == 1) {
+          this.List_OPP_SUB = []
+          this.ListaOPP_SUB()
           this.modalService.dismissAll('Close')
           this.utilService.alertConfirmMini('success','Felicidades<br>La Contraseña fue actualizada satisfactoriamente!')
         } else {

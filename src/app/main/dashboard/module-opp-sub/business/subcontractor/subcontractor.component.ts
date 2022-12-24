@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
-import { IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_DATA_DELEGADOP_ID, IPOSTEL_DATA_EMPRESA_ID, IPOSTEL_DATA_REPRESENTANTE_LEGAL_ID, IPOSTEL_U_Status_Opp_Sub } from '@core/services/empresa/form-opp.service';
 import { UtilService } from '@core/services/util/util.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import jwt_decode from "jwt-decode";
@@ -26,6 +26,19 @@ export class SubcontractorComponent implements OnInit {
     valores: {},
   };
 
+  public IpagarRecaudacion : IPOSTEL_C_PagosDeclaracionOPP_SUB = {
+    id_opp: 0,
+    status_pc: 0,
+    tipo_pago_pc: 0,
+    monto_pc: '',
+    monto_pagar: '',
+    dolar_dia: '',
+    petro_dia: '',
+    archivo_adjunto: undefined,
+    user_created: 0,
+    fecha_pc: ''
+  }
+  
   public DataEmpresa : IPOSTEL_DATA_EMPRESA_ID = {
     id_opp: undefined,
     nombre_empresa: undefined,
@@ -231,13 +244,46 @@ async filterUpdateSubcontratistas(event) {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.sectionBlockUI.start('Cambiando Status, Porfavor Espere!!!');
-        this.rowsSubcontratistas.push({})      
+        this.rowsSubcontratistas.push(this.Subcontratista)      
         if (data.tipo === 1) {    
           this.Subcontratista = []
           this.Subcontratistas(this.IdOPP)
           this.modalService.dismissAll('Close')
           this.sectionBlockUI.stop()
           this.utilService.alertConfirmMini('success', 'Status Cambiado Exitosamente!')
+          if (this.CambiarStatus.status_empresa === 1) {
+            this.IpagarRecaudacion.id_opp = this.IdOPP
+            this.IpagarRecaudacion.status_pc = 0
+            this.IpagarRecaudacion.tipo_pago_pc = 5
+            this.IpagarRecaudacion.monto_pc = '0'
+            this.IpagarRecaudacion.monto_pagar = '60'
+            this.IpagarRecaudacion.dolar_dia = '0'
+            this.IpagarRecaudacion.petro_dia = '0'
+            this.IpagarRecaudacion.fecha_pc = this.utilService.FechaActual()
+            // this.IpagarRecaudacion.archivo_adjunto = 'documento.pdf'
+            this.IpagarRecaudacion.user_created =  this.IdOPP
+            this.xAPI.funcion = "IPOSTEL_C_PagosDeclaracionOPP_SUB";
+            this.xAPI.parametros =  ''
+            this.xAPI.valores = JSON.stringify(this.IpagarRecaudacion)
+            this.sectionBlockUI.start('Guardando Declaración, Porfavor Espere!!!');
+            this.apiService.Ejecutar(this.xAPI).subscribe(
+              (data) => {
+                if (data.tipo === 1) {
+                  this.modalService.dismissAll('Close')
+                  this.sectionBlockUI.stop()
+                  this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
+                  this.router.navigate(['payments/payments-list']).then(() => {window.location.reload()});
+                } else {
+                  this.sectionBlockUI.stop();
+                  this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
+                }
+              },
+              (error) => {
+                console.log(error)
+              }
+            )
+    
+          }
         } else {
           this.sectionBlockUI.stop();
           this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')

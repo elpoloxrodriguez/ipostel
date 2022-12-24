@@ -29,27 +29,14 @@ export class AuthInterceptorService implements HttpInterceptor {
       // });
     }
 
-
-
-
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
 
-        if (err.status === 401) {
-          console.error('Evaluacion de Token:', err.error.msj)
-          this.cerrar(err.error.msj)
-        }
-        // switch (err.status) {
-        //   case 401:
-        //     console.error('Evaluacion de Token:', err.error.msj)
-        //     this.cerrar(err.error.msj)
-        //     break;
-        //   case 403:
-        //     console.error('Evaluacion de Token:', err.error.msj)
-        //     this.cerrar(err.error.msj)
-        //     break;
-        //   default:
-        //     break;
+        // console.log(err)
+
+        // if (err.status === 401) {
+          // console.error('Evaluacion de Token:', err.error.msj)
+          // this.cerrar(err.error.msj)
         // }
 
         return throwError(err);

@@ -59,10 +59,18 @@
                       </ngx-datatable-column>
       
       
-                      <ngx-datatable-column name="Monto" prop="monto_pc" [width]="5">
+                      <ngx-datatable-column name="Monto Adeudado" prop="monto_pagar" [width]="5">
+                        <ng-template let-monto_pagar="value" ngx-datatable-cell-template>
+                          <div>
+                            <span class="font-weight-bold"> {{ monto_pagar }}</span>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Monto Cancelado" prop="monto_pc" [width]="5">
                         <ng-template let-monto_pc="value" ngx-datatable-cell-template>
                           <div>
-                            <span class="font-weight-bold"> {{ monto_pc }}</span>
+                            <span class="font-weight-bold"> {{ monto_pc  }}</span>
                           </div>
                         </ng-template>
                       </ngx-datatable-column>
@@ -83,7 +91,7 @@
                               <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
                             </button>
                             <div ngbDropdownMenu>
-                                  <a (click)="ConciliarPago(ModalConciliarPago,row)" ngbDropdownItem><span [size]="16"
+                                  <a [href]="dwUrl(row.rif,row.archivo_adjunto)" ngbDropdownItem><span [size]="16"
                                     [data-feather]="'download'" [class]="'mr-50'"></span> Descargar Recibo</a>
                                     <a (click)="ConciliarPago(ModalConciliarPago,row)" ngbDropdownItem><span [size]="16"
                                       [data-feather]="'edit'" [class]="'mr-50'"></span> Conciliar Pago</a>

@@ -118,15 +118,14 @@ public idOPP
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
-            // this.List_Pagos_Recaudacion = []
             e.MontoPAGAR = e.monto_pagar
             e.MontoPC = e.monto_pc
+            e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar)
             e.monto_pc = this.utilService.ConvertirMoneda(e.monto_pc)
             this.List_Pagos_Recaudacion.push(e)  
         });
         this.rowsPagosConciliacion = this.List_Pagos_Recaudacion;
         this.tempDataPagosConciliacion = this.rowsPagosConciliacion
-        // console.log(this.rowsPagosConciliacion)
       },
       (error) => {
         console.log(error)
@@ -178,6 +177,11 @@ public idOPP
   }
 
 
+  dwUrl(ncontrol: string, archivo: string): string {
+    return this.apiService.Dws(btoa("D" + ncontrol) + '/' + archivo)
+  }
+
+
   ConciliarPago(modal, data){
     console.log(data)
     this.title_modal = data.nombre_empresa
@@ -209,7 +213,7 @@ public idOPP
   }
 
   async ConciliarPagoRecaudacion(){
-    console.log(this.ActualizarPago)
+    // console.log(this.ActualizarPago)
     this.xAPI.funcion = "IPOSTEL_U_PagosDeclaracionOPP_SUB"
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.ActualizarPago)

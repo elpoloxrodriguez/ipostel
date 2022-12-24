@@ -238,7 +238,7 @@ export class OppComponent implements OnInit {
   public archivos = []
   public hashcontrol = ''
   public numControl: string = ''
-  public TipoDocument: string = '0'
+  public TipoDocument
   public lstTipoDoc = [
     { id: 1, name: 'Prueba'}
   ]

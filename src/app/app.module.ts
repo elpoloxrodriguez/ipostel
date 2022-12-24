@@ -43,6 +43,7 @@ import { PriceTableComponent } from './main/dashboard/module-opp-sub/postage/pri
 import { StatementOfPartiesComponent } from './main/dashboard/module-opp-sub/postage/statement-of-parties/statement-of-parties.component';
 import { SubcontractorComponent } from './main/dashboard/module-opp-sub/business/subcontractor/subcontractor.component';
 import { ReportsRankingComponent } from './main/dashboard/module-opp-sub/opp-reports/reports-ranking/reports-ranking.component';
+import { DigitalFileOppModule } from './main/dashboard/module-admin/digital-file-opp/digital-file-opp.module';
 //  subir Archivos
 
 
@@ -70,6 +71,7 @@ const appRoutes: Routes = [
     BrowserModule,
     NgxDatatableModule,
     ChartsModule,
+    DigitalFileOppModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes, {
@@ -100,18 +102,10 @@ const appRoutes: Routes = [
     // PagesModule
   ],
   providers: [
-    {
-      provide: [ LocationStrategy, AuthGuardGuard,  JsonPipe],
-      useClass: HashLocationStrategy
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    },
+    { provide: [ LocationStrategy, AuthGuardGuard,  JsonPipe], useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS,useClass: AuthInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
   ],
   bootstrap: [AppComponent]
 })

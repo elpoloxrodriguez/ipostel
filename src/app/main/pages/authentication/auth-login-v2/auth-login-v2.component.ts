@@ -171,17 +171,50 @@ export class AuthLoginV2Component implements OnInit {
         this.sessionTOKEN = stoken 
         const tokenSession = this.sessionTOKEN.Usuario[0].status_empresa
 
-        if (tokenSession != '0') {
-          this.itk = data;
-          sessionStorage.setItem("token", this.itk.token);
-          this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
-          this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL`);
-          this._router.navigate(['']).then(() => {window.location.reload()});
-          return;
-        } else {
-          this.loading = false;
-          this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta aun no se encuentra validada por <strong><font color="red">IPOSTEL</font></strong>, porfavor intente de nuevo mas tarde.');
+        switch (tokenSession) {
+          case '0':
+             this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta aun no se encuentra validada por <strong><font color="red">IPOSTEL</font></strong>, porfavor intente de nuevo mas tarde.');
+             this.loading = false;
+             this._router.navigate(['login'])     
+             break;
+            case '1':
+            this.itk = data;
+            sessionStorage.setItem("token", this.itk.token);
+            this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
+            this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL`);
+            this._router.navigate(['']).then(() => {window.location.reload()});
+          // return;
+            break;
+            case '2':
+              this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta Deshabilitada por <strong><font color="red">REVOCATORIA</font></strong>, porfavor pongase en contacto con la administración de IPOSTEL.');
+              this.loading = false;
+              this._router.navigate(['login'])      
+              break;
+             case '3':
+              this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta Deshabilitada por <strong><font color="red">FINIQUITO DE CONTRATO</font></strong>, porfavor pongase en contacto con la administración de IPOSTEL.');
+              this.loading = false;
+              this._router.navigate(['login'])      
+              break;
+             case '4':
+              this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta Deshabilitada por <strong><font color="red">NO MOVILIZACIÓN DE PIEZAS</font></strong>, porfavor pongase en contacto con la administración de IPOSTEL.');
+              this.loading = false;
+              this._router.navigate(['login'])      
+              break;
+          default:
+            break;
         }
+
+        // if (tokenSession != '0') {
+        //   this.itk = data;
+        //   sessionStorage.setItem("token", this.itk.token);
+        //   this.infoUsuario = jwt_decode(sessionStorage.getItem('token'));
+        //   this.utilservice.alertConfirmMini('success', `Bienvenido al IPOSTEL`);
+        //   this._router.navigate(['']).then(() => {window.location.reload()});
+        //   return;
+        // } else {
+        //   this.loading = false;
+        //   this.utilservice.alertConfirmMini('error', '<strong><font color="red">Oops lo sentimos!</font></strong> <br> Estimado usuario su cuenta aun no se encuentra validada por <strong><font color="red">IPOSTEL</font></strong>, porfavor intente de nuevo mas tarde.');
+        // }
       },
       (error) => {
         this.loading = false;

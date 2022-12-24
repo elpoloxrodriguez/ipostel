@@ -292,6 +292,7 @@ export interface IPOSTEL_C_PagosDeclaracionOPP_SUB { // INSERTAR PAGO EN RECAUDA
 	status_pc	 :	number
 	tipo_pago_pc	 :	number
 	monto_pc	 :	string
+	fecha_pc : string
 	monto_pagar	 :	string
 	dolar_dia	 :	string
 	petro_dia	 :	string
@@ -329,6 +330,13 @@ export interface IPOSTEL_I_OtorgamientoConcesion { // INSERTAR REGISTRO PARA OTO
 	fecha_archivo_curp	 :	any
 	user_created	 :	any
 }
+
+export interface IPOSTEL_U_CambiarStatusOPPSUB { //Cambiar estatus de empresa de los opp y sub
+	status_empresa	 :	number
+	observacion	 :	string
+	id_opp	 :	number
+}
+
 
 
 @Injectable({

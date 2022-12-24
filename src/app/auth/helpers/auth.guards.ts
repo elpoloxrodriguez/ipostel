@@ -3,6 +3,12 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import jwt_decode from "jwt-decode";
 
 
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2'
+
+
 import { AuthenticationService } from 'app/auth/service';
 
 @Injectable({ providedIn: 'root' })
@@ -27,7 +33,9 @@ export class AuthGuard implements CanActivate {
       }
       // console.log(currentUser)
 
+
     if (currentUser) {
+
       // check if route is restricted by role
       if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
         // role not authorised so redirect to not-authorized page
@@ -43,4 +51,5 @@ export class AuthGuard implements CanActivate {
     this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
+  
 }

@@ -62,7 +62,8 @@ export class StatementOfPartiesComponent implements OnInit {
     dolar_dia: '',
     petro_dia: '',
     archivo_adjunto: undefined,
-    user_created: 0
+    user_created: 0,
+    fecha_pc: ''
   }
 
   public selectedOption = 10;
@@ -471,6 +472,7 @@ export class StatementOfPartiesComponent implements OnInit {
         this.IpagarRecaudacion.monto_pagar = '0'
         this.IpagarRecaudacion.dolar_dia = '0'
         this.IpagarRecaudacion.petro_dia = '0'
+        this.IpagarRecaudacion.fecha_pc = this.fechaActual
         this.IpagarRecaudacion.archivo_adjunto = 'documento.pdf'
         this.IpagarRecaudacion.user_created =  this.idOPP
         this.xAPI.funcion = "IPOSTEL_C_PagosDeclaracionOPP_SUB";
