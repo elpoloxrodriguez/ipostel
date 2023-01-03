@@ -148,13 +148,13 @@ export class StatementOfPartiesComponent implements OnInit {
     this.fechaUri = atob(this.rutaActiva.snapshot.params.id);
     // console.log(this.mesEncode64 , this.rutaActiva.snapshot.params.id)
     // console.log(this.mesDecode64)
-    if (this.mesEncode64 != this.rutaActiva.snapshot.params.id) {
-      this.router.navigate(['/postage/postage-per-month'])
-      this.utilService.alertConfirmMini('error', 'Oops lo sentimos! <br> No posee movimientos en este mes, porfavor verifique e intente de nuevo!')
-    } else {
-      await this.ListaDeclaracionMovilizacionPiezas()
-    }
-    // await this.ListaDeclaracionMovilizacionPiezas()
+    // if (this.mesEncode64 != this.rutaActiva.snapshot.params.id) {
+    //   this.router.navigate(['/postage/postage-per-month'])
+    //   this.utilService.alertConfirmMini('error', 'Oops lo sentimos! <br> No posee movimientos en este mes, porfavor verifique e intente de nuevo!')
+    // } else {
+    //   await this.ListaDeclaracionMovilizacionPiezas()
+    // }
+    await this.ListaDeclaracionMovilizacionPiezas()
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
     await this.ListaServicioFranqueo()
     await this.ListaDeclaracionMovilizacionPiezasDECLARAR()
@@ -196,6 +196,7 @@ export class StatementOfPartiesComponent implements OnInit {
       user_created: this.idOPP
     });
   }
+
   LimpiarSelects() {
     this.itemsSelectTipoServicio = []
     this.itemsSelectPesoEnvio = []
@@ -420,7 +421,7 @@ export class StatementOfPartiesComponent implements OnInit {
   }
 
   async InsertMontoPeso(event: any) {
-    console.log(event.total_pagar);
+    // console.log(event.total_pagar);
     this.item.tarifa_servicio = event.total_pagar
   }
 
