@@ -118,11 +118,14 @@ public idOPP
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
+          console.log(e)
+            if (e.monto_pc != '0.00' || e.monto_pagar == '0.00') {
             e.MontoPAGAR = e.monto_pagar
             e.MontoPC = e.monto_pc
             e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar)
             e.monto_pc = this.utilService.ConvertirMoneda(e.monto_pc)
-            this.List_Pagos_Recaudacion.push(e)  
+            this.List_Pagos_Recaudacion.push(e) 
+            } 
         });
         this.rowsPagosConciliacion = this.List_Pagos_Recaudacion;
         this.tempDataPagosConciliacion = this.rowsPagosConciliacion

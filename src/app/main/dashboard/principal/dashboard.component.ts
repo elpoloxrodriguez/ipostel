@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
   public hora
   public fecha_Actual_convert
   public hora_Actual_convert
-
+  public role
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
@@ -66,8 +66,8 @@ export class DashboardComponent implements OnInit {
    */
   async ngOnInit() {
     this.fecha_Actual_convert = this.utilService.FechaMomentActual()
-    console.log(this.hora)
     this.token =  jwt_decode(sessionStorage.getItem('token'));
+    this.role = this.token.Usuario[0].role
     this.EmpresaRIF(this.token.Usuario[0].id_opp)
     switch (this.token.Usuario[0].tipo_registro) {
       case undefined:

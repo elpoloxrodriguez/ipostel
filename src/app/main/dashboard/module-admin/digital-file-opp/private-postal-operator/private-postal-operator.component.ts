@@ -40,6 +40,7 @@ export class PrivatePostalOperatorComponent  implements OnInit {
 
 
   public searchValue = '';
+  public searchValueX = '';
 
 
   // Decorator
@@ -106,7 +107,6 @@ export class PrivatePostalOperatorComponent  implements OnInit {
   }  
 
   async listaDocumentosAdjuntosEmpresa(data: any) {
-    console.log(data)
     var usuario = data.IdUsuario
     this.xAPI.funcion = "IPOSTEL_R_DocumentosAdjuntos_Empresas";
     this.xAPI.parametros = usuario;
@@ -130,11 +130,12 @@ export class PrivatePostalOperatorComponent  implements OnInit {
   
 
   filterUpdate(event) {
+    // console.log(event)
     // Reset ng-select on search
     const val = event.target.value.toLowerCase();
     // Filter Our Data
     const temp = this.tempDataEmpresas.filter(function (d) {
-      return d.rif.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.nombre_empresa.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Update The Rows
     this.rowsEmpresas = temp;
@@ -147,7 +148,7 @@ export class PrivatePostalOperatorComponent  implements OnInit {
     const val = event.target.value.toLowerCase();
     // Filter Our Data
     const temp = this.tempData.filter(function (d) {
-      return d.rif.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.nombre_reto.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Update The Rows
     this.rows = temp;

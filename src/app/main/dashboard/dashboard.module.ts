@@ -36,6 +36,8 @@ import { AdminReportsRoutingModule } from './module-admin/admin-reports/admin-re
 import { TrakingsRoutingModule } from './module-admin/trakings/trakings-routing.module';
 import { DigitalFileOppRoutingModule } from './module-admin/digital-file-opp/digital-file-opp-routing.module';
 import { PrivatePostalOperatorComponent } from './module-admin/management/private-postal-operator/private-postal-operator.component';
+import { PriceTableOppComponent } from './module-admin/postage/price-table-opp/price-table-opp.component';
+import { PostageOppModule } from './module-admin/postage/postage.module';
 
 
 
@@ -50,6 +52,7 @@ import { PrivatePostalOperatorComponent } from './module-admin/management/privat
       SystemPullComponent,
       ListPaymentsComponent,
       PrivatePostalOperatorComponent,
+      PriceTableOppComponent,
     ],
   imports: [
     CommonModule,
@@ -73,7 +76,8 @@ import { PrivatePostalOperatorComponent } from './module-admin/management/privat
     BusinessRoutingModule,
     AdminReportsRoutingModule,
     TrakingsRoutingModule,
-    DigitalFileOppRoutingModule
+    DigitalFileOppRoutingModule,
+    PostageOppModule
   ],
   exports: [],
   providers: [DatePipe]

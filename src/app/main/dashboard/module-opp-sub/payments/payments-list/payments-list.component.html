@@ -102,9 +102,9 @@
                 </ngx-datatable-column>
 
                 <ngx-datatable-column name="STATUS" prop="status_pc" [width]="5">
-                  <ng-template let-status_pc="value" ngx-datatable-cell-template>
-                    <div *ngIf="status_pc == 0" class="badge badge-pill" ngClass="badge-light-primary">
-                      En Revisión 
+                  <ng-template  let-status_pc="value" ngx-datatable-cell-template>
+                    <div  class="badge badge-pill" ngClass="badge-light-warning">
+                     Pendiente
                     </div>
                   </ng-template>
                 </ngx-datatable-column>

@@ -28,7 +28,7 @@
                   name="searchValue"
                   type="search"
                   class="form-control ml-25"
-                  placeholder="Ingrese RIF"
+                  placeholder="Nombre Empresa"
                   (keyup)="filterUpdate($event)"
                   (search)="filterUpdate($event)"
               /></label>
@@ -117,11 +117,11 @@
                   <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
                     <label class="d-flex align-items-center ml-1 ml-md-0"
                       >Buscar:<input
-                        [(ngModel)]="searchValue"
+                        [(ngModel)]="searchValueX"
                         name="searchValue"
                         type="search"
                         class="form-control ml-25"
-                        placeholder="Fecha Documento"
+                        placeholder="Tipo Documento"
                         (keyup)="filterUpdateDocumentoAdjuntoEmpresa($event)"
                         (search)="filterUpdateDocumentoAdjuntoEmpresa($event)"
                     /></label>

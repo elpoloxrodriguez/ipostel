@@ -190,15 +190,14 @@ export class ReportsRankingComponent implements OnInit {
    */
   async ngOnInit() {
     // content header
-    await this.DataRecaudacionAnioAnterior(this.añoAn)
+    // await this.DataRecaudacionAnioAnterior(this.añoAn)
     await this.DataRecaudacionAnioActual(this.añoAc)
-    this.CapacidadGraficos = 30000000
+    this.CapacidadGraficos = 300000
   }
 
 
   async DataRecaudacionAnioAnterior(fecha) {
-    this.xAPI.funcion = "RECOSUP_R_GestionMetasRecaudacion";
-    var fec = this.FechaDesde ? this.FechaDesde : this.añoAn
+    this.xAPI.funcion = "IPOSTEL_R_GestionMetasRecaudacion";
     this.xAPI.parametros = fecha.toString()
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
@@ -214,8 +213,7 @@ export class ReportsRankingComponent implements OnInit {
   }
 
   async DataRecaudacionAnioActual(fecha) {
-    this.xAPI.funcion = "RECOSUP_R_GestionMetasRecaudacion";
-    var fec = this.FechaHasta ? this.FechaHasta : this.añoAc
+    this.xAPI.funcion = "IPOSTAL_R_GestionMetasRecaudacion";
     this.xAPI.parametros = fecha.toString()
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {

@@ -160,19 +160,21 @@ export class PaymentsListComponent implements OnInit {
   }
 
   async ListaPagosRecaudacion() {
+    this.List_Pagos_Recaudacion = []
     this.xAPI.funcion = "IPOSTEL_R_Pagos_Conciliacion_IDOPP"
     this.xAPI.parametros = this.idOPP+','+this.n_opp
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
+          // console.log(e)
           e.montoReal = e.monto_pagar
+          e.monto_pcx = e.monto_pc
           this.MontoRealPagar = e.monto_pagar
           e.monto_pc = this.utilService.ConvertirMoneda(e.monto_pc)
           e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar)
           this.List_Pagos_Recaudacion.push(e)  
         });
-        // console.log(this.List_Pagos_Recaudacion)
         this.rowsPagosConciliacion = this.List_Pagos_Recaudacion
         this.RowsLengthConciliacion = this.rowsPagosConciliacion.length
         this.tempDataPagosConciliacion = this.rowsPagosConciliacion
@@ -297,10 +299,25 @@ export class PaymentsListComponent implements OnInit {
 
   async DescargarFactura(data: any){
     this.sectionBlockUI.start('Generando Factura, Porfavor Espere!!!');
-    setTimeout(() => {
-      this.sectionBlockUI.stop()
-      this.pdf.GenerarFactura(data)
-    }, 1000);
+    this.xAPI.funcion = "IPOSTEL_R_GenerarPlanillaAutoliquidacion"
+    this.xAPI.parametros = data.id_opp+','+data.id_pc
+    this.xAPI.valores = ''
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        let datos = data.Cuerpo.map(e => {
+          e.ListaFranqueo = JSON.parse(e.ListaFranqueo)
+          e.ListaFacturas = JSON.parse(e.ListaFacturas)
+          this.sectionBlockUI.stop()
+          this.utilService.alertConfirmMini('success', 'Factura Generada Exitosamente!')
+          return e
+        });
+        this.pdf.GenerarFactura(datos)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+
   }
 
   filterUpdatePagos(event) {

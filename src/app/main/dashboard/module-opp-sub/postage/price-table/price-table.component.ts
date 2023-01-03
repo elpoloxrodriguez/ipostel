@@ -270,6 +270,7 @@ export class PriceTableComponent implements OnInit {
   }
 
   async ListaTarifaNacionalAereo() {
+    this.TarifasFranqueo = []
     const date = this.anio + '-' + this.mes
     const id = this.ServicioFranqueoID
     this.xAPI.funcion = "IPOSTEL_R_TarifasFranqueo_date_id"

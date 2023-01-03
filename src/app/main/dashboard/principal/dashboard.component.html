@@ -39,7 +39,7 @@
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">15,45</h4>
+                    <h4 class="font-weight-bolder mb-0">17,45 VEF</h4>
                     <p class="card-text font-small-3 mb-0">Divisas BCV</p>
                     <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
@@ -53,7 +53,7 @@
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">5345</h4>
+                    <h4 class="font-weight-bolder mb-0">60 $</h4>
                     <p class="card-text font-small-3 mb-0">Petros BCV</p>
                     <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
@@ -93,7 +93,7 @@
       <div class="col-xl-12 col-md-6 col-12" *ngIf="empresa">
         <div class="card card-statistics">
           <div class="card-header">
-            <h3 class="card-title"><strong>Liquidación de Franqueo Postal Obligatorio (F.P.P)</strong></h3>
+            <h3 class="card-title"><strong> {{ role == 3 ? 'Liquidación de Franqueo Postal Obligatorio (F.P.P)' : 'Panel Principal' }}</strong></h3>
             <div class="d-flex align-items-center">
               <p class="card-text font-small-5 mr-25 mb-0"> <strong>{{ fecha_Actual_convert }}</strong></p>
             </div>
@@ -155,7 +155,7 @@
             </div>
           </div>
           <br>
-          <div class="col-12">
+          <div class="col-12" *ngIf="role == 3">
             <br>
             <div class="datos-generales" align="center">
             <h4 class="card-title" align="center"> <font color="#FFFFFF"><strong>CONSOLIDADO MENSUAL DE INGRESOS POR FRANQUEO POSTAL OBLIGATORIO</strong></font></h4>

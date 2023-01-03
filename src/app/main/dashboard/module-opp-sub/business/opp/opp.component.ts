@@ -900,7 +900,7 @@ export class OppComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // Filter Our Data
     const temp = this.tempDataDocumentosAdjuntosEmpresa.filter(function (d) {
-      return d.fech.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.nombre_reto.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // Update The Rows
     this.rowsDocumentosAdjuntosEmpresa = temp;

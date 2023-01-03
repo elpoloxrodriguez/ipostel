@@ -338,6 +338,36 @@ export interface IPOSTEL_U_CambiarStatusOPPSUB { //Cambiar estatus de empresa de
 }
 
 
+export interface IPOSTEL_U_ListaTarifasOppAutorizacion { // actualizar lista de tarifas de franqueo opp
+	status_pef	 :	number
+	id_peso_envio	 :	any
+	descripcion	 :	string
+	pmvp	 :	string
+	iva	 :	string
+	tasa_postal	 :	string
+	total_pagar	 :	string
+	mes	 :	string
+	id_servicio_franqueo	 :	number
+	user_updated	 :	number
+	id_pef	 :	number
+}
+
+
+export interface IPOSTEL_U_ActualizarMovilizacionPiezas { // modificar datos de movilizacion de piezas
+	id_opp	 :	number
+	id_factura	:	number
+	id_servicio_franqueo	 :	number
+	id_peso_envio	 :	number
+	tarifa_servicio	 :	string
+	porcentaje_tarifa	 :	number
+	monto_fpo	 :	string
+	mes	 :	string
+	cantidad_piezas	 :	number
+	monto_causado	 :	string
+	user_updatede	 :	number
+	id_movilizacion_piezas	 :	number
+}
+
 
 @Injectable({
 	providedIn: 'root'

@@ -5,9 +5,9 @@
         <div class="row">
       <div class="col-md-6 col-12">
         <div class="d-flex justify-content-between align-items-center m-1">
-          <button type="button" (click)="DeclararPiezasIPOSTEL()"   class="btn btn-primary btn-block"  rippleEffect>
+          <button type="button" (click)="SIDeclararPiezasIPOSTEL(ModalSiDeclarar)"   class="btn btn-primary btn-block"  rippleEffect>
             <span [data-feather]="'truck'" [class]="'mr-25'"></span>
-            DECLARAR MOVILIZACIÓN DE PIEZAS A IPOSTEL</button>
+            DECLARAR MOVILIZACIÓN DE PIEZAS A IPOSTEL  <small>({{ selected }})</small></button>
         </div>
       </div>
       <div class="col-md-6 col-12">
@@ -787,10 +787,6 @@
 </div>
 
 
-
-
-
-
 <ng-template #ModalAddRegistrarPiezas let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Declaración de Piezas</h5>
@@ -856,7 +852,7 @@
             <div class="col-md-2 col-12">
               <div class="form-group">
                 <label for=" itempmvp">Tarifa de Servicio </label>
-                <input type="number" class="form-control"   [(ngModel)]="item.tarifa_servicio" autocomplete="off"
+                <input type="number" class="form-control"  [value]="item.tarifa_servicio"  [(ngModel)]="item.tarifa_servicio" autocomplete="off"
                   [ngModelOptions]="{standalone: true}" name="itempmvp{{ i }}" id="itempmvp{{ i }}"
                   placeholder="Monto PMVP" />
               </div>
@@ -900,12 +896,63 @@
       <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
       <button type="submit" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarDeclaracionPiezas()"
       rippleEffect class="btn btn-success mr-1">Registrar Tarifa</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Accept click');LimpiarSelects()" rippleEffect>
       Cerrar
     </button>
   </div>
 </ng-template>
 
+
+
+<ng-template #ModalSiDeclarar let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Declaración de Movilización de Piezas</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="col-xl-12 col-md-12 col-12">
+      <!-- Header Starts -->
+      <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
+      <div class="row d-flex align-items-end">
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Monto Total a Pagar</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoCausadoX"
+            [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
+          </div>
+        </div>
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Total de Declaraciones</label>
+            <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="selected"
+              [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
+          </div>
+        </div>
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Total de Piezas Movilizadas</label>
+            <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="TotalPiezas"
+              [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
+          </div>
+        </div>
+
+      </div>
+    </form>
+    </div>
+      <!-- Header Starts -->
+      <!-- </div> -->
+      <!-- Header Ends -->
+  </div>
+  <!--/ Invoice -->
+  <div class="modal-footer">
+    <!-- <button class="btn bg-gradient-success text-white" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarTarifaNacionalAereo()">
+      <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
+      <button type="submit" [disabled]="!formUsersRegister.form.valid" *ngIf="selected != 0" (click)="RegistrarSIDeclaracionPiezas()"
+      rippleEffect class="btn btn-success mr-1">Declarar Movilización de Piezas</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+      Cerrar
+    </button>
+  </div>
+</ng-template>
 
 
 <ng-template #ModalNoDeclarar let-modal>
