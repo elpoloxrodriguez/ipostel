@@ -179,6 +179,7 @@ export class PriceTableComponent implements OnInit {
     this.token = jwt_decode(sessionStorage.getItem('token'));
     this.idOPP = this.token.Usuario[0].id_opp
     await this.ListaTarifaNacionalAereo()
+    await this.fechaF()
     await this.ListaPesoEnvio()
     await this.ListaServicioFranqueo()
     await this.ListaTarifasFranqueoAll()
@@ -269,9 +270,14 @@ export class PriceTableComponent implements OnInit {
     }
   }
 
+  async fechaF(){
+    const date = this.anio + '-' + this.mes
+    return date
+  }
+
   async ListaTarifaNacionalAereo() {
     this.TarifasFranqueo = []
-    const date = this.anio + '-' + this.mes
+    const date = this.anio + '-' + '0'+this.mes
     const id = this.ServicioFranqueoID
     this.xAPI.funcion = "IPOSTEL_R_TarifasFranqueo_date_id"
     this.xAPI.parametros = this.idOPP + ',' + date + ',' + id
