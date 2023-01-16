@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { PdfService } from '@core/services/pdf/pdf.service';
+import { AngularFileUploaderComponent } from 'angular-file-uploader';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class PaymentsListComponent implements OnInit {
 
   @BlockUI() blockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  @ViewChild('fileUpload1')
+  private fileUpload1: AngularFileUploaderComponent
 
 
   public chkBoxSelected = [];
@@ -35,6 +38,9 @@ export class PaymentsListComponent implements OnInit {
     valores: {},
   };
 
+  public archivos = []
+  public hashcontrol = ''
+  public numControl: string = ''
 
 
   public ActualizarPago : IPOSTEL_U_PagosDeclaracionOPP_SUB = {
@@ -132,6 +138,9 @@ export class PaymentsListComponent implements OnInit {
     // console.log('Activate Event', event);
   }
   
+  fileSelected(e) {
+    this.archivos.push(e.target.files[0])
+  }
 
   async CapturarNav(event) {
     switch (event.target.id) {
@@ -187,6 +196,10 @@ export class PaymentsListComponent implements OnInit {
   }
 
   async ModalPagar(modal, data){
+    this.token = jwt_decode(sessionStorage.getItem('token'));
+    this.numControl = this.token.Usuario[0].rif
+    this.hashcontrol = btoa("D" + this.numControl) //Cifrar documentos
+
     this.title_modal = 'Reportar Declaración de Pago'
     this.ShowReportarPago = true
     this.ShowModificarPago = false
@@ -200,7 +213,6 @@ export class PaymentsListComponent implements OnInit {
     this.monto_pagarX = data.monto_pagar
     this.ActualizarPago.dolar_dia = data.dolar_dia
     this.ActualizarPago.petro_dia = data.petro_dia
-    this.ActualizarPago.archivo_adjunto = 'archivo.pdf'
     // this.ActualizarPago.observacion_pc = ''
     this.ActualizarPago.user_created = this.idOPP
     this.ActualizarPago.user_updated = this.idOPP
@@ -268,6 +280,7 @@ export class PaymentsListComponent implements OnInit {
   }
 
   async PagarRecaudacion(){
+    this.ActualizarPago.archivo_adjunto = this.archivos[0].name
     // console.log(this.ActualizarPago.monto_pagar, this.ActualizarPago.monto_pc)
     this.xAPI.funcion = "IPOSTEL_U_PagosDeclaracionOPP_SUB"
     this.xAPI.parametros = ''

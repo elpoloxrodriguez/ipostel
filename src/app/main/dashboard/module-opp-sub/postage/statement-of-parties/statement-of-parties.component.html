@@ -3,14 +3,14 @@
 
       <div align="center">
         <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12" *ngIf="btnShowDatePayment != false">
         <div class="d-flex justify-content-between align-items-center m-1">
-          <button type="button" (click)="SIDeclararPiezasIPOSTEL(ModalSiDeclarar)"   class="btn btn-primary btn-block"  rippleEffect>
+          <button type="button" (click)="SIDeclararPiezasIPOSTEL(ModalSiDeclarar)"    class="btn btn-primary btn-block"  rippleEffect>
             <span [data-feather]="'truck'" [class]="'mr-25'"></span>
             DECLARAR MOVILIZACIÓN DE PIEZAS A IPOSTEL  <small>({{ selected }})</small></button>
         </div>
       </div>
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12" *ngIf="btnShowDatePayment !== false">
         <div class="d-flex justify-content-between align-items-center m-1">
           <button type="button" (click)="NODeclararPiezasIPOSTEL(ModalNoDeclarar)"   class="btn btn-danger btn-block"  rippleEffect>
             <span [data-feather]="'shield-off'" [class]="'mr-25'"></span>
@@ -971,6 +971,7 @@
       <!-- Header Starts -->
       <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
       <div class="row d-flex align-items-end">
+        <input type="hidden" name="identificador" value="{{hashcontrol}}" readonly="readonly">
         <div class="col-md-6 col-12">
           <div class="form-group">
             <label for=" itempmvp">Monto</label>
@@ -989,11 +990,14 @@
         <div class="form-group">
           <label for="basicInputFile">Ingrese Comprobante de Declaración en Cero (VEF 0,00) de SENIAT <strong><font color="red">(Solo formato PDF)</font></strong></label>
           <div class="custom-file">
-            <input (change)="fileSelected($event)" class="custom-file-input" name="archivos" type="file" accept=".pdf">
-            <label class="custom-file-label" for="customFile">Seleccione Documento</label>
+            <input (change)="fileSelected($event)" class="custom-file-input" name="archivos" type="file"
+              accept=".pdf">
+            <label class="custom-file-label" for="customFile">Solo formato PDF</label>
           </div>
         </div>
         </div>
+
+        
 
       </div>
     </form>

@@ -767,6 +767,7 @@ export class OppComponent implements OnInit {
     this.DocAdjunto.tipo = parseInt(this.TipoDocument)
     this.DocAdjunto.vencimiento = this.datetime1.year+'-'+this.datetime1.month+'-'+this.datetime1.day 
     var frm = new FormData(document.forms.namedItem("forma"))
+    // console.log(frm)
     try {
        this.apiService.EnviarArchivos(frm).subscribe(
         (data) => {
@@ -800,6 +801,7 @@ export class OppComponent implements OnInit {
     }
 
   }
+
    DescargarADP(ncontrol: string, archivo: string) {
     return  this.apiService.Dws(btoa("D" + ncontrol) + '/' + archivo)
   }

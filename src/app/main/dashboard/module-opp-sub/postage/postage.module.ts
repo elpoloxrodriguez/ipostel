@@ -25,6 +25,8 @@ import { CoreSidebarModule } from '@core/components';
 
 import { PostageRoutingModule } from './postage-routing.module';
 
+import { AngularFileUploaderModule } from "angular-file-uploader";
+
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { PostageRoutingModule } from './postage-routing.module';
     CommonModule,
     PostageRoutingModule,
     FormsModule, 
+    AngularFileUploaderModule,
     ReactiveFormsModule,
     RouterModule,
     ContentHeaderModule,

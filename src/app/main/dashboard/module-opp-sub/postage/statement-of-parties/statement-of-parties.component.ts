@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { IPOSTEL_C_MovilizacionPiezas, IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_U_ActualizarMovilizacionPiezas, IPOSTEL_U_MovilizacionPiezasIdFactura } from '@core/services/empresa/form-opp.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AngularFileUploaderComponent } from 'angular-file-uploader';
+
 
 export const repeaterAnimation = trigger('heightIn', [
   transition(':enter', [
@@ -33,6 +35,9 @@ export class StatementOfPartiesComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @BlockUI() blockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  @ViewChild('fileUpload1')
+  private fileUpload1: AngularFileUploaderComponent
+
 
   public xAPI: IAPICore = {
     funcion: '',
@@ -86,6 +91,7 @@ export class StatementOfPartiesComponent implements OnInit {
     id_factura: 0
   }
 
+  public btnShowDatePayment = false
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public searchValue = '';
@@ -94,6 +100,7 @@ export class StatementOfPartiesComponent implements OnInit {
   public idOPP
   public fechax
   public fecha = new Date();
+  public dia = this.fecha.getDate();
   public mes = this.fecha.getMonth() + 1;
   public anio = this.fecha.getFullYear();
   public mesEncode64 = btoa(this.anio + '-' + this.mes)
@@ -141,6 +148,10 @@ public idFactura
 
   public rowsUtilidadCierreFiscal = []
 
+  public archivos = []
+  public hashcontrol = ''
+  public numControl: string = ''
+
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
@@ -162,6 +173,7 @@ public idFactura
     // } else {
     //   await this.ListaDeclaracionMovilizacionPiezas()
     // }
+    await this.BloqueoBtnDeclaracion()
     await this.ListaDeclaracionMovilizacionPiezas()
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
     await this.ListaServicioFranqueo()
@@ -170,6 +182,11 @@ public idFactura
 
   filterUpdate(event) {
 
+  }
+
+  fileSelected(e) {
+    this.archivos.push(e.target.files[0])
+    // console.log(this.archivos)
   }
 
 
@@ -216,6 +233,25 @@ public idFactura
         break;
       }
     }
+  }
+
+  async BloqueoBtnDeclaracion(){
+    this.xAPI.funcion = "IPOSTEL_R_Settings_Initials"
+    this.xAPI.parametros = ''
+    await this.apiService.EjecutarDev(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map(e => {
+          if (this.dia <= e.declaration_button_by_date) {
+            this.btnShowDatePayment = true
+          } else {
+            this.btnShowDatePayment = false 
+          }
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   async RegistrarDeclaracionPiezas() {
@@ -588,6 +624,9 @@ public idFactura
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.token = jwt_decode(sessionStorage.getItem('token'));
+        this.numControl = this.token.Usuario[0].rif
+        this.hashcontrol = btoa("D" + this.numControl) //Cifrar documentos    
         this.montoPagar = this.utilService.ConvertirMoneda(0)
         this.fechaActual = this.utilService.FechaActual()
         this.modalService.open(modal, {
@@ -615,6 +654,7 @@ public idFactura
       confirmButtonText: 'Si, Deseo Declarar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+      // var frm = new FormData(document.forms.namedItem("forma"))
       if (result.isConfirmed) {
         this.IpagarRecaudacion.id_opp = this.idOPP
         this.IpagarRecaudacion.status_pc = 0
@@ -624,7 +664,7 @@ public idFactura
         this.IpagarRecaudacion.dolar_dia = '0'
         this.IpagarRecaudacion.petro_dia = '0'
         this.IpagarRecaudacion.fecha_pc = this.fechaActual
-        this.IpagarRecaudacion.archivo_adjunto = 'documento.pdf'
+        this.IpagarRecaudacion.archivo_adjunto = this.archivos[0].name
         this.IpagarRecaudacion.user_created = this.idOPP
         this.xAPI.funcion = "IPOSTEL_C_PagosDeclaracionOPP_SUB";
         this.xAPI.parametros = ''
@@ -633,10 +673,22 @@ public idFactura
         this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
             if (data.tipo === 1) {
-              this.modalService.dismissAll('Close')
-              this.sectionBlockUI.stop()
-              this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
-              this.router.navigate(['payments/payments-list']).then(() => { window.location.reload() });
+              try {
+              // this.apiService.EnviarArchivos(frm).subscribe(
+              //   (data) => {
+                  this.modalService.dismissAll('Close')
+                  this.sectionBlockUI.stop()
+                  this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
+                  this.router.navigate(['payments/payments-list']).then(() => { window.location.reload() });    
+                // },
+                // (err) => {
+                //   this.sectionBlockUI.stop();
+                //   this.utilService.alertConfirmMini('error', 'Algo salio mal al cargar el archivo! <br> Verifique e intente de nuevo')    
+                // })
+              } catch (err) {
+                this.sectionBlockUI.stop();
+                this.utilService.alertConfirmMini('error', 'Algo salio mal al cargar el archivo! <br> Verifique e intente de nuevo')    
+              }
             } else {
               this.sectionBlockUI.stop();
               this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
