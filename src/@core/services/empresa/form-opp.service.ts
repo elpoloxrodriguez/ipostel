@@ -369,6 +369,25 @@ export interface IPOSTEL_U_ActualizarMovilizacionPiezas { // modificar datos de 
 }
 
 
+export interface IPOSTEL_U_TarifasFranqueo { // Actualizar tarifa de franqueo
+	status_pef	:	number
+	id_peso_envio	:	number
+	pmvp	:	string
+	iva	:	string
+	tasa_postal	:	string
+	total_pagar	:	string
+	mes	:	string
+	id_servicio_franqueo	:	string
+	user_updated	:	number
+	id_pef	:	number
+}
+
+export interface IPOSTEL_U_MovilizacionPiezasIdFactura { // Asignar ID Factura a Movilizacion de Piezas
+	id_factura	 :	number
+	id_movilizacion_piezas	 :	number
+}
+
+
 @Injectable({
 	providedIn: 'root'
 })

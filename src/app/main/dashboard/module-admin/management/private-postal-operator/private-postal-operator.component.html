@@ -89,6 +89,9 @@
                     <div *ngIf="status_curp == 0" class="badge badge-pill" ngClass="badge-light-danger">
                       En Espera
                     </div>
+                    <div *ngIf="status_curp == 2" class="badge badge-pill" ngClass="badge-light-warning">
+                      En Revisión
+                    </div>
                   </ng-template>
                 </ngx-datatable-column>
 
@@ -183,6 +186,17 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Concesion" prop="status_curp" [width]="5">
+                  <ng-template let-status_curp="value" ngx-datatable-cell-template>
+                    <div *ngIf="status_curp == 1" class="badge badge-pill" ngClass="badge-light-success">
+                      Aprobada
+                    </div>
+                    <div *ngIf="status_curp == 0" class="badge badge-pill" ngClass="badge-light-danger">
+                      En Espera
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
                     <div ngbDropdown container="body">
@@ -193,6 +207,10 @@
                         <a (click)="DetallesOPP(ModalDetailsOPP,row)"
                           ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
                           Detalles</a>
+                          <a (click)="ModalAprobarConcesionPostal(ModalAprobarOPP,row)"  *ngIf="row.status_curp == null" ngbDropdownItem><span [size]="16"
+                            [data-feather]="'edit'" [class]="'mr-50'"></span> Aprobar Subcontrstista</a>
+                            <a (click)="DeleteConcesionPostalPrivada(row)" *ngIf="row.id_curp != null" ngbDropdownItem><span [size]="16"
+                              [data-feather]="'trash'" [class]="'mr-50'"></span> Revocar Subcontrstista</a>
                           <a (click)="CambiarContrasena(ModalCambiarContrasena,row)" ngbDropdownItem><span [size]="16"
                             [data-feather]="'key'" [class]="'mr-50'"></span> Cambiar Contraseña</a>
                       </div>
@@ -264,7 +282,7 @@
         <div class="col-md-6 col-12">
           <div class="form-group">
             <label class="form-label">Periodo del Contrato</label>
-            <input required  type="text" class="form-control"
+            <input required  type="date" class="form-control"
             [(ngModel)]="ICrearConcesion.periodo_contrato_curp " [ngModelOptions]="{standalone: true}"
             placeholder="Nombre de Empresa" />
           </div>
@@ -288,7 +306,7 @@
         </div>
         <div class="col-md-6 col-12">
           <div class="form-group">
-            <label class="form-label">Fecha del Archivo</label>
+            <label class="form-label">Fecha de Autenticación</label>
             <input required  type="date" class="form-control"
             [(ngModel)]="ICrearConcesion.fecha_archivo_curp" [ngModelOptions]="{standalone: true}"
             placeholder="Nombre de Empresa" />

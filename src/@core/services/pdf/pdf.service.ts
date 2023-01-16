@@ -95,6 +95,7 @@ IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fec
   }
 
   AutorizacionInscripcion(data: any, Qr: any, TokenQr: any,  n_curp: any) {
+    console.log(data)
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
@@ -144,7 +145,7 @@ fecha 21 de Junio de 2019, quien actúa en ejercicio de las atribuciones que le 
 “e” de la Ley antes citada y bajo Autorización del Directorio de IPOSTEL, evidenciando la operatividad de
 las empresas subcontratadas que realizan a nombre de su representada las actividades inherentes a la
 prestación de los servicios públicos de correo, se procede a AUTORIZAR para la subcontratación de la
-empresa XXX, sociedad mercantil inscrita en el Registro Mercantil Segundo de la Circunscripción Judicial
+empresa ${data.nombre_empresa}, sociedad mercantil inscrita en el Registro Mercantil Segundo de la Circunscripción Judicial
 del Estado Aragua, en fecha XXX, bajo el N° Xxx, tomo XXX; la cual prestara servicios al Operador Postal
 xxxxxxxxxxxxx identificado con el RIF J- XXXXXXX, Código Postal N° xxxxx, de conformidad a lo
 establecido en el CONTRATO DE CONCESIÓN PARA LA PRESTACION DE LOS SERVICIOS PÚBLICOS DE 
@@ -433,6 +434,8 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     doc.setFontSize(9);
     doc.setFont(undefined, "bold");
     doc.text("OBSERVACIONES:", 15, 213, { align: "left" });
+    doc.text(data[0].ListaFacturas[0].observacion_pc, 15, 217, { maxWidth: 178, align: "justify" });
+
 
     doc.rect(14, 240, 60.6, 5);
     doc.setFontSize(6);

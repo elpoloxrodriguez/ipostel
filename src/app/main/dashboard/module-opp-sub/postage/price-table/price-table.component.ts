@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { UtilService } from '@core/services/util/util.service';
 import { NgbModal, NgbActiveModal, NgbModalConfig, NgbDateStruct, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { IPOSTEL_C_Peso_Envio_Franqueo } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_Peso_Envio_Franqueo, IPOSTEL_U_TarifasFranqueo } from '@core/services/empresa/form-opp.service';
 import jwt_decode from "jwt-decode";
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import Swal from 'sweetalert2';
@@ -51,6 +51,19 @@ export class PriceTableComponent implements OnInit {
     mes: '',
     id_servicio_franqueo: 0,
     user_created: 0
+  }
+
+  public IupdateTarifaFranqueo : IPOSTEL_U_TarifasFranqueo = {
+    status_pef: 0,
+    id_peso_envio: 0,
+    pmvp: '',
+    iva: '',
+    tasa_postal: '',
+    total_pagar: '',
+    mes: '',
+    id_servicio_franqueo: '',
+    user_updated: 0,
+    id_pef: 0
   }
 
   public itemsSelectMes = [
@@ -130,6 +143,13 @@ export class PriceTableComponent implements OnInit {
     { name: '2021' },
     { name: '2022' },
   ]
+
+  public Xnombre_peso_envio
+  public Xpmvp
+  public Xiva
+  public Xtasa_postal
+  public Xtotal_pagar
+
 
   public loginForm: FormGroup;
 
@@ -285,12 +305,17 @@ export class PriceTableComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
+          e.pmvpx = e.pmvp
+          e.ivax = e.iva
+          e.tasa_postalx = e.tasa_postal
+          e.total_pagarx = e.total_pagar
           e.pmvp = this.utilService.ConvertirMoneda(e.pmvp);
           e.iva = this.utilService.ConvertirMoneda(e.iva);
           e.tasa_postal = this.utilService.ConvertirMoneda(e.tasa_postal);
           e.total_pagar = this.utilService.ConvertirMoneda(e.total_pagar);
           this.TarifasFranqueo.push(e)
         });
+        // console.log(this.TarifasFranqueo)
         this.rowsTarifaNacionalAereo = this.TarifasFranqueo;
         this.tempDataTarifasFranqueo = this.rowsTarifaNacionalAereo
       },
@@ -378,6 +403,85 @@ export class PriceTableComponent implements OnInit {
       id_servicio_franqueo: '',
       user_created: ''
     }]);
+  }
+
+  async EditTarifa(modal, data){
+    console.log(data);
+    this.Xnombre_peso_envio = data.nombre_peso_envio
+    this.Xpmvp = data.pmvpx
+    this.Xiva = data.ivax
+    this.Xtasa_postal = data.tasa_postalx
+    this.Xtotal_pagar = data.total_pagarx
+
+    this.IupdateTarifaFranqueo.status_pef = 0
+    this.IupdateTarifaFranqueo.id_peso_envio = data.id_peso_envio
+    this.IupdateTarifaFranqueo.mes = data.mes
+    this.IupdateTarifaFranqueo.id_servicio_franqueo = data.id_servicio_franqueo
+    this.IupdateTarifaFranqueo.user_updated = this.idOPP
+    this.IupdateTarifaFranqueo.id_pef = data.id_pef
+
+
+    this.modalService.open(modal, {
+      centered: true,
+      size: 'lg',
+      backdrop: false,
+      keyboard: false,
+      windowClass: 'fondo-modal',
+    });
+  }
+
+  CambiarMontos(data: any){
+    var ivaq = data * this.montoIVA  / 100
+    var tasaq = data * this.montoTASA / 100
+    var suma = (ivaq + tasaq)
+    var totalq = parseFloat(data) + suma
+
+    this.Xiva = parseFloat(ivaq.toFixed(2))
+    this.Xtasa_postal = parseFloat(tasaq.toFixed(2))
+    this.Xtotal_pagar = totalq
+
+    this.IupdateTarifaFranqueo.pmvp = data
+    this.IupdateTarifaFranqueo.iva = this.Xiva
+    this.IupdateTarifaFranqueo.tasa_postal = this.Xtasa_postal
+    this.IupdateTarifaFranqueo.total_pagar = this.Xtotal_pagar
+  }
+
+  async UpdateTarifa(){
+    await Swal.fire({
+      title: 'Esta Seguro?',
+      html: "De Actualizar el Monto de este Registro! <br> Tenga en cuenta que una vez modifique el monto tendra que esperar la autorización del mismo por parte de <font color='red'><strong>IPOSTEL</strong</font>",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Actualizarlo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+    this.xAPI.funcion = "IPOSTEL_U_TarifasFranqueo"
+    this.xAPI.parametros = ''
+    this.xAPI.valores = JSON.stringify(this.IupdateTarifaFranqueo)
+    this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.sectionBlockUI.start('Actualizando Registros, Porfavor Espere!!!');
+        this.rowsTarifaNacionalAereo.push(this.TarifasFranqueo)
+        if (data.tipo === 1) {
+          this.TarifasFranqueo = []
+          this.TarifasFranqueoAll = []
+          this.ListaTarifaNacionalAereo()
+          this.ListaTarifasFranqueoAll()
+          this.modalService.dismissAll('Close')
+          this.sectionBlockUI.stop()
+          this.utilService.alertConfirmMini('success', 'Tarifas Actualizadas Exitosamente!')
+        } else {
+          this.sectionBlockUI.stop();
+          this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
+        }
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    })
   }
 
   async RegistrarTarifaNacionalAereo() {

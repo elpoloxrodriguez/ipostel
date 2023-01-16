@@ -213,7 +213,7 @@ export class ReportsRankingComponent implements OnInit {
   }
 
   async DataRecaudacionAnioActual(fecha) {
-    this.xAPI.funcion = "IPOSTAL_R_GestionMetasRecaudacion";
+    this.xAPI.funcion = "IPOSTEL_R_GestionMetasRecaudacion";
     this.xAPI.parametros = fecha.toString()
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {

@@ -10,7 +10,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { IPOSTEL_C_MovilizacionPiezas, IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_U_ActualizarMovilizacionPiezas } from '@core/services/empresa/form-opp.service';
+import { IPOSTEL_C_MovilizacionPiezas, IPOSTEL_C_PagosDeclaracionOPP_SUB, IPOSTEL_U_ActualizarMovilizacionPiezas, IPOSTEL_U_MovilizacionPiezasIdFactura } from '@core/services/empresa/form-opp.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
 export const repeaterAnimation = trigger('heightIn', [
@@ -51,6 +51,11 @@ export class StatementOfPartiesComponent implements OnInit {
     cantidad_piezas: 0,
     monto_causado: '',
     user_created: 0
+  }
+
+  public IidFacturaMovilizacionPiezas : IPOSTEL_U_MovilizacionPiezasIdFactura = {
+    id_factura: 0,
+    id_movilizacion_piezas: 0
   }
 
   public IpagarRecaudacion: IPOSTEL_C_PagosDeclaracionOPP_SUB = {
@@ -96,6 +101,7 @@ export class StatementOfPartiesComponent implements OnInit {
 
   public fechaUri
 
+  public MontoPetro
 
   public montoPagar
   public fechaActual
@@ -107,6 +113,8 @@ export class StatementOfPartiesComponent implements OnInit {
   public DeclaracionPiezas = []
   public rowsDeclaracionPiezas
   public tempDataDeclaracionPiezas = []
+
+public idFactura
 
   public DeclaracionPiezasLength
   public selected = 0
@@ -336,10 +344,10 @@ export class StatementOfPartiesComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
-          e.tarifa_servicio = this.utilService.ConvertirMoneda(e.tarifa_servicio);
-          e.monto_fpo = this.utilService.ConvertirMoneda(e.monto_fpo);
-          e.monto_causado = this.utilService.ConvertirMoneda(e.monto_causado);
-          this.DeclaracionPiezas.push(e)
+            e.tarifa_servicio = this.utilService.ConvertirMoneda(e.tarifa_servicio);
+            e.monto_fpo = this.utilService.ConvertirMoneda(e.monto_fpo);
+            e.monto_causado = this.utilService.ConvertirMoneda(e.monto_causado);
+            this.DeclaracionPiezas.push(e)
         });
         // console.log(this.DeclaracionPiezas)
         this.rowsDeclaracionPiezas = this.DeclaracionPiezas;
@@ -366,6 +374,8 @@ export class StatementOfPartiesComponent implements OnInit {
         })
         const SumaMontos = this.DeclaracionPiezasLength.map(item => item.monto_causado).reduce((prev, curr) => prev + curr, 0);
         this.MontoCausadoX = this.utilService.ConvertirMoneda(SumaMontos)
+        let ok = (SumaMontos / parseFloat('1155.91'))
+        this.MontoPetro = 'P ' + ok.toFixed(8)
         this.MontoCausado = SumaMontos
         const SumarPiezas = this.DeclaracionPiezasLength.map(item => item.cantidad_piezas).reduce((prev, curr) => prev + curr, 0);
         this.TotalPiezas = SumarPiezas
@@ -491,32 +501,38 @@ export class StatementOfPartiesComponent implements OnInit {
         this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
             if (data.tipo === 1) {
+              this.idFactura = data.msj
               this.DeclaracionPiezasLength.map(e => {
                 e.id_factura = data.msj
                 // this.DeclaracionPiezasLength = []
                 this.UpdateMovilizacionPiezasDeclaracion.push(e)
               });
-              console.log(this.UpdateMovilizacionPiezasDeclaracion)
-                this.xAPI.funcion = "IPOSTEL_U_ActualizarMovilizacionPiezas";
-                this.xAPI.parametros =  ''
-                this.xAPI.valores = JSON.stringify(this.UpdateMovilizacionPiezasDeclaracion)
-                this.apiService.Ejecutar(this.xAPI).subscribe(
-                (datax) => {
-                  if (datax.tipo === 1) {                                    
-                    this.modalService.dismissAll('Close')
-                    this.sectionBlockUI.stop()
-                    this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
-                    // this.router.navigate(['payments/payments-list']).then(() => {window.location.reload()});
-                  } else {
+              // console.log(this.UpdateMovilizacionPiezasDeclaracion)
+              for (let i = 0; i <  this.UpdateMovilizacionPiezasDeclaracion.length; i++) {
+                const element =  this.UpdateMovilizacionPiezasDeclaracion[i];
+                this.IidFacturaMovilizacionPiezas.id_factura = this.idFactura,
+                this.IidFacturaMovilizacionPiezas.id_movilizacion_piezas =  element.id_movilizacion_piezas
+                  this.xAPI.funcion = "IPOSTEL_U_MovilizacionPiezasIdFactura";
+                  this.xAPI.parametros =  ''
+                  this.xAPI.valores = JSON.stringify(this.IidFacturaMovilizacionPiezas)
+                  this.apiService.Ejecutar(this.xAPI).subscribe(
+                  (datax) => {
+                    if (datax.tipo === 1) {                                    
+                      this.modalService.dismissAll('Close')
+                      this.sectionBlockUI.stop()
+                      this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
+                      this.router.navigate(['payments/payments-list']).then(() => {window.location.reload()});
+                    } else {
+                      this.sectionBlockUI.stop();
+                      this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> No se agregaron las declaraciones de movilizacion de piezas a la factura Verifique e intente de nuevo')    
+                    }
+                  },
+                  (error) => {
                     this.sectionBlockUI.stop();
-                    this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> No se agregaron las declaraciones de movilizacion de piezas a la factura Verifique e intente de nuevo')    
+                    this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')  
                   }
-                },
-                (error) => {
-                  this.sectionBlockUI.stop();
-                  this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')  
-                }
-              )
+                )
+              }
             } else {
               this.sectionBlockUI.stop();
               this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')

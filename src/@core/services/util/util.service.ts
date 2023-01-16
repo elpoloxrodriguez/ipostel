@@ -86,6 +86,11 @@ export class UtilService {
     return formatter
   }
 
+  ConvertirMoneda$(moneda: any) {
+    const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(moneda)
+    return formatter
+  }
+
   RevertirConvertirMoneda(moneda: any) {
     let TotalDevengado = moneda.replace(/,/g, "");
     return TotalDevengado

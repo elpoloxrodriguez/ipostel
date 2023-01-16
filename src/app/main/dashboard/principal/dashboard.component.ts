@@ -52,6 +52,11 @@ export class DashboardComponent implements OnInit {
   public fecha_Actual_convert
   public hora_Actual_convert
   public role
+
+  public bolivares
+  public dolar
+  public petro
+
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
@@ -65,6 +70,7 @@ export class DashboardComponent implements OnInit {
    * On init
    */
   async ngOnInit() {
+    await this.Precio_Dolar_Petro()
     this.fecha_Actual_convert = this.utilService.FechaMomentActual()
     this.token =  jwt_decode(sessionStorage.getItem('token'));
     this.role = this.token.Usuario[0].role
@@ -94,7 +100,7 @@ export class DashboardComponent implements OnInit {
     }
 
 
-    if (this.token.Usuario[0].status_curp != null) {
+    if (this.token.Usuario[0].status_curp == 1) {
       this.statusEmpresaOPP = true
       this.statusEmpresaSUB = true
     } else {
@@ -119,6 +125,25 @@ export class DashboardComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
           this.DataEmpresa.push(data.Cuerpo);
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+
+  async Precio_Dolar_Petro() {
+    this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
+    this.xAPI.parametros = ''
+    this.DataEmpresa = []
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+         data.Cuerpo.map(e => {
+          this.dolar = this.utilService.ConvertirMoneda(e.dolar)
+          this.petro = this.utilService.ConvertirMoneda$(e.petro)
+          this.bolivares = this.utilService.ConvertirMoneda(e.petro * e.dolar)
+         });
       },
       (error) => {
         console.log(error)

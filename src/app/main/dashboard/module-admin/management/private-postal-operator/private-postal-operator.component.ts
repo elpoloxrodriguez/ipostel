@@ -500,7 +500,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
 
   async ModalAprobarConcesionPostal(modal, data) {
     this.ICrearConcesion.id_opp = data.id_opp
-    this.ICrearConcesion.status_curp = 1
+    this.ICrearConcesion.status_curp = 2
     // this.ICrearConcesion.punto_cuenta_curp = '4234'
     // this.ICrearConcesion.fecha_punto_cuenta_curp = '2022-11-11'
     // this.ICrearConcesion.concesion_postal_curp = 'CCS-4535'

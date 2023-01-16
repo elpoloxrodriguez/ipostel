@@ -40,7 +40,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -86,6 +86,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -95,10 +102,10 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
-                          <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
+                          <a (click)="DeleteTarifaNacionalAereo(row)" *ngIf="row.status_pef != '1'" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
                       </div>
@@ -153,7 +160,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -199,6 +206,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -208,9 +222,9 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
                           <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
@@ -266,7 +280,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -312,6 +326,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -321,9 +342,9 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
                           <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
@@ -379,7 +400,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -425,6 +446,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -434,9 +462,9 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
                           <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
@@ -492,7 +520,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -538,6 +566,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -547,9 +582,9 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
                           <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
@@ -605,7 +640,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -651,6 +686,13 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
+                  </ng-template>
+                </ngx-datatable-column>
+
 
                 <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
@@ -660,9 +702,9 @@
                       </button>
                       <div ngbDropdownMenu>
                         <div>
-                          <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
-                            ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                            Detalles</a>
+                          <a (click)="EditTarifa(ModalEditTarifa,row)"
+                            ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span>
+                            Editar</a>
                           <a (click)="DeleteTarifaNacionalAereo(row)" ngbDropdownItem><span [data-feather]="'trash'"
                               [size]="16" [class]="'mr-50'"></span> Eliminar</a>
                         </div>
@@ -746,7 +788,7 @@
                 [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
                 [scrollbarH]="true">
 
-                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="20">
+                <ngx-datatable-column name="Peso Envio" prop="nombre_peso_envio" [width]="60">
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
@@ -793,20 +835,20 @@
                 </ngx-datatable-column>
 
 
-                <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
+                <!-- <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
                     <div ngbDropdown container="body">
                       <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
                         <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
                       </button>
                       <div ngbDropdownMenu>
-                        <a (click)="DetallesPagosAporte(ModalDetailsAporte,row);DetalleAportes(row)"
+                        <a (click)="EditTarifa(ModalEditTarifa,row)"
                           ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
                           Detalles</a>
                       </div>
                     </div>
                   </ng-template>
-                </ngx-datatable-column>
+                </ngx-datatable-column> -->
 
               </ngx-datatable>
 
@@ -936,6 +978,61 @@
       <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
       <button type="submit" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarTarifaNacionalAereo()"
       rippleEffect class="btn btn-success mr-1">Registrar Tarifa</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+      Cerrar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #ModalEditTarifa let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Actualizar Tarifa de Envio</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="col-xl-12 col-md-12 col-12">
+      <!-- Header Starts -->
+      <div class="row d-flex align-items-end">
+        <div class="col-md-12 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Peso de Envio</label>
+            <input type="text" class="form-control" autocomplete="off" readonly [value]="Xnombre_peso_envio"  />
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">PMVP</label>
+            <input type="text" class="form-control"  [(ngModel)]="Xpmvp"  (ngModelChange)="CambiarMontos($event)"  [ngModelOptions]="{standalone: true}"  autocomplete="off"  />
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">I.V.A</label>
+            <input type="text" class="form-control" readonly autocomplete="off"  [(ngModel)]="Xiva"  [ngModelOptions]="{standalone: true}"  />
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">TASA POSTAL</label>
+            <input type="text" class="form-control" readonly autocomplete="off"  [(ngModel)]="Xtasa_postal"  [ngModelOptions]="{standalone: true}" />
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">TOTAL PAGAR</label>
+            <input type="text" class="form-control" readonly autocomplete="off"  [(ngModel)]="Xtotal_pagar"  [ngModelOptions]="{standalone: true}" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!--/ Invoice -->
+  <div class="modal-footer">
+    <!-- <button class="btn bg-gradient-success text-white" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarTarifaNacionalAereo()">
+      <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
+      <button type="submit" (click)="UpdateTarifa()"
+      rippleEffect class="btn btn-success mr-1">Actualizar Tarifa </button>
     <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
       Cerrar
     </button>

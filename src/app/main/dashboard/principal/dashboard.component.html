@@ -35,11 +35,11 @@
                 <div class="media">
                   <div class="avatar bg-light-info mr-2">
                     <div class="avatar-content">
-                      <i data-feather="dollar-sign" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 $</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">17,45 VEF</h4>
+                    <h4 class="font-weight-bolder mb-0">{{ dolar }}</h4>
                     <p class="card-text font-small-3 mb-0">Divisas BCV</p>
                     <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
@@ -49,12 +49,26 @@
                 <div class="media">
                   <div class="avatar bg-light-danger mr-2">
                     <div class="avatar-content">
-                      <i data-feather="figma" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 P</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">60 $</h4>
+                    <h4 class="font-weight-bolder mb-0">{{ petro }} </h4>
                     <p class="card-text font-small-3 mb-0">Petros BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
+                <div class="media">
+                  <div class="avatar bg-light-warning mr-2">
+                    <div class="avatar-content">
+                      <i  class="avatar-icon"><strong><h3>BS</h3></strong></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{ bolivares }} </h4>
+                    <p class="card-text font-small-3 mb-0">Bolivares BCV</p>
                     <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
                 </div>
@@ -80,8 +94,52 @@
                   </div>
                 </div>
               </div>
+              <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+                <div class="media">
+                  <div class="avatar bg-light-info mr-2">
+                    <div class="avatar-content">
+                      <i data-feather="dollar-sign" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{ dolar }} </h4>
+                    <p class="card-text font-small-3 mb-0">Divisas BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
+                <div class="media">
+                  <div class="avatar bg-light-danger mr-2">
+                    <div class="avatar-content">
+                      <i data-feather="figma" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{ petro }} </h4>
+                    <p class="card-text font-small-3 mb-0">Petros BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
+                <div class="media">
+                  <div class="avatar bg-light-warning mr-2">
+                    <div class="avatar-content">
+                      <i  class="avatar-icon"><strong>BSF</strong></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0">{{ bolivares }} </h4>
+                    <p class="card-text font-small-3 mb-0">Bolivares BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          
 
           </div>
         </div>
@@ -155,6 +213,7 @@
             </div>
           </div>
           <br>
+          
           <div class="col-12" *ngIf="role == 3">
             <br>
             <div class="datos-generales" align="center">
@@ -184,7 +243,7 @@
                 </tr>
                 <tr>
                   <td  colspan="3" align="center"><strong>Estimación en Divisas Tasa 15,45 07/12</strong></td>
-                  <td align="center"><strong>$ 129.482,63</strong></td>
+                  <td align="center"><strong> 129.482,63</strong></td>
                   <td  colspan="3" align="center"><strong>Incluido los pagos no liquidados</strong></td>
                 </tr>
               </tbody>
@@ -298,7 +357,7 @@
             </div>
 
 
-            </div>
+          </div>
             
         </div>
       </div>

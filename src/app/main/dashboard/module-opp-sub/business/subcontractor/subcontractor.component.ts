@@ -164,6 +164,10 @@ export class SubcontractorComponent implements OnInit {
       tipologia_empresa : undefined, 
     }
 
+  public dolar
+  public petro
+  public bolivares
+
   public Subcontratista = []
   public token
   public TipoRegistro
@@ -197,7 +201,7 @@ export class SubcontractorComponent implements OnInit {
     this.TipoRegistro = this.token.Usuario[0].tipo_registro
     this.IdOPP = this.token.Usuario[0].id_opp
     this.CargarSub = await this.Subcontratistas(this.IdOPP)
-
+    await this.Precio_Dolar_Petro()
   }
 
 
@@ -256,7 +260,7 @@ async filterUpdateSubcontratistas(event) {
             this.IpagarRecaudacion.status_pc = 0
             this.IpagarRecaudacion.tipo_pago_pc = 5
             this.IpagarRecaudacion.monto_pc = '0'
-            this.IpagarRecaudacion.monto_pagar = '60'
+            this.IpagarRecaudacion.monto_pagar = this.bolivares
             this.IpagarRecaudacion.dolar_dia = '0'
             this.IpagarRecaudacion.petro_dia = '0'
             this.IpagarRecaudacion.fecha_pc = this.utilService.FechaActual()
@@ -288,6 +292,24 @@ async filterUpdateSubcontratistas(event) {
           this.sectionBlockUI.stop();
           this.utilService.alertConfirmMini('error', 'Algo salio mal! <br> Verifique e intente de nuevo')
         }
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async Precio_Dolar_Petro() {
+    this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
+    this.xAPI.parametros = ''
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+         data.Cuerpo.map(e => {
+          this.dolar = e.dolar
+          this.petro = e.petro
+          this.bolivares = e.petro * e.dolar
+         });
+         console.log(this.bolivares)
       },
       (error) => {
         console.log(error)

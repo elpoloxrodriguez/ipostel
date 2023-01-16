@@ -67,6 +67,7 @@ export class PaymentsListComponent implements OnInit {
   public ShowModificarPago = false
   public monto_pagarX
 
+
   public ShowMontoCero
 
   public SelectionType = SelectionType;

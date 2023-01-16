@@ -913,23 +913,30 @@
       <!-- Header Starts -->
       <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
       <div class="row d-flex align-items-end">
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
           <div class="form-group">
             <label for=" itempmvp">Monto Total a Pagar</label>
             <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoCausadoX"
             [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
           </div>
         </div>
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Monto a Pagar en Petros</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoPetro"
+            [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
+          </div>
+        </div>
+        <div class="col-md-3 col-12">
           <div class="form-group">
             <label for=" itempmvp">Total de Declaraciones</label>
             <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="selected"
               [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
           </div>
         </div>
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
           <div class="form-group">
-            <label for=" itempmvp">Total de Piezas Movilizadas</label>
+            <label for=" itempmvp">Piezas Movilizadas</label>
             <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="TotalPiezas"
               [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
           </div>
