@@ -141,7 +141,63 @@ export const menu: CoreMenu[] = [
       nombre: 'Actualizar SIRPV',
       icono: 'refresh-ccw',
       type: 'item',
-      role: ['3'],
+      role: ['3','4'],
       url: 'update-system/system-pull',
     },
+
+
+  // Soporte
+  {
+    id: 'soporte',
+    nombre: 'Soporte',
+    title: 'Soporte',
+    type: 'collapsible',
+    icono: 'tool',
+    // hidden: true,
+    role: ['4'],
+    children: [
+      // {
+      //   id: 'modulosmenus',
+      //   nombre: 'Modulos Menus',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'support/menu-module',
+      // },
+      {
+        id: 'rolesusuarios',
+        nombre: 'Roles de Usuarios',
+        type: 'item',
+        icono: 'circle',
+        url: 'support/role-user'
+      },
+      {
+        id: 'permisosusuarios',
+        nombre: 'Permisos de Usuarios',
+        type: 'item',
+        icono: 'circle',
+        url: 'support/permissions-user'
+      },
+      {
+        id: 'gestiontablas',
+        nombre: 'Gestion Tablas',
+        type: 'item',
+        icono: 'circle',
+        url: 'support/table-management'
+      },
+      {
+        id: 'cambiarcontraseña',
+        nombre: 'Cambiar Contraseña',
+        type: 'item',
+        icono: 'circle',
+        url: 'support/change-password'
+      },
+      {
+        id: 'users-system',
+        nombre: 'Usuarios',
+        type: 'item',
+        icono: 'circle',
+        url: 'support/users'
+      },
+    ]
+  },
 ];

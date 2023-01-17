@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'update-system/system-pull',
     component: SystemPullComponent,
     canActivate: [AuthGuard,AuthGuardGuard],
-    data: { roles: ['3'] },
+    data: { roles: ['3','4'] },
   },
 ];
 
