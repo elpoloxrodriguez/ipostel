@@ -54,7 +54,7 @@ export class PostagePerMonthComponent implements OnInit {
   }
 
   async SeleccionarMes(dat: any) {
-    console.log(dat)
+    // console.log(dat)
   }
 
 }

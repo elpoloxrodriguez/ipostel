@@ -24,6 +24,9 @@ export class AuthForgotPasswordV2Component implements OnInit {
     valores : {},
   };
 
+  public  img
+  public appLogoImage
+  public appName
 
   public SelectedTipoRegistro = [
     {id: '1', name: 'Operador Postal Privado'},
@@ -141,6 +144,10 @@ export class AuthForgotPasswordV2Component implements OnInit {
     // Subscribe to config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
+      this.img = this.coreConfig.layout.skin
+      this.appLogoImage = this.coreConfig.app.appLogoImage
+      this.appName = this.coreConfig.app.appName
+
     });
   }
 

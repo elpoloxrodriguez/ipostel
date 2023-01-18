@@ -36,6 +36,10 @@ export class AuthResetPasswordV2Component implements OnInit {
   public resetPasswordForm: FormGroup;
   public submitted = false;
 
+  public img
+  public appLogoImage
+  public appName
+
 
   public TokenEmail
   public token
@@ -125,6 +129,9 @@ export class AuthResetPasswordV2Component implements OnInit {
     // Subscribe to config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
+      this.img = this.coreConfig.layout.skin
+      this.appLogoImage = this.coreConfig.app.appLogoImage
+      this.appName = this.coreConfig.app.appName
     });
 
     this.token = atob(sessionStorage.getItem('TokenResetPass'))

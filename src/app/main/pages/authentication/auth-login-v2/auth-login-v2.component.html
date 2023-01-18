@@ -15,10 +15,11 @@
           <h1 class="mb-1 fondo-negro"><strong><font color="#ffffff">SISTEMA INTEGRADO DE REGULACIÓN <br> POSTAL VENEZOLANO 🇻🇪 </font></strong></h1>
           <img
           class="img-fluid drop"
-          [src]="coreConfig.layout.skin === 'dark' ? 'assets/images/logos/ipostel.png' : 'assets/images/logos/ipostel.png'"
+           [src]="img === 'default' ? 'assets/images/logos/ipostel.png' : 'assets/images/logos/ipostel.png'"
           alt="Login"
           width="450px"
         />
+        
 
           <h2 class="mb-1 drop"><strong><font color="#ffffff">Validación de Certificados ✅</font></strong></h2>
           <p class="mb-3 drop"><font color="#ffffff">Ingrese el codigo QR del certificado.</font></p>
@@ -43,8 +44,8 @@
         <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
           <!-- <a class="brand-logo" href="/" align="center"> -->
             <h1 class="card-title font-weight-bold mb-1 text-primary" align="center">
-              <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
-              <strong>{{ coreConfig.app.appName }}</strong>
+              <img src="{{ appLogoImage }}" alt="brand-logo" height="28" />
+              <strong>{{ appName }}</strong>
             </h1>
           <!-- </a> -->
           <h4><p class="card-text mb-2" align="center">Sistema Integrado de Regulación Postal Venezolano 🇻🇪</p></h4>
@@ -55,7 +56,7 @@
             </div>
           </ngb-alert>
 
-          <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="login()">
+          <form class="auth-login-form mt-2" (ngSubmit)="login()">
             <div class="form-group">
               <label class="form-label" for="login-email">Usuario</label>
               <input type="text" [(ngModel)]="usuario" [ngModelOptions]="{standalone: true, required: true}"

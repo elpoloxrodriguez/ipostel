@@ -309,7 +309,7 @@ async filterUpdateSubcontratistas(event) {
           this.petro = e.petro
           this.bolivares = e.petro * e.dolar
          });
-         console.log(this.bolivares)
+        //  console.log(this.bolivares)
       },
       (error) => {
         console.log(error)

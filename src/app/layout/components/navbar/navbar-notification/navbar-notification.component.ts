@@ -50,16 +50,18 @@ export class NavbarNotificationComponent implements OnInit {
    * On init
    */
   async ngOnInit() {
-    this.token =  jwt_decode(sessionStorage.getItem('token'));
-    if (this.token.Usuario[0].role == '3' || this.token.Usuario[0].role == '4') {
-      this.StatusRole = 1
-      await this.NotificacionesTotal()
-      this._notificationsService.onApiDataChange.subscribe(res => {
-        this.notifications = res;
-      });
-    } else {
-      this.StatusRole = 0
-    }
+    if (sessionStorage.getItem('token') != null) {
+      this.token =  jwt_decode(sessionStorage.getItem('token'));
+      if (this.token.Usuario[0].role == '3' || this.token.Usuario[0].role == '4') {
+        this.StatusRole = 1
+        await this.NotificacionesTotal()
+        this._notificationsService.onApiDataChange.subscribe(res => {
+          this.notifications = res;
+        });
+      } else {
+        this.StatusRole = 0
+      }
+    } 
   }
 
 

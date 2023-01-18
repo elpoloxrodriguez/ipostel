@@ -247,7 +247,7 @@ export class PriceTableComponent implements OnInit {
   }
 
   async CapturarNav(event) {
-    console.log(event.target.id);
+    // console.log(event.target.id);
     switch (event.target.id) {
       case 'ngb-nav-0':
         this.TarifasFranqueo = []

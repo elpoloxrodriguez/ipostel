@@ -47,7 +47,9 @@ export class AuthLoginV2Component implements OnInit {
 
   //  QR certifucado
   public Qr
-
+  public img
+  public appLogoImage
+  public appName
   public infoUsuario
   public iToken: IToken = { token: '', };
   public itk: IToken;
@@ -154,6 +156,10 @@ export class AuthLoginV2Component implements OnInit {
     // Subscribe to config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
+      // console.log(this.coreConfig)
+      this.img = this.coreConfig.layout.skin
+      this.appLogoImage = this.coreConfig.app.appLogoImage
+      this.appName = this.coreConfig.app.appName
     });
   }
 

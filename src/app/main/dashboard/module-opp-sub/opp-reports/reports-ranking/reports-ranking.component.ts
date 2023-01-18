@@ -219,7 +219,7 @@ export class ReportsRankingComponent implements OnInit {
       (data) => {
         data.Cuerpo.map(AnioActual => {
           this.MontoRecaudacionAnioActual.push(this.utilService.RevertirConvertirMoneda(AnioActual.MontoTotal))
-          console.log(AnioActual.MontoMayor)
+          // console.log(AnioActual.MontoMayor)
         })
       },
       (error) => {
