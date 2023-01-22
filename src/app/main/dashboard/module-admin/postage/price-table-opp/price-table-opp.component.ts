@@ -208,14 +208,14 @@ public SelectidOPP
         this.xAPI.valores = JSON.stringify(this.IUpdateListaTablaTarifasFranqueo)
         await this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
-            this.sectionBlockUI.start('Autorizando Tarifas, Porfavor Espere!!!');
+            this.sectionBlockUI.start('Rechazando Tarifas, Porfavor Espere!!!');
             this.rows.push(this.TarifasFranqueoAll)
             if (data.tipo === 1) {
               this.TarifasFranqueoAll = []
               this.RowsLengthConciliacion = []
               this.ListaTarifasFranqueoAll(this.SelectidOPP)
               this.sectionBlockUI.stop()
-              this.utilService.alertConfirmMini('success', 'Tarifa Autorizada Exitosamente')
+              this.utilService.alertConfirmMini('success', 'Tarifa Rechazada Exitosamente')
             } else {
               this.sectionBlockUI.stop()
               this.utilService.alertConfirmMini('error', 'Lo sentimos algo salio mal, intente de nuevo')
