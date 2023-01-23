@@ -98,11 +98,11 @@
                 <div class="media">
                   <div class="avatar bg-light-info mr-2">
                     <div class="avatar-content">
-                      <i data-feather="dollar-sign" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 $</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">{{ dolar }} </h4>
+                    <h4 class="font-weight-bolder mb-0">{{ dolar }}</h4>
                     <p class="card-text font-small-3 mb-0">Divisas BCV</p>
                     <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
@@ -112,7 +112,7 @@
                 <div class="media">
                   <div class="avatar bg-light-danger mr-2">
                     <div class="avatar-content">
-                      <i data-feather="figma" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 P</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
@@ -126,7 +126,7 @@
                 <div class="media">
                   <div class="avatar bg-light-warning mr-2">
                     <div class="avatar-content">
-                      <i  class="avatar-icon"><strong>BSF</strong></i>
+                      <i  class="avatar-icon"><strong><h3>BS</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
@@ -162,12 +162,12 @@
                 <div class="media">
                   <div class="avatar bg-light-primary mr-2">
                     <div class="avatar-content">
-                      <i data-feather="user" class="avatar-icon"></i>
+                      <i data-feather="activity" class="avatar-icon"></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">234343K</h4>
-                    <p class="card-text font-small-3 mb-0">Usuarios OPP</p>
+                    <!-- <p class="card-text font-small-3 mb-0">Actualizar Monto</p> -->
+                    <button type="button"  *ngIf="role == 3" (click)="ModalCambiarMontos(ModalEditarPetroDolar)" class="btn btn-success" rippleEffect><i data-feather="activity" class="avatar-icon"></i> Actualizar Monto</button>
                   </div>
                 </div>
               </div>
@@ -175,12 +175,13 @@
                 <div class="media">
                   <div class="avatar bg-light-info mr-2">
                     <div class="avatar-content">
-                      <i data-feather="user" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 $</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">6456K</h4>
-                    <p class="card-text font-small-3 mb-0">Usuarios SUB</p>
+                    <h4 class="font-weight-bolder mb-0">{{ dolar }}</h4>
+                    <p class="card-text font-small-3 mb-0">Divisas BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
                 </div>
               </div>
@@ -188,29 +189,32 @@
                 <div class="media">
                   <div class="avatar bg-light-danger mr-2">
                     <div class="avatar-content">
-                      <i data-feather="user" class="avatar-icon"></i>
+                      <i  class="avatar-icon"><strong><h3>1 P</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">5345 K</h4>
-                    <p class="card-text font-small-3 mb-0">Usuarios Internos IPOSTEL</p>
+                    <h4 class="font-weight-bolder mb-0">{{ petro }} </h4>
+                    <p class="card-text font-small-3 mb-0">Petros BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-xl-3 mb-2 mb-sm-0">
                 <div class="media">
-                  <div class="avatar bg-light-success mr-2">
+                  <div class="avatar bg-light-warning mr-2">
                     <div class="avatar-content">
-                      <i data-feather="user" class="avatar-icon">Bs</i>
+                      <i  class="avatar-icon"><strong><h3>BS</h3></strong></i>
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <h4 class="font-weight-bolder mb-0">423 K</h4>
-                    <p class="card-text font-small-3 mb-0">Ingresos</p>
+                    <h4 class="font-weight-bolder mb-0">{{ bolivares }} </h4>
+                    <p class="card-text font-small-3 mb-0">Bolivares BCV</p>
+                    <p class="card-text font-small-3 mb-0">Via Web Scraping</p>
                   </div>
                 </div>
               </div>
             </div>
+            
           </div>
           <br>
           
@@ -366,3 +370,50 @@
 
   </div>
 </div>
+
+
+
+
+<ng-template #ModalEditarPetroDolar let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Modificar Montos</h5>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="col-xl-12 col-md-12 col-12">
+      <!-- Header Starts -->
+      <div class="row d-flex align-items-end">
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Dolar</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="I_UpdateMontosPetroDolar.dolar"  [ngModelOptions]="{standalone: true}" placeholder="Dolar" />
+          </div>
+        </div>
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Petro</label>
+            <input type="text" class="form-control"  autocomplete="off"[(ngModel)]="I_UpdateMontosPetroDolar.petro" [ngModelOptions]="{standalone: true}" placeholder="Petro" />
+          </div>
+        </div>
+        <div class="col-md-4 col-12">
+          <div class="form-group">
+            <label for=" itempmvp">Bolivares</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="I_UpdateMontosPetroDolar.petro_bolivares"
+              [ngModelOptions]="{standalone: true}" placeholder="Bolivares" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!--/ Invoice -->
+  <div class="modal-footer">
+    <!-- <button class="btn bg-gradient-success text-white" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarTarifaNacionalAereo()">
+      <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
+      <button type="submit"  (click)="UpdateMontos()"
+      rippleEffect class="btn btn-success mr-1">Modificar Montos</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+      Cerrar
+    </button>
+  </div>
+</ng-template>

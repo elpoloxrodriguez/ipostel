@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable } from '@angular/core';
 import { ApiService, IAPICore } from '@core/services/apicore/api.service';
-import { ICrearCertificados } from '@core/services/empresa/form-opp.service';
+import { ICrearCertificados, IPOSTEL_U_PRECIO_PETRO_DOLAR } from '@core/services/empresa/form-opp.service';
 import { PdfService } from '@core/services/pdf/pdf.service';
 import { UtilService } from '@core/services/util/util.service';
 import jwt_decode from "jwt-decode";
@@ -8,6 +8,9 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import puppeteer from 'puppeteer';
 
 import { HttpClient } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +28,13 @@ export class DashboardComponent implements OnInit {
     parametros: '',
     valores: {},
   };
+
+  public I_UpdateMontosPetroDolar : IPOSTEL_U_PRECIO_PETRO_DOLAR = {
+    petro: '',
+    dolar: '',
+    petro_bolivares: '',
+    id_pd: 0
+  }
 
   public CrearCert: ICrearCertificados = {
     usuario: 0,
@@ -56,8 +66,14 @@ export class DashboardComponent implements OnInit {
   public bolivares
   public dolar
   public petro
+  public bolivaresx
+  public dolarx
+  public petrox
+
 
   constructor(
+    private modalService: NgbModal,
+    private _router: ActivatedRoute,
     private apiService: ApiService,
     private utilService: UtilService,
     private pdf: PdfService,
@@ -110,6 +126,16 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  ModalCambiarMontos(modal : any){
+    this.modalService.open(modal, {
+      centered: true,
+      size: 'lg',
+      backdrop: false,
+      keyboard: false,
+      windowClass: 'fondo-modal',
+    });
+  }
+
   GenerarReporteLiquidacionFPO(){
     this.sectionBlockUI.start('Generando Reporte de Liquidación P.F.O, Porfavor Espere!!!');
     setTimeout(() => {
@@ -136,14 +162,45 @@ export class DashboardComponent implements OnInit {
   async Precio_Dolar_Petro() {
     this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
     this.xAPI.parametros = ''
-    this.DataEmpresa = []
+    this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
          data.Cuerpo.map(e => {
+          this.I_UpdateMontosPetroDolar.petro = e.petro
+          this.I_UpdateMontosPetroDolar.dolar = e.dolar
+          this.I_UpdateMontosPetroDolar.petro_bolivares = e.petro_bolivares
+          // this.dolarx = e.dolar
+          // this.petrox = e.petro
+          // this.bolivaresx = e.petro_bolivares
           this.dolar = this.utilService.ConvertirMoneda(e.dolar)
           this.petro = this.utilService.ConvertirMoneda$(e.petro)
-          this.bolivares = this.utilService.ConvertirMoneda(e.petro * e.dolar)
+          this.bolivares = this.utilService.ConvertirMoneda(e.petro_bolivares)
          });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async UpdateMontos() {
+    this.I_UpdateMontosPetroDolar.id_pd = 1
+    // this.I_UpdateMontosPetroDolar.petro = this.petrox
+    // this.I_UpdateMontosPetroDolar.dolar = this.dolarx
+    // this.I_UpdateMontosPetroDolar.petro_bolivares = this.bolivaresx
+
+    this.xAPI.funcion = "IPOSTEL_U_PRECIO_PETRO_DOLAR";
+    this.xAPI.parametros = ''
+    this.xAPI.valores = JSON.stringify(this.I_UpdateMontosPetroDolar)
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        if (data.tipo === 1) {
+          this.utilService.alertConfirmMini('success', 'Montos Actualizados Exitosamente!')
+          this.modalService.dismissAll('Close')
+           this.Precio_Dolar_Petro()
+        } else {
+          this.utilService.alertConfirmMini('error', 'Oops lo sentimos, algo salio mal!')
+        }
       },
       (error) => {
         console.log(error)

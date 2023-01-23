@@ -387,6 +387,13 @@ export interface IPOSTEL_U_MovilizacionPiezasIdFactura { // Asignar ID Factura a
 	id_movilizacion_piezas	 :	number
 }
 
+export interface IPOSTEL_U_PRECIO_PETRO_DOLAR { // Actualizar montos de petro dolar y bolivares
+	petro	 :	string
+	dolar	 :	string
+	petro_bolivares	:	string
+	id_pd	 :	number
+}
+
 
 @Injectable({
 	providedIn: 'root'
