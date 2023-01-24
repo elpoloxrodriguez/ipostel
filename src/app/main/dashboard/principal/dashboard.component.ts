@@ -21,7 +21,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 export class DashboardComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-  
+
 
   public xAPI: IAPICore = {
     funcion: '',
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   public urlPetro: string = 'https://www.petro.gob.ve/es/'
   public urlBcv: string = 'https://www.bcv.org.ve/'
 
-  public I_UpdateMontosPetroDolar : IPOSTEL_U_PRECIO_PETRO_DOLAR = {
+  public I_UpdateMontosPetroDolar: IPOSTEL_U_PRECIO_PETRO_DOLAR = {
     petro: '',
     dolar: '',
     petro_bolivares: '',
@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
     created_user: 0
   }
   public title
-  
+
   public DataEmpresa
   public token
   public empresa = false
@@ -60,11 +60,16 @@ export class DashboardComponent implements OnInit {
   public empresaSUB = false
 
   public fecha = new Date('yyyy-MM-dd HH:mm:ss');
+  public fechax = new Date();
+  public aniox = this.fechax.getFullYear();
   public anio = this.fecha.getFullYear();
+  public mes = this.fechax.getMonth();
   public hora
   public fecha_Actual_convert
   public hora_Actual_convert
   public role
+
+  public MesAnio
 
   public bolivares
   public dolar
@@ -90,30 +95,31 @@ export class DashboardComponent implements OnInit {
    */
   async ngOnInit() {
     await this.Precio_Dolar_Petro()
+    await this.Meses()
     this.fecha_Actual_convert = this.utilService.FechaMomentActual()
-    this.token =  jwt_decode(sessionStorage.getItem('token'));
+    this.token = jwt_decode(sessionStorage.getItem('token'));
     this.role = this.token.Usuario[0].role
     this.EmpresaRIF(this.token.Usuario[0].id_opp)
     switch (this.token.Usuario[0].tipo_registro) {
       case undefined:
-        this.title =  'Administrador IPOSTEL'
+        this.title = 'Administrador IPOSTEL'
         this.usuario = false
         this.empresa = true
         break;
       case '1':
-        this.title =  'Operador Postal Privado'
+        this.title = 'Operador Postal Privado'
         this.empresaSUB = false
         this.empresaOPP = true
         this.usuario = true
         this.empresa = false
-      break;
-        case '2':
-          this.title =  'Sub Contratista'
-          this.empresaSUB = true
-          this.empresaOPP = false  
-          this.usuario = true
-          this.empresa = false
-          break;
+        break;
+      case '2':
+        this.title = 'Sub Contratista'
+        this.empresaSUB = true
+        this.empresaOPP = false
+        this.usuario = true
+        this.empresa = false
+        break;
       default:
         break;
     }
@@ -129,7 +135,52 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  ModalCambiarMontos(modal : any){
+  Meses() {
+    console.log(this.mes)
+    switch (this.mes) {
+      case 0:
+        this.MesAnio = 'Enero ' + this.aniox
+        break;
+      case 1:
+        this.MesAnio = 'Febrero ' + this.aniox
+        break;
+      case 2:
+        this.MesAnio = 'Marzo ' + this.aniox
+        break;
+      case 3:
+        this.MesAnio = 'Abril ' + this.aniox
+        break;
+      case 4:
+        this.MesAnio = 'Mayo ' + this.aniox
+        break;
+      case 5:
+        this.MesAnio = 'Junio ' + this.aniox
+        break;
+      case 6:
+        this.MesAnio = 'Julio ' + this.aniox
+        break;
+      case 7:
+        this.MesAnio = 'Agosto ' + this.aniox
+        break;
+      case 8:
+        this.MesAnio = 'Septiembre ' + this.aniox
+        break;
+      case 9:
+        this.MesAnio = 'Octubre ' + this.aniox
+        break;
+      case 10:
+        this.MesAnio = 'Noviembre ' + this.aniox
+        break;
+      case 11:
+        this.MesAnio = 'Diciembre ' + this.aniox
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  ModalCambiarMontos(modal: any) {
     this.modalService.open(modal, {
       centered: true,
       size: 'lg',
@@ -139,7 +190,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  GenerarReporteLiquidacionFPO(){
+  GenerarReporteLiquidacionFPO() {
     this.sectionBlockUI.start('Generando Reporte de Liquidación P.F.O, Porfavor Espere!!!');
     setTimeout(() => {
       this.sectionBlockUI.stop()
@@ -153,7 +204,7 @@ export class DashboardComponent implements OnInit {
     this.DataEmpresa = []
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-          this.DataEmpresa.push(data.Cuerpo);
+        this.DataEmpresa.push(data.Cuerpo);
       },
       (error) => {
         console.log(error)
@@ -168,7 +219,7 @@ export class DashboardComponent implements OnInit {
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-         data.Cuerpo.map(e => {
+        data.Cuerpo.map(e => {
           this.I_UpdateMontosPetroDolar.petro = e.petro
           this.I_UpdateMontosPetroDolar.dolar = e.dolar
           this.I_UpdateMontosPetroDolar.petro_bolivares = e.petro_bolivares
@@ -178,7 +229,7 @@ export class DashboardComponent implements OnInit {
           this.dolar = this.utilService.ConvertirMoneda(e.dolar)
           this.petro = this.utilService.ConvertirMoneda$(e.petro)
           this.bolivares = this.utilService.ConvertirMoneda(e.petro_bolivares)
-         });
+        });
       },
       (error) => {
         console.log(error)
@@ -200,7 +251,7 @@ export class DashboardComponent implements OnInit {
         if (data.tipo === 1) {
           this.utilService.alertConfirmMini('success', 'Montos Actualizados Exitosamente!')
           this.modalService.dismissAll('Close')
-           this.Precio_Dolar_Petro()
+          this.Precio_Dolar_Petro()
         } else {
           this.utilService.alertConfirmMini('error', 'Oops lo sentimos, algo salio mal!')
         }
@@ -215,17 +266,17 @@ export class DashboardComponent implements OnInit {
   async GenerarCertificadoInscripcion() {
     this.CrearCert.usuario = this.token.Usuario[0].id_opp
     this.CrearCert.token = this.utilService.TokenAleatorio(10),
-    this.CrearCert.type = 1,
-     // 1 CERTIFICADO UNICO OPP
-     // 2 AUTORIZACION UNICA  SUB
-    this.CrearCert.created_user = this.token.Usuario[0].id_opp
+      this.CrearCert.type = 1,
+      // 1 CERTIFICADO UNICO OPP
+      // 2 AUTORIZACION UNICA  SUB
+      this.CrearCert.created_user = this.token.Usuario[0].id_opp
     this.xAPI.funcion = "IPOSTEL_C_Certificados";
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.CrearCert)
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.sectionBlockUI.start('Generando Certificado, Porfavor Espere!!!');
-        this.n_curp = data.msj+'-IP'+this.anio
+        this.n_curp = data.msj + '-IP' + this.anio
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');
@@ -263,17 +314,17 @@ export class DashboardComponent implements OnInit {
     this.CrearCert.usuario = this.token.Usuario[0].id_opp
     this.CrearCert.created_user = this.token.Usuario[0].id_opp
     this.CrearCert.token = this.utilService.TokenAleatorio(10),
-    this.CrearCert.type = 2,
-     // 1 CERTIFICADO UNICO OPP
-     // 2 AUTORIZACION UNICA  SUB
-    this.CrearCert.created_user = this.token.Usuario[0].id_opp
+      this.CrearCert.type = 2,
+      // 1 CERTIFICADO UNICO OPP
+      // 2 AUTORIZACION UNICA  SUB
+      this.CrearCert.created_user = this.token.Usuario[0].id_opp
     this.xAPI.funcion = "IPOSTEL_C_Certificados";
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.CrearCert)
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.sectionBlockUI.start('Generando Autorización, Porfavor Espere!!!');
-        this.n_curp = data.msj+'-IP'+this.anio
+        this.n_curp = data.msj + '-IP' + this.anio
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');

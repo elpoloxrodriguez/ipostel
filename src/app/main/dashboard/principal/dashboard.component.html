@@ -166,7 +166,7 @@
                     </div>
                   </div>
                   <div class="media-body my-auto">
-                    <!-- <p class="card-text font-small-3 mb-0">Actualizar Monto</p> -->
+                    <p class="card-text font-small-3 mb-0">Actualizar Monto</p>
                     <button type="button"  *ngIf="role == 3" (click)="ModalCambiarMontos(ModalEditarPetroDolar)" class="btn btn-success" rippleEffect><i data-feather="activity" class="avatar-icon"></i> Actualizar Monto</button>
                   </div>
                 </div>
@@ -237,19 +237,20 @@
               </thead>
               <tbody>
                 <tr>
-                  <td align="center" style="background-color: #0964d4;"><font color="white">Diciembre 2022</font></td>
-                  <td style="background-color: #18e25b;"  align="center">46</td>
-                  <td  align="center">67,65 %</td>
-                  <td  align="center"><strong>VEF 1.135.562,65</strong></td>
-                  <td  align="center" style="background-color: #e8e819;">195.949</td>
-                  <td  align="center" style="background-color: #e8e819;">22</td>
-                  <td  align="center">32,35 %</td>
+                  <td align="center" style="background-color: #0964d4;"><font color="white"> {{ MesAnio }}</font></td>
+                  <td style="background-color: #18e25b;"  align="center">0</td>
+                  <td  align="center">0,00 %</td>
+                  <td  style="background-color: #18e25b;" align="center"><strong>VEF 0,00</strong></td>
+                  <td  align="center" style="background-color: #e8e819;">0,00</td>
+                  <td  align="center" style="background-color: #e8e819;">0</td>
+                  <td  align="center">0,00 %</td>
                 </tr>
                 <tr>
-                  <td  colspan="3" align="center"><strong>Estimación en Divisas Tasa 15,45 07/12</strong></td>
-                  <td align="center"><strong> 129.482,63</strong></td>
-                  <td  colspan="3" align="center"><strong>Incluido los pagos no liquidados</strong></td>
-                </tr>
+                  <td  style="background-color: #3d3d3a;" colspan="2" align="center"><strong><font color="white">Estimación en Divisas {{ dolar  }} | Estimación en Petro {{ petro }} </font></strong></td>
+                  <td  style="background-color: #18e25b;"  align="center"><strong> $ 0,00</strong></td>
+                  <td  style="background-color: #18e25b;"  align="center"><strong> P 0,00</strong></td>
+                  <td  style="background-color: #3d3d3a;" colspan="3" align="center"><strong><font color="white">Incluido los pagos no liquidados</font></strong></td>
+                </tr>¶¶
               </tbody>
             </table>
 
@@ -273,13 +274,13 @@
                     <tr>
                       <td rowspan="3" align="center" style="background-color: #3d88e4;"><font color="white"><strong>FRANQUEO POSTAL OBLIGATORIO</strong></font></td>
                       <td align="center" style="background-color: #18e25b;">Liquidados</td>
-                      <td align="center">37</td>
-                      <td rowspan="3" align="center">46</td>
+                      <td align="center">0</td>
+                      <td rowspan="3" align="center">0</td>
                     </tr>
                     <tr>
               
                       <td align="center" style="background-color: #18e25b;">Cartas de no Movilización</td>
-                      <td align="center">9</td>
+                      <td align="center">0</td>
                       
                     </tr>
                     <tr>
@@ -290,16 +291,16 @@
                     <tr>
                       <td rowspan="3" align="center" style="background-color: #3d88e4;"><font color="white"><strong>PIEZAS MOVILIZADAS</strong></font></td>
                       <td align="center" style="background-color: #e8e819;">Piezas Servicio Nacional</td>
-                      <td align="center">183.270</td>
-                      <td rowspan="3" align="center">195.949</td>
+                      <td align="center">0</td>
+                      <td rowspan="3" align="center">0</td>
                     </tr>
                     <tr>
                       <td align="center" style="background-color: #e8e819;">Piezas Ser. Int. de Llegada</td>
-                      <td align="center">12.452</td>
+                      <td align="center">0</td>
                     </tr>
                     <tr>
                       <td align="center" style="background-color: #e8e819;">Piezas Ser. Int. de Salida</td>
-                      <td align="center">227</td>
+                      <td align="center">0</td>
                     </tr>
                     <tr>
                       <td colspan="4" align="center">
@@ -324,36 +325,36 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td align="center">F.P.O DICIEMBRE</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 975.475,42</td>
+                      <td align="center">F.P.O {{ MesAnio }}</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">F.P.O OTROS MESES</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">DERECHOS SEMESTRALES 1</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">DERECHOS SEMESTRALES 2</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">ANUALIDAD</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">SUBCONTRATISTAS</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center">PAGOS NO LIQUIDADOS</td>
-                      <td align="center" style="background-color: #e8e819;">VEF 2.662,83</td>
+                      <td align="center" style="background-color: #e8e819;">VEF 0,00</td>
                     </tr>
                     <tr>
                       <td align="center"><strong>TOTAL GENERAL</strong></td>
-                      <td align="center" style="background-color: #18e25b;"><strong>VEF 1.135.,65</strong></td>
+                      <td align="center" style="background-color: #18e25b;"><strong>VEF 0,00</strong></td>
                     </tr>
                   </tbody>
                 </table>
