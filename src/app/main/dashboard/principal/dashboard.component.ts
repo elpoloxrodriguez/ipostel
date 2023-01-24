@@ -29,6 +29,9 @@ export class DashboardComponent implements OnInit {
     valores: {},
   };
 
+  public urlPetro: string = 'https://www.petro.gob.ve/es/'
+  public urlBcv: string = 'https://www.bcv.org.ve/'
+
   public I_UpdateMontosPetroDolar : IPOSTEL_U_PRECIO_PETRO_DOLAR = {
     petro: '',
     dolar: '',
