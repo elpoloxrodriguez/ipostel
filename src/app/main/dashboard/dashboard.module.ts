@@ -38,6 +38,8 @@ import { DigitalFileOppRoutingModule } from './module-admin/digital-file-opp/dig
 import { PrivatePostalOperatorComponent } from './module-admin/management/private-postal-operator/private-postal-operator.component';
 import { PriceTableOppComponent } from './module-admin/postage/price-table-opp/price-table-opp.component';
 import { PostageOppModule } from './module-admin/postage/postage.module';
+import { ConnectionSettingsComponent } from './module-admin/settings/connection-settings/connection-settings.component';
+import { SettingsModule } from './module-admin/settings/settings.module';
 
 
 
@@ -53,6 +55,7 @@ import { PostageOppModule } from './module-admin/postage/postage.module';
       ListPaymentsComponent,
       PrivatePostalOperatorComponent,
       PriceTableOppComponent,
+      ConnectionSettingsComponent,
     ],
   imports: [
     CommonModule,
@@ -77,7 +80,8 @@ import { PostageOppModule } from './module-admin/postage/postage.module';
     AdminReportsRoutingModule,
     TrakingsRoutingModule,
     DigitalFileOppRoutingModule,
-    PostageOppModule
+    PostageOppModule,
+    SettingsModule
   ],
   exports: [],
   providers: [DatePipe]

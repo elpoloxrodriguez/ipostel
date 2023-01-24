@@ -144,7 +144,53 @@ export const menu: CoreMenu[] = [
       role: ['3','4'],
       url: 'update-system/system-pull',
     },
-
+  // Soporte
+  {
+    id: 'config',
+    nombre: 'Configuración',
+    title: 'Configuración',
+    type: 'collapsible',
+    icono: 'tool',
+    // hidden: true,
+    role: ['3'],
+    children: [
+      {
+        id: 'systemHors',
+        nombre: 'Estatus Sistema',
+        type: 'item',
+        icono: 'circle',
+        url: 'settings/connection-settings'
+      },
+      // {
+      //   id: 'permisosusuarios',
+      //   nombre: 'Permisos de Usuarios',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'support/permissions-user'
+      // },
+      // {
+      //   id: 'gestiontablas',
+      //   nombre: 'Gestion Tablas',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'support/table-management'
+      // },
+      // {
+      //   id: 'cambiarcontraseña',
+      //   nombre: 'Cambiar Contraseña',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'support/change-password'
+      // },
+      // {
+      //   id: 'users-system',
+      //   nombre: 'Usuarios',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'support/users'
+      // },
+    ]
+  },
 
   // Soporte
   {
