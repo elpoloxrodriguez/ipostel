@@ -302,7 +302,7 @@ public idFactura
     // this.itemsSelectPesoEnvio = []
     if (id != null || this.fechaUri != '') {
       this.xAPI.funcion = "IPOSTEL_R_ListarTablaPesoEnvio_ID"
-      this.xAPI.parametros = id + ',' + this.fechaUri + ',' + '1'
+      this.xAPI.parametros = id + ',' + this.fechaUri + ',' + '1' + ','+ this.idOPP
       await this.apiService.Ejecutar(this.xAPI).subscribe(
         (data) => {
           this.itemsSelectPesoEnvio = data.Cuerpo.map(e => {

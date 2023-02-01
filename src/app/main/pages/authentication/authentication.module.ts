@@ -22,6 +22,7 @@ import { AuthRegisterOppComponent } from './auth-register-opp/auth-register-opp.
 import { AuthRegisterSubcontratorComponent } from './auth-register-subcontrator/auth-register-subcontrator.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { FooterComponent } from './footer/footer.component';
+import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthLoginV2Component,
+    // canActivate: [AuthGuard,AuthGuardGuard],
     data: { animation: 'misc' }
   },
   {

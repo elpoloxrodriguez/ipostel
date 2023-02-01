@@ -45,6 +45,8 @@ export class AuthLoginV2Component implements OnInit {
 
   public sessionTOKEN
 
+  public Nsession : string = '0';
+
   //  QR certifucado
   public Qr
   public img
@@ -226,6 +228,8 @@ export class AuthLoginV2Component implements OnInit {
         this.loading = false;
         this._router.navigate(['login'])
         this.utilservice.alertConfirmMini('error','Verifique los datos, e intente nuevamente')
+        this.usuario = ''
+        this.clave = ''
       }
     );
   }
@@ -276,6 +280,7 @@ export class AuthLoginV2Component implements OnInit {
     this.xAPI.parametros = id
      await this.apiService.EjecutarDev(this.xAPI).subscribe(
       (data) => {
+        console.log(data)
         if (data.Cuerpo.length != 0) {
           this.Qr = ''
           // console.log(data.Cuerpo[0])
