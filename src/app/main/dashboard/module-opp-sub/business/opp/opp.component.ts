@@ -577,7 +577,7 @@ export class OppComponent implements OnInit {
      this.UDatosGeneralesOPPSUB.tipo_agencia = this.DataEmpresa.tipo_agencia
      this.UDatosGeneralesOPPSUB.sucursales = this.DataEmpresa.sucursales
      this.UDatosGeneralesOPPSUB.subcontrataciones = this.DataEmpresa.subcontrataciones
-     this.UDatosGeneralesOPPSUB.tipologia_empresa = this.DataEmpresa.tipologia_empresa
+     this.UDatosGeneralesOPPSUB.tipologia_empresa =  this.IFormOPP.tipologia_empresa
      this.UDatosGeneralesOPPSUB.tipo_servicio =  JSON.stringify(this.DataEmpresa.tipo_servicio)
      this.UDatosGeneralesOPPSUB.especificacion_servicio = this.DataEmpresa.especificacion_servicio
      this.UDatosGeneralesOPPSUB.licencia_actividades_economicas_municipales = this.DataEmpresa.licencia_actividades_economicas_municipales
@@ -594,7 +594,7 @@ export class OppComponent implements OnInit {
      this.UDatosGeneralesOPPSUB.cantidad_trabajadores = this.DataEmpresa.cantidad_trabajadores
      this.UDatosGeneralesOPPSUB.cantidad_subcontratados  = this.DataEmpresa.cantidad_subcontratados
      this.UDatosGeneralesOPPSUB.id_opp = this.IdOPP
-    console.log( this.UDatosGeneralesOPPSUB)
+    // console.log( this.UDatosGeneralesOPPSUB)
     this.xAPI.funcion = 'IPOSTEL_U_OPP_ID'
     this.xAPI.parametros = this.IdOPP
     this.xAPI.valores = JSON.stringify(this.UDatosGeneralesOPPSUB)
