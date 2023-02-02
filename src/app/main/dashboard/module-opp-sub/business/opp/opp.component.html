@@ -674,7 +674,7 @@
           <div class="form-group">
             <label class="form-label" for="email">Tipo de servicio que presta o proveé el OPP</label>
             <ng-select #selectMultiLimited [items]="SelectTipoServicio" [multiple]="true"
-              (ngModelChange)="Select_TipologiaEmpresa($event)" disabled [(ngModel)]="DataEmpresa.tipo_servicio"
+              (ngModelChange)="Select_TipologiaEmpresa($event)" [(ngModel)]="DataEmpresa.tipo_servicio"
               [ngModelOptions]="{standalone: true}" [maxSelectedItems]="7" placeholder="Seleccione Tipo de Servicio OPP"
               bindLabel="nombre_tipo_servicio" autocomplete="off">
             </ng-select>
