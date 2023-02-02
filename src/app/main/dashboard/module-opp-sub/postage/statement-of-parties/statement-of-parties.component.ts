@@ -302,12 +302,13 @@ public idFactura
     // this.itemsSelectPesoEnvio = []
     if (id != null || this.fechaUri != '') {
       this.xAPI.funcion = "IPOSTEL_R_ListarTablaPesoEnvio_ID"
-      this.xAPI.parametros = id + ',' + this.fechaUri + ',' + '1' + ','+ this.idOPP
+      this.xAPI.parametros = id + ',' + this.fechaUri + ',' + 1 + ','+ this.idOPP
       await this.apiService.Ejecutar(this.xAPI).subscribe(
         (data) => {
           this.itemsSelectPesoEnvio = data.Cuerpo.map(e => {
             e.name = e.nombre_peso_envio + ' (' + this.utilService.ConvertirMoneda(e.total_pagar) + ')'
             e.id = e.id_peso_envio
+            // console.log(e)
             return e
           });
         },
