@@ -79,7 +79,8 @@ export class OppComponent implements OnInit {
     avionetas: null,
     containers: null,
     motos: null,
-    bicicletas: null
+    bicicletas: null,
+    autobuses: null
   }
 
   public UpdateDelegate: IPOSTEL_U_DatosDelegados = {
@@ -286,6 +287,7 @@ export class OppComponent implements OnInit {
   public containers = false
   public motos = false
   public bicicletas = false
+  public autobuses = false
 
   public ErrorRegistro
 
@@ -491,6 +493,7 @@ export class OppComponent implements OnInit {
           this.containers = false
           this.motos = false
           this.bicicletas = false
+          this.autobuses = false
           break;
         case '1':
           this.vehiculo_liviano = true
@@ -534,6 +537,9 @@ export class OppComponent implements OnInit {
         case '14':
           this.bicicletas = true
           break;
+          case '15':
+            this.autobuses = true
+            break;
         default:
           break;
       }
@@ -542,21 +548,21 @@ export class OppComponent implements OnInit {
   async Select_TipologiaEmpresa(event: any) {
     switch (event.length) {
       case 1:
-        this.IFormOPP.tipologia_empresa = 3
+       this.DataEmpresa.tipologia_empresa = 3
         this.labelTipologiaEmpresa = 'Operador Pequeña Escala'
         break;
       case 2:
-        this.IFormOPP.tipologia_empresa = 2
+       this.DataEmpresa.tipologia_empresa = 2
         this.labelTipologiaEmpresa = 'Operador Mediana Escala'
         break;
       case 3:
-        this.IFormOPP.tipologia_empresa = 1
+       this.DataEmpresa.tipologia_empresa = 1
         this.labelTipologiaEmpresa = 'Operador Gran Escala'
         break;
-      case 0:
-        this.IFormOPP.tipologia_empresa = 0
-        this.labelTipologiaEmpresa = ''
-        break;
+      // case 0:
+      //   this.IFormOPP.tipologia_empresa = 0
+      //   this.labelTipologiaEmpresa = ''
+      //   break;
       default:
         break;
     }
@@ -577,7 +583,7 @@ export class OppComponent implements OnInit {
      this.UDatosGeneralesOPPSUB.tipo_agencia = this.DataEmpresa.tipo_agencia
      this.UDatosGeneralesOPPSUB.sucursales = this.DataEmpresa.sucursales
      this.UDatosGeneralesOPPSUB.subcontrataciones = this.DataEmpresa.subcontrataciones
-     this.UDatosGeneralesOPPSUB.tipologia_empresa =  this.IFormOPP.tipologia_empresa
+     this.UDatosGeneralesOPPSUB.tipologia_empresa =  this.DataEmpresa.tipologia_empresa
      this.UDatosGeneralesOPPSUB.tipo_servicio =  JSON.stringify(this.DataEmpresa.tipo_servicio)
      this.UDatosGeneralesOPPSUB.especificacion_servicio = this.DataEmpresa.especificacion_servicio
      this.UDatosGeneralesOPPSUB.licencia_actividades_economicas_municipales = this.DataEmpresa.licencia_actividades_economicas_municipales
@@ -620,6 +626,7 @@ export class OppComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
+          this.DataEmpresa.tipologia_empresa = e.tipologia_empresa
           this.DataEmpresa.id_opp = e.id_opp
           this.DataEmpresa.nombre_empresa = e.nombre_empresa
           this.DataEmpresa.rif = e.rif
@@ -691,6 +698,7 @@ export class OppComponent implements OnInit {
         this.IConexionFlotaUtilizada.avionetas = e.avionetas
         this.IConexionFlotaUtilizada.containers = e.containers
         this.IConexionFlotaUtilizada.bicicletas = e.bicicletas
+        this.IConexionFlotaUtilizada.autobuses = e.autobuses
         this.IConexionFlotaUtilizada.motos = e.motos
 
         this.arrayFlotaUtilizada = [
@@ -708,6 +716,7 @@ export class OppComponent implements OnInit {
         { name: 'Containers' , valor:  e.containers},
         { name: 'Motos' , valor:  e.motos},
         { name: 'Bicicletas' , valor:  e.bicicletas},
+        { name: 'Autobuses' , valor:  e.autobuses},
       ]
 
        return e

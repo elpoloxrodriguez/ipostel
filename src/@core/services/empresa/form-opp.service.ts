@@ -89,6 +89,7 @@ export interface IPOSTEL_C_ConexionFlotaUtilizada {
 	containers: number
 	motos: number
 	bicicletas: number
+	autobuses: number
 }
 
 

@@ -436,6 +436,13 @@
                   [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Cantidad Bicicletas" />
               </div>
             </div>
+            <div class="col-sm-3 col-md-6" *ngIf="autobuses">
+              <div class="form-group">
+                <label class="form-label" for="email"><font color="red">Total Autobuses</font></label>
+                <input required  type="number" [(ngModel)]="IConexionFlotaUtilizada.autobuses"
+                  [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Cantidad Autobuses" />
+              </div>
+            </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">

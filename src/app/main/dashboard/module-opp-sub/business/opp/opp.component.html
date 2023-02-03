@@ -542,6 +542,7 @@
   </div>
   <!-- </div> -->
 </ng-template>
+
 <ng-template #EditarDatosGenerales let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Actualizar Datos Generales</h5>
@@ -665,8 +666,8 @@
         </div>
         <div class="col-md-3 col-12">
           <div class="form-group">
-            <label class="form-label" for="email">Tipología de Empresa OPP</label>
-            <input required type="text" class="form-control" [(ngModel)]="labelTipologiaEmpresa"
+            <label class="form-label" for="email">Tipología de Empresa OPP {{labelTipologiaEmpresa}}</label>
+            <input required type="text" class="form-control" [(ngModel)]="DataEmpresa.tipologia_empresa"
               [ngModelOptions]="{standalone: true}" readonly placeholder="Seleccione Tipología de Empresa OPP" />
           </div>
         </div>
@@ -906,6 +907,15 @@
             </label>
             <input required type="number" [(ngModel)]="IConexionFlotaUtilizada.bicicletas"
               [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Cantidad Bicicletas" />
+          </div>
+        </div>
+        <div class="col-sm-3 col-md-6" *ngIf="autobuses">
+          <div class="form-group">
+            <label class="form-label" for="email">
+              <font color="red">Total Autobuses</font>
+            </label>
+            <input required type="number" [(ngModel)]="IConexionFlotaUtilizada.autobuses"
+              [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Ingrese Cantidad Autobuses" />
           </div>
         </div>
 

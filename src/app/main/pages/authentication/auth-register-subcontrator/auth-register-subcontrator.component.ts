@@ -103,7 +103,8 @@ export class AuthRegisterSubcontratorComponent implements OnInit {
     avionetas: null,
     containers: null,
     motos: null,
-    bicicletas: null
+    bicicletas: null,
+    autobuses: null
   }
 
   public xAPI : IAPICore = {
@@ -127,7 +128,7 @@ export class AuthRegisterSubcontratorComponent implements OnInit {
     public containers = false
     public motos = false
     public bicicletas = false
-  
+    public autobuses = false
 
 
   public SelectEstado
@@ -493,6 +494,7 @@ public passwordConfirm
           this.containers = false
           this.motos = false
           this.bicicletas = false
+          this.autobuses = false
           break;
         case '1':
           this.vehiculo_liviano = true
@@ -536,6 +538,9 @@ public passwordConfirm
         case '14':
           this.bicicletas = true
           break;
+          case '15':
+            this.autobuses = true
+            break;
 
 
         default:
