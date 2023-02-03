@@ -307,6 +307,42 @@ public SelectidOPP
     )
   }
 
+
+  async DeleteTarifaOpp(data: any) {
+    let OPP = data.id_opp
+    await Swal.fire({
+      title: 'Esta Seguro?',
+      text: "De Eliminar Este Registro!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminarlo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.xAPI.funcion = "IPOSTEL_D_TarifasFranqueo";
+        this.xAPI.parametros = data.id_pef
+        this.xAPI.valores = ''
+        this.apiService.Ejecutar(this.xAPI).subscribe(
+          (data) => {
+            this.rows.push(this.TarifasFranqueoAll)
+            if (data.tipo === 1) {
+              this.utilService.alertConfirmMini('success', 'Registro Eliminado Exitosamente')
+              this.TarifasFranqueoAll = []
+              this.ListaTarifasFranqueoAll(OPP)  
+            } else {
+              this.utilService.alertConfirmMini('error', 'Lo sentimos algo salio mal, intente de nuevo')
+            }
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+      }
+    })
+  }
+
   filterUpdate(event) {
     // console.log(event.target.value)
     // Reset ng-select on search

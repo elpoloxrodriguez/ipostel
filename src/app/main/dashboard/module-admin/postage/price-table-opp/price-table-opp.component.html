@@ -136,6 +136,14 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="20">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="Tipo Franqueo" prop="nombre_servicios_franqueo" [width]="20">
                   <ng-template let-nombre_servicios_franqueo="value" ngx-datatable-cell-template>
                     <div>
@@ -188,6 +196,21 @@
                     </div>
                     <div class="badge badge-pill" *ngIf="status_pef == 0" ngClass="badge-light-danger">
                      No  Autorizado
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Accion"  [width]="5" [sortable]="false">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <div ngbDropdown container="body" *ngIf="row.montoReal != '0.00'">
+                      <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect >
+                        <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
+                      </button>
+                      <div ngbDropdownMenu>
+                        <a (click)="DeleteTarifaOpp(row)" ngbDropdownItem><span [size]="16"
+                            [data-feather]="'trash'" [class]="'mr-50'"></span>Eliminar</a>
+                      </div>
                     </div>
                   </ng-template>
                 </ngx-datatable-column>

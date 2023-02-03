@@ -122,6 +122,7 @@ export class PriceTableComponent implements OnInit {
   public fechax
   public fecha = new Date();
   public mes = this.fecha.getMonth() + 1;
+  public mesx = this.fecha.getMonth();
   public anio = this.fecha.getFullYear();
 
   public items = [];
@@ -150,7 +151,7 @@ export class PriceTableComponent implements OnInit {
   public Xtasa_postal
   public Xtotal_pagar
 
-
+public NombreTipoFranqueo
   public loginForm: FormGroup;
 
   public selectServicioFranqueo = []
@@ -204,6 +205,7 @@ export class PriceTableComponent implements OnInit {
     await this.ListaServicioFranqueo()
     await this.ListaTarifasFranqueoAll()
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
+    await this.ModalListaServicioFranqueo(1)
   }
 
   addItem() {
@@ -246,7 +248,7 @@ export class PriceTableComponent implements OnInit {
     )
   }
 
-  async CapturarNav(event) {
+  async CapturarNav(event: any) {
     // console.log(event.target.id);
     switch (event.target.id) {
       case 'ngb-nav-0':
@@ -254,38 +256,49 @@ export class PriceTableComponent implements OnInit {
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 1
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       case 'ngb-nav-1':
         this.TarifasFranqueo = []
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 2
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       case 'ngb-nav-2':
         this.TarifasFranqueo = []
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 3
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       case 'ngb-nav-3':
         this.TarifasFranqueo = []
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 4
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       case 'ngb-nav-4':
         this.TarifasFranqueo = []
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 5
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       case 'ngb-nav-5':
         this.TarifasFranqueo = []
         this.TarifasFranqueoAll = []
         this.ServicioFranqueoID = 6
         await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
       default:
+        this.TarifasFranqueo = []
+        this.TarifasFranqueoAll = []
+        this.ServicioFranqueoID = 1
+        await this.ListaTarifaNacionalAereo()
+        await this.ModalListaServicioFranqueo(this.ServicioFranqueoID)
         break;
     }
   }
@@ -299,6 +312,7 @@ export class PriceTableComponent implements OnInit {
     this.TarifasFranqueo = []
     const date = this.anio + '-' + '0'+this.mes
     const id = this.ServicioFranqueoID
+    console.log(id)
     this.xAPI.funcion = "IPOSTEL_R_TarifasFranqueo_date_id"
     this.xAPI.parametros = this.idOPP + ',' + date + ',' + id
     this.xAPI.valores = ''
@@ -365,6 +379,22 @@ export class PriceTableComponent implements OnInit {
     )
   }
 
+  async ModalListaServicioFranqueo(TipoFranqueoId : any) { //Mostrar el Tipo de Franqueo en el Modal
+    this.xAPI.funcion = "IPOSTEL_R_ServicioFranqueo";
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map(e => {
+          if (e.id_servicios_franqueo == TipoFranqueoId) {
+            this.NombreTipoFranqueo = e.nombre_servicios_franqueo
+          }
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
   async ListaPesoEnvio() {
     this.xAPI.funcion = "IPOSTEL_R_PesoEnvio";
     await this.apiService.Ejecutar(this.xAPI).subscribe(
@@ -389,7 +419,7 @@ export class PriceTableComponent implements OnInit {
       keyboard: false,
       windowClass: 'fondo-modal',
     });
-    this.fechax = ''
+    this.fechax = this.anio+'-0'+this.mes
     this.items.splice(0);
     this.items.push([{
       id_opp: '',
@@ -406,7 +436,7 @@ export class PriceTableComponent implements OnInit {
   }
 
   async EditTarifa(modal, data){
-    console.log(data);
+    // console.log(data);
     this.Xnombre_peso_envio = data.nombre_peso_envio
     this.Xpmvp = data.pmvpx
     this.Xiva = data.ivax
