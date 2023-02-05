@@ -110,6 +110,8 @@ export class StatementOfPartiesComponent implements OnInit {
 
   public MontoPetro
 
+public PrecioMantenimiento
+
   public montoPagar
   public fechaActual
   public montoIVA = 16
@@ -152,6 +154,14 @@ public idFactura
   public hashcontrol = ''
   public numControl: string = ''
 
+  public idMantenimiento
+  public iniciales
+  public nombre
+  public precio
+  public ConvertirTasaPetro
+  public PetroConvertidoBolivares
+  public PetroConvertidoBolivaresx
+
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
@@ -178,6 +188,8 @@ public idFactura
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
     await this.ListaServicioFranqueo()
     await this.ListaDeclaracionMovilizacionPiezasDECLARAR()
+    await this.MantenimientoSIRPVEN()
+    await this. Precio_Dolar_Petro()
   }
 
   filterUpdate(event) {
@@ -371,6 +383,44 @@ public idFactura
     }
   }
 
+    async MantenimientoSIRPVEN() {
+    this.xAPI.funcion = "IPOSTEL_R_MantenimientoSIRPVEN";
+    this.xAPI.parametros = '7'
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map(e => {
+          this.idMantenimiento = e.id_tipo_pago
+          this.iniciales = e.iniciales_tipo_pagos
+          this.nombre = e.nombre_tipo_pagos
+          this.precio = e.tasa_petro
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+   async Precio_Dolar_Petro() {
+    this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
+    this.xAPI.parametros = ''
+    this.xAPI.valores = ''
+     await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.map(e => {
+          this.PrecioMantenimiento = e.petro_bolivares
+          this.PetroConvertidoBolivares = e.petro_bolivares
+          return e
+        });
+        console.log(this.PetroConvertidoBolivares)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
   async ListaDeclaracionMovilizacionPiezas() {
     // const date = this.anio + '-' + this.mes
     this.DeclaracionPiezas = []
@@ -411,7 +461,7 @@ public idFactura
         })
         const SumaMontos = this.DeclaracionPiezasLength.map(item => item.monto_causado).reduce((prev, curr) => prev + curr, 0);
         this.MontoCausadoX = this.utilService.ConvertirMoneda(SumaMontos)
-        let ok = (SumaMontos / parseFloat('1155.91'))
+        let ok = parseFloat(SumaMontos) / parseFloat(this.PetroConvertidoBolivares)
         this.MontoPetro = 'P ' + ok.toFixed(8)
         this.MontoCausado = SumaMontos
         const SumarPiezas = this.DeclaracionPiezasLength.map(item => item.cantidad_piezas).reduce((prev, curr) => prev + curr, 0);
@@ -585,6 +635,7 @@ public idFactura
   }
 
   async SIDeclararPiezasIPOSTEL(modal) {
+    this.PetroConvertidoBolivares = this.PetroConvertidoBolivaresx
     Swal.fire({
       title: 'Esta seguro de declarar?',
       html: "Estimado <strong><font color=red>Operador Postal Privado</font></strong> <br> se recopilara todas las movilizaciones de piezas que tengas en las tablas de los diferentes tipos de franqueo, tenga en cuenta que una vez realice la declaración de piezas no podra revertir los cambios!",

@@ -15,6 +15,10 @@ export class UtilService {
 
   }
 
+   FechaFormato(texto){
+    return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+  }
+
 
   /**
    * Fecha Actual del sistema desde la application
@@ -83,6 +87,11 @@ export class UtilService {
 
   ConvertirMoneda(moneda: any) {
     const formatter = new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VEF' }).format(moneda)
+    return formatter
+  }
+
+  ConvertirMonedaSola(moneda: any) {
+    const formatter = new Intl.NumberFormat('es-VE', { maximumFractionDigits: 2, }).format(moneda)
     return formatter
   }
 

@@ -9,7 +9,7 @@
                 <section class="users-list-wrapper">
                   <div class="card">
                     <div class="row">
-                      <div class="col-md-6 col-12">
+                      <div class="col-md-3 col-12">
                         <div class="d-flex justify-content-between align-items-center m-1">
                           <label class="d-flex align-items-center">Mostrar
                             <select class="form-control mx-25" [(ngModel)]="selectedOption">
@@ -19,6 +19,12 @@
                               <option value="100">100</option>
                             </select>
                             Registros</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                          <button type="button" class="btn btn-danger"  rippleEffect>
+                            Monto por Liquidar <small>(<strong>{{ MontoTotalAdeudado }}</strong>)</small></button>
                         </div>
                       </div>
                       <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
@@ -114,7 +120,7 @@
                 <section class="users-list-wrapper">
                   <div class="card">
                     <div class="row">
-                      <div class="col-md-6 col-12">
+                      <div class="col-md-3 col-12">
                         <div class="d-flex justify-content-between align-items-center m-1">
                           <label class="d-flex align-items-center">Mostrar
                             <select class="form-control mx-25" [(ngModel)]="selectedOption">
@@ -124,6 +130,12 @@
                               <option value="100">100</option>
                             </select>
                             Registros</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                          <button type="button" class="btn btn-danger"  rippleEffect>
+                            Monto No Liquidados <small>(<strong>{{ MontoTotalAdeudado }}</strong>)</small></button>
                         </div>
                       </div>
                       <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
@@ -211,7 +223,7 @@
                 <section class="users-list-wrapper">
                   <div class="card">
                     <div class="row">
-                      <div class="col-md-6 col-12">
+                      <div class="col-md-3 col-12">
                         <div class="d-flex justify-content-between align-items-center m-1">
                           <label class="d-flex align-items-center">Mostrar
                             <select class="form-control mx-25" [(ngModel)]="selectedOption">
@@ -221,6 +233,12 @@
                               <option value="100">100</option>
                             </select>
                             Registros</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                          <button type="button" class="btn btn-danger"  rippleEffect>
+                            Monto Rechazado <small>(<strong>{{ MontoTotalAdeudado }}</strong>)</small></button>
                         </div>
                       </div>
                       <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
@@ -308,7 +326,7 @@
                 <section class="users-list-wrapper">
                   <div class="card">
                     <div class="row">
-                      <div class="col-md-6 col-12">
+                      <div class="col-md-3 col-12">
                         <div class="d-flex justify-content-between align-items-center m-1">
                           <label class="d-flex align-items-center">Mostrar
                             <select class="form-control mx-25" [(ngModel)]="selectedOption">
@@ -318,6 +336,12 @@
                               <option value="100">100</option>
                             </select>
                             Registros</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                          <button type="button" class="btn btn-danger"  rippleEffect>
+                            Monto Aprobado <small>(<strong>{{ MontoTotalAdeudado }}</strong>)</small></button>
                         </div>
                       </div>
                       <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">

@@ -198,6 +198,10 @@ public NombreTipoFranqueo
 
   async ngOnInit() {
     this.token = jwt_decode(sessionStorage.getItem('token'));
+    // console.log(this.token)
+    if ( this.token.Usuario[0].iva_exento == 1) {
+      this.montoIVA = 0
+    }
     this.idOPP = this.token.Usuario[0].id_opp
     await this.ListaTarifaNacionalAereo()
     await this.fechaF()

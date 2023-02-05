@@ -38,6 +38,7 @@ export class PaymentsListComponent implements OnInit {
     valores: {},
   };
 
+  public MontoTotalAdeudado : string = '0';
   public archivos = []
   public hashcontrol = ''
   public numControl: string = ''
@@ -177,14 +178,16 @@ export class PaymentsListComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
-          // console.log(e)
           e.montoReal = e.monto_pagar
           e.monto_pcx = e.monto_pc
           this.MontoRealPagar = e.monto_pagar
           e.monto_pc = this.utilService.ConvertirMoneda(e.monto_pc)
           e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar)
           this.List_Pagos_Recaudacion.push(e)  
+          // console.log(this.List_Pagos_Recaudacion)
         });
+        let MontoTotalA =  this.List_Pagos_Recaudacion.map(item => item.montoReal).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+        this.MontoTotalAdeudado =  this.utilService.ConvertirMoneda(MontoTotalA)
         this.rowsPagosConciliacion = this.List_Pagos_Recaudacion
         this.RowsLengthConciliacion = this.rowsPagosConciliacion.length
         this.tempDataPagosConciliacion = this.rowsPagosConciliacion

@@ -20,10 +20,16 @@
                       Registros</label>
                   </div>
                 </div>
-                <div class="col-md-6 col-12">
+                <div class="col-md-3 col-12">
                   <div class="d-flex justify-content-between align-items-center m-1">
                     <button type="button" class="btn btn-success" *ngIf="RowsLengthConciliacion >= 2" rippleEffect>
                       Realizar Pagos Seleccionados <small>({{ selected.length }})</small></button>
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <button type="button" class="btn btn-danger"  rippleEffect>
+                      Monto Adeudado <small>(<strong>{{ MontoTotalAdeudado }}</strong>)</small></button>
                   </div>
                 </div>
                 <div class="col-md-3 col-12 d-flex justify-content-start justify-content-md-end">

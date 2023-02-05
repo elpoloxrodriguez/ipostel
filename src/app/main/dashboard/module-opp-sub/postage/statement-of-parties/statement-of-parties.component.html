@@ -909,10 +909,41 @@
     <h5 class="modal-title" id="myModalLabel160">Declaración de Movilización de Piezas</h5>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="col-md-12 col-12" align="center">
+      <label><strong><font color="red">Soporte Tecnico y Mantenimiento del SIRPVEN</font></strong></label>
+    </div>
     <div class="col-xl-12 col-md-12 col-12">
       <!-- Header Starts -->
       <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
-      <div class="row d-flex align-items-end">
+        <div class="row d-flex align-items-end">
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for=" itempmvp">Nombre</label>
+              <input type="text" class="form-control" readonly  autocomplete="off" [value]="nombre">
+              <!-- <p><label>{{ nombre }} ({{ iniciales }})</label></p> -->
+            </div>
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for=" itempmvp">Monto en Petros</label>
+              <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="precio"
+                [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
+            </div>
+          </div>
+          <div class="col-md-3 col-12">
+            <div class="form-group">
+              <label for=" itempmvp">Monto en Bolivares</label>
+              <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="PrecioMantenimiento * precio"
+                [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
+            </div>
+          </div>
+  
+        </div>
+        <hr>
+        <div class="col-md-12 col-12" align="center">
+          <label><strong><font color="red">Descripcion Total de la Declaración de Piezas</font></strong></label>
+        </div>
+        <div class="row d-flex align-items-end">
         <div class="col-md-3 col-12">
           <div class="form-group">
             <label for=" itempmvp">Monto Total a Pagar</label>
@@ -942,6 +973,26 @@
           </div>
         </div>
 
+      </div>
+      <hr>
+      <div class="col-md-12 col-12" align="center">
+        <label><strong><font color="red">Monto Total a Declarar</font></strong></label>
+        <div class="row d-flex align-items-end">
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for=" itempmvp">Monto Total a Pagar en Bolivares</label>
+              <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoCausadoX"
+              [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for=" itempmvp">Monto Total a Pagar en Petros</label>
+              <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoPetro"
+              [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
+            </div>
+          </div>
+        </div>
       </div>
     </form>
     </div>

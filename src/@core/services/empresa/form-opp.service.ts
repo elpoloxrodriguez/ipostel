@@ -324,6 +324,7 @@ export interface IPOSTEL_I_OtorgamientoConcesion { // INSERTAR REGISTRO PARA OTO
 	punto_cuenta_curp	 :	any
 	fecha_punto_cuenta_curp	 :	any
 	concesion_postal_curp	 :	any
+	tiempo_concesion : any
 	n_contrato_curp	 :	any
 	periodo_contrato_curp	 :	any
 	n_archivo_curp	 :	any

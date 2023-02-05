@@ -286,7 +286,7 @@ export class DashboardComponent implements OnInit {
               this.apiService.LoadQR(id).subscribe(
                 (xdata) => {
                   var sdata = this.DataEmpresa[0]
-                  console.log(sdata)
+                  // console.log(sdata)
                   this.pdf.CertificadoInscripcion(sdata[0], xdata.contenido, this.CrearCert.token, this.n_curp)
                   this.sectionBlockUI.stop()
                   this.utilService.alertConfirmMini('success', 'Certificado Descagado Exitosamente')

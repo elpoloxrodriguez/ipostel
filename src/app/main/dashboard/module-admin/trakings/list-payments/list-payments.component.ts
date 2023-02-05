@@ -51,6 +51,7 @@ public idOPP
   { id: '3', name:'Pago Rechazado'}
  ]
   
+  public MontoTotalAdeudado : string = '0'
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public searchValue = '';
@@ -118,7 +119,7 @@ public idOPP
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
-          console.log(e)
+          // console.log(e)
             if (e.monto_pc != '0.00' || e.monto_pagar == '0.00') {
             e.MontoPAGAR = e.monto_pagar
             e.MontoPC = e.monto_pc
@@ -129,6 +130,9 @@ public idOPP
         });
         this.rowsPagosConciliacion = this.List_Pagos_Recaudacion;
         this.tempDataPagosConciliacion = this.rowsPagosConciliacion
+        let MontoTotalA =  this.List_Pagos_Recaudacion.map(item => item.MontoPC).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+        this.MontoTotalAdeudado =  this.utilService.ConvertirMoneda(MontoTotalA)
+
       },
       (error) => {
         console.log(error)

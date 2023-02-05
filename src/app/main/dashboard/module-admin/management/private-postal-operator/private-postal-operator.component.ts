@@ -39,7 +39,8 @@ export class PrivatePostalOperatorComponent implements OnInit {
     n_archivo_curp: undefined,
     tomo_archivo_curp: undefined,
     fecha_archivo_curp: undefined,
-    user_created: undefined
+    user_created: undefined,
+    tiempo_concesion: undefined
   }
 
   public IpagarRecaudacion: IPOSTEL_C_PagosDeclaracionOPP_SUB = {
@@ -137,6 +138,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
     id_opp: 0
   }
 
+  public IdUser
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public searchValue = '';
@@ -181,6 +183,8 @@ export class PrivatePostalOperatorComponent implements OnInit {
   async ngOnInit() {
     this.token = jwt_decode(sessionStorage.getItem('token'));
     this.idOPP = this.token.Usuario[0].id_opp
+    this.IdUser = this.token.Usuario[0].id_user
+    // console.log(this.IdUser)
     await this.ListaOPP_SUB()
   }
 
@@ -418,6 +422,10 @@ export class PrivatePostalOperatorComponent implements OnInit {
   }
 
   async GenerarConcesionPostalPrivada() {
+    var enero = new Date(this.ICrearConcesion.fecha_archivo_curp);
+    var febrero  = new Date(enero.setFullYear(enero.getFullYear()+this.ICrearConcesion.tiempo_concesion));
+    this.ICrearConcesion.periodo_contrato_curp = this.utilService.FechaMomentL(febrero)
+    this.ICrearConcesion.user_created = this.IdUser
     this.xAPI.funcion = "IPOSTEL_I_OtorgamientoConcesion"
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.ICrearConcesion)

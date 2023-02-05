@@ -8,7 +8,14 @@ import { UtilService } from '../util/util.service';
   providedIn: 'root'
 })
 export class PdfService {
-  
+
+  public Nacional
+  public InternacionalLlegada
+  public InternacionalSalida
+  public Nacionalx = []
+  public InternacionalLlegadax = []
+  public InternacionalSalidax = []
+
   constructor(
     private utilService: UtilService,
   ) { }
@@ -17,6 +24,9 @@ export class PdfService {
   CertificadoInscripcion(data: any, Qr: any, TokenQr: any, n_curp: any) {
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
+    var fechax= fecha
+    var nueva=fechax.split(" ")[0].split("/").reverse().join("/");
+
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
     doc.setProperties({
@@ -29,6 +39,9 @@ export class PdfService {
 
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
+    // if ( this.utilService.FechaFormato(nueva) < data.periodo_contrato_curp) {
+    //   doc.addImage('assets/images/pdf/vencido.png', "PNG", 30, 140, 140, 140);
+    // } 
     doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
     doc.addImage(Qr, "PNG", 170, 255, 30, 30);
 
@@ -63,10 +76,14 @@ export class PdfService {
 del Archivo Postal de Operadoras Privadas llevados por la Dirección de Gestión Postal de
 IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fecha ${this.utilService.FechaMomentLL(data.fecha_archivo_curp)} a los efectos de Ley.`,
       14,
-      215,
+      205,
       { maxWidth: 185, align: "justify" }
     );
 
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    doc.text(`CERTIFICADO VALIDO HASTA: ${this.utilService.FechaMoment(data.periodo_contrato_curp)}`, 15, 240, { align: "justify" });
 
 
 
@@ -217,8 +234,38 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
   }
 
   GenerarFactura(data: any){
+    // console.log(data);
     const fecha = this.utilService.FechaActual()
+    const anio = new Date (fecha)
+    let aniox = anio.getFullYear()
     const doc = new jsPDF();
+
+    
+    this.Nacional =  data[0].ListaFranqueo
+    this.InternacionalLlegada =  data[0].ListaFranqueo
+    this.InternacionalSalida =  data[0].ListaFranqueo
+    const TotalFactura = data[0].ListaFranqueo
+
+    let MontoTotalPiezasNacional = 0
+    let MontoTotalBsNacional = 0
+    let Nacional0_2 = 0
+    let MontoNacional0_2 = 0
+    let Nacional2_4 = 0
+    let MontoNacional2_4 = 0
+    let Nacional4_5 = 0
+    let MontoNacional4_5 = 0
+    let Nacional5_30 = 0
+    let MontoNacional5_30 = 0
+
+    let MontoTotalPiezasLlegada = 0
+    let MontoTotalBsLlegada = 0
+
+    let MontoTotalPiezasSalida = 0
+    let MontoTotalBsSalida = 0
+
+
+    let MontoTotalPiezas = 0
+    let MontoTotalBs = 0
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
     doc.setProperties({
@@ -231,6 +278,9 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
 
     doc.addImage('assets/images/pdf/cintillo-ipostel.png', "PNG", 10, 5, 187.5, 15);
     doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 210, 160, 60);
+    doc.addImage('assets/images/pdf/factura/firma.png', "PNG", 60, 190, 120, 120);
+    doc.addImage('assets/images/pdf/factura/sello.png', "PNG", 70, 225, 90, 90);
+
 
     doc.rect(14, 20, 142, 20);
     doc.setFontSize(12);
@@ -254,7 +304,7 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     doc.rect(156, 35, 40, 5);
     doc.setFontSize(7);
     doc.setFont(undefined, "bold");
-    doc.text(data[0].n_contrato_curp, 176, 38.5, { align: "center" });
+    doc.text(`${aniox}-`, 176, 38.5, { align: "center" });
 
 
     doc.rect(14, 40, 25, 5);
@@ -271,7 +321,7 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     doc.setFont(undefined, "bold");
     doc.text("CODIGO POSTAL N°", 145,43.3, { align: "center" });
     doc.setFont(undefined, "bold");
-    doc.text("34574857349354473", 175,43.3, { align: "center" });
+    doc.text(data[0].concesion_postal_curp, 175,43.3, { align: "center" });
 
     
     doc.rect(14, 45, 20, 5);
@@ -298,7 +348,7 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     doc.setFont(undefined, "bold");
     doc.text("CONTRATO N°", 145,48.3, { align: "center" });
     doc.setFont(undefined, "bold");
-    doc.text(data[0].concesion_postal_curp, 175,48.3, { align: "center" });
+    doc.text(data[0].n_contrato_curp, 175,48.3, { align: "center" });
 
 
     doc.rect(156, 40, 40, 5);
@@ -333,30 +383,20 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
     let tempDataRowsFacturas = [
         e.nombre_tipo_pagos,
         e.fecha_pc,
-        e.status_pc,
-        e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar),
+        // e.status_pc,
+        e.monto_pagar = this.utilService.ConvertirMonedaSola(e.monto_pagar),
         e.referencia_bancaria,
         e.fecha_pc,
       ];
-      rowsFacturas.push(tempDataRowsFacturas); 
+      rowsFacturas.push(tempDataRowsFacturas);  
     });
 
-    // itemMontoFacturas.map(element => {
-    //   let MontoDataRowsFacturas = [
-    //     element.monto_pc,
-    //   ];
-    //   MontoFacturas.push(MontoDataRowsFacturas); 
-    // });
-
-    // const SumaMontos = MontoFacturas.map(item => item.monto_pc).reduce((prev, curr) => prev + curr, 0);
-    //  console.log(SumaMontos)
-
-
-
+    
+   
     autoTable(doc, {
         styles: { fillColor: [153,153,153], halign: 'center', overflow: "linebreak", fontSize: 9, valign: "middle", },
         // columnStyles: { 0: { halign: 'center', fillColor: [153,153,153] } }, // Cells in first column centered and green
-        head: [['CONCEPTO','PERÍODO','TARIFA','MONTO','DEPÓSITO','FECHA']],
+        head: [['CONCEPTO','PERÍODO','MONTO','DEPÓSITO','FECHA']],
         body: rowsFacturas,
       startY: 67,
       })
@@ -364,7 +404,7 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
       autoTable(doc,{
         styles: { fillColor: [153,153,153], halign: 'center' },
         columnStyles: { 0: { halign: 'center', fillColor: [147,196,125] } }, // Cells in first column centered and green
-        body: [['TOTAL A CANCELAR', '0.00', 'Valor Petro Bs','0,00']],
+        body: [['TOTAL A CANCELAR', 'l', 'Valor Petro Bs','0,00']],
         theme: "grid",
       })
 
@@ -376,11 +416,34 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
       body: [['SERVICIO NACIONAL']],
       startY: 108,
     })
+
+
+    this.Nacional.map(element => {
+      if (element.id_servicio_franqueo == 1 || element.id_servicio_franqueo == 2) {
+        this.Nacionalx.push(element)
+      }
+    });
+    this.Nacionalx.forEach(element => {
+      if (element.id_peso_envio == 1 || element.id_peso_envio == 2 || element.id_peso_envio == 3 || element.id_peso_envio == 4 || element.id_peso_envio == 5  ) {
+        Nacional0_2 = this.Nacionalx.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+      }
+      if (element.id_peso_envio == 6 || element.id_peso_envio == 7 || element.id_peso_envio == 8 || element.id_peso_envio == 9   ) {
+        Nacional2_4 = this.Nacionalx.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+      }
+    });
+    
+    MontoTotalPiezasNacional =   this.Nacionalx.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+    MontoTotalBsNacional =   this.Nacionalx.map(item => item.monto_caudado).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+
       autoTable(doc, {
-        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 9, valign: "middle", },
+        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 8, valign: "middle", },
         head: [['TOTAL PIEZAS', 'TOTAL BS', '0 - 2 KG','BS', '2 - 4 KG','BS', '4 - 5 KG','BS', '5 - 30 KG','BS']],
         body: [
-          ['0', '0.00', '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
+          [MontoTotalPiezasNacional, this.utilService.ConvertirMonedaSola(MontoTotalBsNacional), Nacional0_2,this.utilService.ConvertirMonedaSola(MontoNacional0_2), Nacional2_4,this.utilService.ConvertirMonedaSola(MontoNacional2_4), Nacional4_5,this.utilService.ConvertirMonedaSola(MontoNacional4_5), Nacional5_30,this.utilService.ConvertirMonedaSola(MontoNacional5_30)],
+          
+
+
+
         ],
       startY: 123,
       })
@@ -391,11 +454,19 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
         body: [['SERVICIO INTERNACIONAL DE LLEGADA']],
         startY: 138,
       })
+      this.InternacionalLlegada.map(element => {
+        if (element.id_servicio_franqueo == 3 || element.id_servicio_franqueo == 5) {
+          this.InternacionalLlegadax.push(element)
+        }
+      });
+      MontoTotalPiezasLlegada =   this.InternacionalLlegadax.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+      MontoTotalBsLlegada =   this.InternacionalLlegadax.map(item => item.monto_caudado).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+  
       autoTable(doc, {
-        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 9, valign: "middle", },
+        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 7, valign: "middle", },
         head: [['TOTAL PIEZAS', 'TOTAL BS', '0 - 2 KG','BS', '2 - 4 KG','BS', '4 - 5 KG','BS', '5 - 30 KG','BS']],
         body: [
-          ['0', '0.00', '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
+          [MontoTotalPiezasLlegada, this.utilService.ConvertirMonedaSola(MontoTotalBsLlegada), '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
         ],
       startY: 145,
       })
@@ -406,26 +477,37 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
         body: [['SERVICIO INTERNACIONAL DE SALIDA']],
         startY: 160,
       })
+      this.InternacionalSalida.map(element => {
+        if (element.id_servicio_franqueo == 4 || element.id_servicio_franqueo == 6) {
+          this.InternacionalSalidax.push(element)
+        }
+      });
+      MontoTotalPiezasSalida =   this.InternacionalSalidax.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+      MontoTotalBsSalida =   this.InternacionalSalidax.map(item => item.monto_caudado).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+
       autoTable(doc, {
-        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 9, valign: "middle", },
+        styles: { fillColor: [128,24,24], halign: 'center', overflow: "linebreak", fontSize: 7, valign: "middle", },
         head: [['TOTAL PIEZAS', 'TOTAL BS', '0 - 2 KG','BS', '2 - 4 KG','BS', '4 - 5 KG','BS', '5 - 30 KG','BS']],
         body: [
-          ['0', '0.00', '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
+          [MontoTotalPiezasSalida, this.utilService.ConvertirMonedaSola(MontoTotalBsSalida), '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
         ],
       startY: 167,
       })
       autoTable(doc, {
         styles: { fillColor: [128,24,24], halign: 'center' },
-        columnStyles: { 0: { halign: 'center', fillColor: [147,196,125] } }, // Cells in first column centered and green
+        columnStyles: { 0: { halign: 'center', fillColor: [255, 255, 0] } }, // Cells in first column centered and green
         margin: { top: 0 },
         body: [['TOTAL PIEZAS DECLARADAS EN EL MES']],
         startY: 185,
       })
+              // Calculo de Movimiento Total en el Mes
+              MontoTotalPiezas =  TotalFactura.map(item => item.cantidad_piezas).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+              MontoTotalBs =  TotalFactura.map(item => item.monto_caudado).reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);      
       autoTable(doc, {
         styles: { fillColor: [128,24,24], halign: 'center' },
         head: [['NETO PIEZAS', 'TOTAL BS', '0 - 2 KG','BS', '2 - 4 KG','BS', '4 - 5 KG','BS', '5 - 30 KG','BS']],
         body: [
-          ['0', '0.00', '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
+          [MontoTotalPiezas, this.utilService.ConvertirMonedaSola(MontoTotalBs), '0','0.00', '0','0.00', '0','0.00', '0','0.00'],
         ],
       startY: 192,
       })

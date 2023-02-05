@@ -250,7 +250,7 @@
             <label class="form-label">Punto de Cuenta</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.punto_cuenta_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese Punto de Cuenta" />
           </div>
         </div>
         <div class="col-md-6 col-12">
@@ -258,7 +258,7 @@
             <label class="form-label">Fecha Punto de Cuenta</label>
             <input required  type="date" class="form-control"
             [(ngModel)]="ICrearConcesion.fecha_punto_cuenta_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese Fecha" />
           </div>
         </div>
 
@@ -267,7 +267,7 @@
             <label class="form-label">N# Concesión Postal</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.concesion_postal_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese N# de Concesion Postal" />
           </div>
         </div>
         <div class="col-md-6 col-12">
@@ -275,16 +275,16 @@
             <label class="form-label">N# Contrato</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.n_contrato_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese N# Contrato" />
           </div>
         </div>
 
         <div class="col-md-6 col-12">
           <div class="form-group">
-            <label class="form-label">Periodo del Contrato</label>
-            <input required  type="date" class="form-control"
-            [(ngModel)]="ICrearConcesion.periodo_contrato_curp " [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            <label class="form-label">Tiempo del Concesión</label>
+            <input required  type="number" class="form-control"
+            [(ngModel)]="ICrearConcesion.tiempo_concesion" [ngModelOptions]="{standalone: true}"
+            placeholder="Ingrese Cantidad de Años" />
           </div>
         </div>
         <div class="col-md-6 col-12">
@@ -292,7 +292,7 @@
             <label class="form-label">N# de Archivo</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.n_archivo_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese N# de Archivo" />
           </div>
         </div>
 
@@ -301,7 +301,7 @@
             <label class="form-label">Tomo del Archivo</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.tomo_archivo_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese Tomo del Archivo" />
           </div>
         </div>
         <div class="col-md-6 col-12">
@@ -309,9 +309,22 @@
             <label class="form-label">Fecha de Autenticación</label>
             <input required  type="date" class="form-control"
             [(ngModel)]="ICrearConcesion.fecha_archivo_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Nombre de Empresa" />
+            placeholder="Ingrese Fecha" />
           </div>
         </div>
+
+        <div class="col-md-12 col-12">
+          <div class="form-group">
+            <label class="form-label">Periodo del Contrato</label>
+            <input required  type="text" class="form-control" readonly
+            [(ngModel)]="ICrearConcesion.periodo_contrato_curp" [ngModelOptions]="{standalone: true}"
+            placeholder="Periodo del Contrato" />
+          </div>
+        </div>
+
+       <div class="container">
+        <font color="red"><strong>Nota: </strong> IP = Ipostel - 10 = Estado - 19-85 = Año Otorgamiento - 001 = Libro de Registros</font> 
+       </div>
         
         </div>
       <!-- Header Ends -->
