@@ -113,6 +113,10 @@ export class StatementOfPartiesComponent implements OnInit {
 public PrecioMantenimiento
 public PrecioMantenimientoX
 public PrecioMantenimientoXT
+public PrecioMantenimientoXTF
+
+public DolarDia
+public PetroDia
 
 
 public MontoCausadoYMantenimiento
@@ -418,8 +422,11 @@ public idFactura
      await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
+          this.DolarDia = e.dolar
+          this.PetroDia = e.petro_bolivares
           this.PrecioMantenimientoX = e.petro_bolivares
-          this.PrecioMantenimiento = this.utilService.ConvertirMoneda(e.petro_bolivares)
+          // this.PrecioMantenimiento = this.utilService.ConvertirMoneda(e.petro_bolivares)
+          this.PrecioMantenimiento = 0
           this.PetroConvertidoBolivares = e.petro_bolivares
           return e
         });
@@ -473,12 +480,13 @@ public idFactura
         this.MontoCausadoX = this.utilService.ConvertirMoneda(SumaMontos)
         this.MontoCausado = SumaMontos
         this.MontoCausadoYMantenimiento = SumaMontos
-        // this.PrecioMantenimientoXT = parseFloat(this.MontoCausado).toFixed(2)
         var montoPagar = this.MontoCausado
         var montoMant = this.PrecioMantenimientoX
-       var TotalMontoPagar = montoPagar + parseFloat(montoMant)
-       var TotalMontoPagarConvertido = TotalMontoPagar.toFixed(2)
-        this.PrecioMantenimientoXT = this.utilService.ConvertirMoneda(TotalMontoPagarConvertido)
+        var TotalMontoPagar = montoPagar + parseFloat(montoMant)
+        var TotalMontoPagarConvertido = TotalMontoPagar.toFixed(2)
+        this.PrecioMantenimientoXT = this.MontoCausadoX
+        // this.PrecioMantenimientoXT = this.utilService.ConvertirMoneda(TotalMontoPagarConvertido)
+        this.PrecioMantenimientoXTF = TotalMontoPagarConvertido
         let ok = parseFloat(SumaMontos) / parseFloat(this.PetroConvertidoBolivares)
         this.MontoPetro = 'P ' + ok.toFixed(8)
         this.MontoCausado = SumaMontos
@@ -592,11 +600,12 @@ public idFactura
         this.IpagarRecaudacion.status_pc = 0
         this.IpagarRecaudacion.tipo_pago_pc = 1
         this.IpagarRecaudacion.monto_pc = '0'
+        // this.IpagarRecaudacion.monto_pagar = this.PrecioMantenimientoXTF
         this.IpagarRecaudacion.monto_pagar = this.MontoCausado
-        this.IpagarRecaudacion.dolar_dia = '0'
-        this.IpagarRecaudacion.petro_dia = '0'
+        this.IpagarRecaudacion.dolar_dia = this.DolarDia
+        this.IpagarRecaudacion.petro_dia = this.PetroDia
         this.IpagarRecaudacion.fecha_pc = this.fechaActual
-        this.IpagarRecaudacion.archivo_adjunto = ''
+        // this.IpagarRecaudacion.archivo_adjunto = ''
         this.IpagarRecaudacion.user_created = this.idOPP
         //  
         this.xAPI.funcion = "IPOSTEL_C_PagosDeclaracionOPP_SUB";

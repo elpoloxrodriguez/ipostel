@@ -53,7 +53,7 @@ export class PaymentsListComponent implements OnInit {
     monto_pagar: '',
     dolar_dia: '',
     petro_dia: '',
-    archivo_adjunto: undefined,
+    archivo_adjunto: '',
     observacion_pc: '',
     user_created: 0,
     user_updated: 0,
@@ -325,8 +325,9 @@ export class PaymentsListComponent implements OnInit {
   }
 
   async PagarRecaudacion(){
+    // console.log(this.archivos[0].name)
     this.sectionBlockUI.start('Reportando Pago, Porfavor Espere!!!');
-    // this.ActualizarPago.archivo_adjunto = this.archivos[0].name
+    this.ActualizarPago.archivo_adjunto = this.archivos[0].name
     var frm = new FormData(document.forms.namedItem("forma"))
     try {
       await this.apiService.EnviarArchivos(frm).subscribe(

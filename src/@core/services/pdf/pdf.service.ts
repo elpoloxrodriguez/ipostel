@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable'
+import { ApiService, IAPICore } from '../apicore/api.service';
 import { UtilService } from '../util/util.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class PdfService {
 
+
+  public xAPI: IAPICore = {
+    funcion: '',
+    parametros: '',
+    valores: {},
+  };
+  
+  public MantenimientoSoporteSIRPVEN = []
   public Nacional
   public InternacionalLlegada
   public InternacionalSalida
@@ -18,7 +29,23 @@ export class PdfService {
 
   constructor(
     private utilService: UtilService,
+    private apiService: ApiService,
   ) { }
+
+  async MantenimientoSIRPVEN() {
+    this.xAPI.funcion = "IPOSTEL_R_MantenimientoSIRPVEN";
+    this.xAPI.parametros = '7'
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.MantenimientoSoporteSIRPVEN = data.Cuerpo.map(e => {
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 
 
   CertificadoInscripcion(data: any, Qr: any, TokenQr: any, n_curp: any) {
@@ -234,6 +261,8 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
   }
 
   GenerarFactura(data: any){
+    this.MantenimientoSIRPVEN()
+    console.log(this.MantenimientoSoporteSIRPVEN)
     // console.log(data);
     const fecha = this.utilService.FechaActual()
     const anio = new Date (fecha)
@@ -388,7 +417,21 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
         e.referencia_bancaria,
         e.fecha_pc,
       ];
-      rowsFacturas.push(tempDataRowsFacturas);  
+      let tempMantenimiento = [
+        'Servicio de Mantenimiento y Soporte Tecnico SIRPVEN',
+        e.fecha_pc,
+        '0,00',
+        '---',
+        '---',
+      ];
+      let tempSeguridad = [
+        'Servicio de Seguridad de Datos SIRPVEN',
+        e.fecha_pc,
+        '0,00',
+        '---',
+        '---',
+      ];
+      rowsFacturas.push(tempDataRowsFacturas,tempSeguridad, tempMantenimiento);  
     });
 
     
@@ -404,8 +447,9 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
       autoTable(doc,{
         styles: { fillColor: [153,153,153], halign: 'center' },
         columnStyles: { 0: { halign: 'center', fillColor: [147,196,125] } }, // Cells in first column centered and green
-        body: [['TOTAL A CANCELAR', 'l', 'Valor Petro Bs','0,00']],
+        body: [['TOTAL A CANCELAR', '173.813,3', 'Valor Petro Bs','0,00']],
         theme: "grid",
+        startY: 98,
       })
 
     autoTable(doc, {
