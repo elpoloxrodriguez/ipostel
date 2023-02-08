@@ -344,42 +344,42 @@ public idFactura
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 1
-        await this.ListaServicioFranqueo()
+        // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-1':
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 2
-        await this.ListaServicioFranqueo()
+        // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-2':
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 3
-        await this.ListaServicioFranqueo()
+       //  await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-3':
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 4
-        await this.ListaServicioFranqueo()
+        // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-4':
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 5
-        await this.ListaServicioFranqueo()
+       //  await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-5':
         this.DeclaracionPiezas = []
         this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 6
-        await this.ListaServicioFranqueo()
+        // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       default:
@@ -479,8 +479,10 @@ public idFactura
   }
 
   async ListaServicioFranqueo() {
-    this.xAPI.funcion = "IPOSTEL_R_ServicioFranqueo_ID";
-    this.xAPI.parametros = `${this.ServicioFranqueoID}`
+    this.xAPI.funcion = "IPOSTEL_R_ServicioFranqueo";
+    this.xAPI.parametros = ''
+    // this.xAPI.funcion = "IPOSTEL_R_ServicioFranqueo_ID";
+    // this.xAPI.parametros = `${this.ServicioFranqueoID}`
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.itemsSelectTipoServicio = data.Cuerpo.map(e => {
@@ -505,18 +507,18 @@ public idFactura
     });
     this.fechax = this.fechaUri
     this.items.splice(0);
-    // this.items.push([{
-    //   id_opp: this.idOPP, // ID DE LA OPP
-    //   id_servicio_franqueo: '', // ID DEL TIPO DE SERVICIO DE FRANQUEO
-    //   id_peso_envio: '', // ID TIPO DE PESO DE ENVIO
-    //   tarifa_servicio: '', // MONTO DEL PESO DE ENVIO 
-    //   porcentaje_tarifa: '', // PORCENTAJE DE TARIFA SEGUN TIPOLOGIA_EMPRESA
-    //   monto_fpo: '', // MONTO DE FPD
-    //   mes: '', // MES DE DECLARACION
-    //   cantidad_piezas: '', // CANTIDAD DE PIEZAS DECLARADAS
-    //   monto_causado : '', // MONTO TOTAL A PAGAR
-    //   user_created: this.idOPP
-    // }]);
+    this.items.push([{
+      id_opp: this.idOPP, // ID DE LA OPP
+      id_servicio_franqueo: '', // ID DEL TIPO DE SERVICIO DE FRANQUEO
+      id_peso_envio: '', // ID TIPO DE PESO DE ENVIO
+      tarifa_servicio: '', // MONTO DEL PESO DE ENVIO 
+      porcentaje_tarifa: '', // PORCENTAJE DE TARIFA SEGUN TIPOLOGIA_EMPRESA
+      monto_fpo: '', // MONTO DE FPD
+      mes: '', // MES DE DECLARACION
+      cantidad_piezas: '', // CANTIDAD DE PIEZAS DECLARADAS
+      monto_causado : '', // MONTO TOTAL A PAGAR
+      user_created: this.idOPP
+    }]);
   }
 
   async InsertMontoPeso(event: any) {
