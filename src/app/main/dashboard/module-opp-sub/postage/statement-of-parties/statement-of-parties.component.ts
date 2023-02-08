@@ -172,6 +172,10 @@ public idFactura
 
   async ngOnInit() {
     this.token = jwt_decode(sessionStorage.getItem('token'));
+    // console.log(this.token)
+    if ( this.token.Usuario[0].iva_exento == 1) {
+      this.montoIVA = 0
+    }
     this.idOPP = this.token.Usuario[0].id_opp
     // this.uri = this.rutaActiva.snapshot.params.id
     this.fechaUri = atob(this.rutaActiva.snapshot.params.id);
@@ -318,7 +322,7 @@ public idFactura
       await this.apiService.Ejecutar(this.xAPI).subscribe(
         (data) => {
           this.itemsSelectPesoEnvio = data.Cuerpo.map(e => {
-            e.name = e.nombre_peso_envio + ' (' + this.utilService.ConvertirMoneda(e.total_pagar) + ')'
+            e.name = e.descripcion + ' (' + this.utilService.ConvertirMoneda(e.total_pagar) + ') ' + e.nombre_peso_envio
             e.id = e.id_peso_envio
             // console.log(e)
             return e

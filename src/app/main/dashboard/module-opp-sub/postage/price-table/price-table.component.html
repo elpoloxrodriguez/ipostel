@@ -48,6 +48,14 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="PMVP" prop="pmvp" [width]="20">
                   <ng-template let-pmvp="value" ngx-datatable-cell-template>
                     <div>
@@ -164,6 +172,14 @@
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
                     </div>
                   </ng-template>
                 </ngx-datatable-column>
@@ -288,6 +304,14 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="PMVP" prop="pmvp" [width]="20">
                   <ng-template let-pmvp="value" ngx-datatable-cell-template>
                     <div>
@@ -404,6 +428,14 @@
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
                     </div>
                   </ng-template>
                 </ngx-datatable-column>
@@ -528,6 +560,14 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="PMVP" prop="pmvp" [width]="20">
                   <ng-template let-pmvp="value" ngx-datatable-cell-template>
                     <div>
@@ -644,6 +684,14 @@
                   <ng-template let-nombre_peso_envio="value" ngx-datatable-cell-template>
                     <div>
                       <span class="font-weight-bold">{{ nombre_peso_envio }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
                     </div>
                   </ng-template>
                 </ngx-datatable-column>
@@ -796,6 +844,14 @@
                   </ng-template>
                 </ngx-datatable-column>
 
+                <ngx-datatable-column name="Descripcion" prop="descripcion" [width]="60">
+                  <ng-template let-descripcion="value" ngx-datatable-cell-template>
+                    <div>
+                      <span class="font-weight-bold">{{ descripcion }} </span>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
                 <ngx-datatable-column name="PMVP" prop="pmvp" [width]="20">
                   <ng-template let-pmvp="value" ngx-datatable-cell-template>
                     <div>
@@ -831,6 +887,13 @@
                     <div class="badge badge-pill" ngClass="badge-light-success">
                       {{ total_pagar }}
                     </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="status" prop="status_pef" [width]="20">
+                  <ng-template let-status_pef="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" *ngIf="status_pef === '1'" ngClass="badge-light-success">Autorizado</div>
+                    <div class="badge badge-pill" *ngIf="status_pef === '0'" ngClass="badge-light-danger">No Autorizado</div>
                   </ng-template>
                 </ngx-datatable-column>
 

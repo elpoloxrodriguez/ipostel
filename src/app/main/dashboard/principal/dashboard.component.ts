@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
   }
 
   Meses() {
-    console.log(this.mes)
+    // console.log(this.mes)
     switch (this.mes) {
       case 0:
         this.MesAnio = 'Enero ' + this.aniox
@@ -264,6 +264,7 @@ export class DashboardComponent implements OnInit {
 
 
   async GenerarCertificadoInscripcion() {
+    console.log(this.anio)
     this.CrearCert.usuario = this.token.Usuario[0].id_opp
     this.CrearCert.token = this.utilService.TokenAleatorio(10),
       this.CrearCert.type = 1,
@@ -276,7 +277,7 @@ export class DashboardComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.sectionBlockUI.start('Generando Certificado, Porfavor Espere!!!');
-        this.n_curp = data.msj + '-IP' + this.anio
+        this.n_curp = data.msj + '-IP' + this.aniox
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');
@@ -324,7 +325,7 @@ export class DashboardComponent implements OnInit {
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.sectionBlockUI.start('Generando Autorización, Porfavor Espere!!!');
-        this.n_curp = data.msj + '-IP' + this.anio
+        this.n_curp = data.msj + '-IP' + this.aniox
         if (data.tipo === 1) {
           var id = this.CrearCert.token
           let ruta: string = btoa('https://sirp.ipostel.gob.ve');

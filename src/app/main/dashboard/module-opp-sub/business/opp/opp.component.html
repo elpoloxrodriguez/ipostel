@@ -575,12 +575,17 @@
 
           </div>
         </div>
+        
         <div class="col-md-3 col-12">
           <div class="form-group">
             <label class="form-label" for="email">Estado</label>
-
+            <ng-select [items]="SelectEstado" bindLabel="estado" placeholder="Seleccione Estado"
+            [(ngModel)]="DataEmpresa.estado_empresa" [ngModelOptions]="{standalone: true}" required autocomplete="off"
+            (ngModelChange)="Select_Ciudad($event.id_estado)">
+          </ng-select>
           </div>
         </div>
+
         <div class="col-md-3 col-12">
           <div class="form-group">
             <label class="form-label" for="email">Ciudad</label>
@@ -590,11 +595,8 @@
             </ng-select>
           </div>
         </div>
+
         <div class="col-md-3 col-12">
-          <ng-select [items]="SelectEstado" bindLabel="estado" placeholder="Seleccione Estado"
-            [(ngModel)]="DataEmpresa.estado_empresa" [ngModelOptions]="{standalone: true}" required autocomplete="off"
-            (ngModelChange)="Select_Ciudad($event.id_estado)">
-          </ng-select>
           <div class="form-group">
             <label class="form-label" for="email">Municipios</label>
             <ng-select [items]="SelectMunicipio" [(ngModel)]="DataEmpresa.municipio_empresa"
@@ -603,6 +605,7 @@
             </ng-select>
           </div>
         </div>
+
         <div class="col-md-3 col-12">
           <div class="form-group">
             <label class="form-label">Parroquia</label>
@@ -612,6 +615,7 @@
             </ng-select>
           </div>
         </div>
+
         <div class="col-md-12 col-12">
           <div class="form-group">
             <label class="form-label" for="email">Correo Electronico OPP</label>

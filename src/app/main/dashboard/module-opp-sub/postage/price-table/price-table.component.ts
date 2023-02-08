@@ -316,7 +316,7 @@ public NombreTipoFranqueo
     this.TarifasFranqueo = []
     const date = this.anio + '-' + '0'+this.mes
     const id = this.ServicioFranqueoID
-    console.log(id)
+    // console.log(id)
     this.xAPI.funcion = "IPOSTEL_R_TarifasFranqueo_date_id"
     this.xAPI.parametros = this.idOPP + ',' + date + ',' + id
     this.xAPI.valores = ''

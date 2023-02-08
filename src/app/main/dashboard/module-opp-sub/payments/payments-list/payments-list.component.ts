@@ -73,7 +73,7 @@ export class PaymentsListComponent implements OnInit {
   public ShowReportarPago = false
   public ShowModificarPago = false
   public monto_pagarX
-
+  public monto_pagar_muestra
 
   public ShowMontoCero
 
@@ -143,6 +143,51 @@ export class PaymentsListComponent implements OnInit {
     this.archivos.push(e.target.files[0])
   }
 
+   subirArchivo(e) {
+    this.sectionBlockUI.start('Subiendo Archivo, Porfavor Espere!!!');
+    this.token = jwt_decode(sessionStorage.getItem('token'));
+    // this.DocAdjunto.nombre = this.archivos[0].name
+    // this.DocAdjunto.usuario = this.token.Usuario[0].id_opp
+    // this.DocAdjunto.empresa = this.token.Usuario[0].id_opp
+    // this.DocAdjunto.numc = this.numControl
+    // this.DocAdjunto.tipo = parseInt(this.TipoDocument)
+    // this.DocAdjunto.vencimiento = this.datetime1.year+'-'+this.datetime1.month+'-'+this.datetime1.day 
+    var frm = new FormData(document.forms.namedItem("forma"))
+    // console.log(frm)
+    try {
+       this.apiService.EnviarArchivos(frm).subscribe(
+        (data) => {
+          // this.rowsDocumentosAdjuntosEmpresa.push(this.EmpresaDocumentosAdjuntos)
+          this.xAPI.funcion = 'IPOSTEL_I_ArchivoDigital'
+          this.xAPI.parametros = ''
+          // this.xAPI.valores = JSON.stringify(this.DocAdjunto)
+          this.apiService.Ejecutar(this.xAPI).subscribe(
+            (xdata) => {
+              if (xdata.tipo == 1) {
+                // this.EmpresaDocumentosAdjuntos = []
+                // this.DocumentosAdjuntosOPPSUB()    
+                this.utilService.alertConfirmMini('success', 'Tu archivo ha sido cargado con exito')
+                this.modalService.dismissAll('Cerrar Modal')
+                 this.sectionBlockUI.stop();
+              } else {
+                this.utilService.alertConfirmMini('info', xdata.msj)
+                this.sectionBlockUI.stop();
+              }
+            },
+            (error) => {
+              this.utilService.alertConfirmMini('error', error)
+              this.sectionBlockUI.stop();
+            }
+          )
+        }
+      )
+    } catch (error) {
+      this.utilService.alertConfirmMini('error', error)
+      this.sectionBlockUI.stop();
+    }
+
+  }
+
   async CapturarNav(event) {
     switch (event.target.id) {
       case 'ngb-nav-0':
@@ -208,15 +253,12 @@ export class PaymentsListComponent implements OnInit {
     this.ShowModificarPago = false
     // console.log(data)
     this.ActualizarPago.status_pc = 0
-    // this.ActualizarPago.fecha_pc = '2022-12-18'
-    // this.ActualizarPago.id_banco_pc = 1
-    // this.ActualizarPago.referencia_bancaria = 'IHJ324IO2H32423'
-    // this.ActualizarPago.monto_pc = '66666'
     this.ActualizarPago.monto_pagar = data.montoReal
     this.monto_pagarX = data.monto_pagar
+    this.monto_pagar_muestra = data.monto_pagar
+    this.ActualizarPago.monto_pc = data.montoReal
     this.ActualizarPago.dolar_dia = data.dolar_dia
     this.ActualizarPago.petro_dia = data.petro_dia
-    // this.ActualizarPago.observacion_pc = ''
     this.ActualizarPago.user_created = this.idOPP
     this.ActualizarPago.user_updated = this.idOPP
     this.ActualizarPago.id_pc = data.id_pc
@@ -244,7 +286,7 @@ export class PaymentsListComponent implements OnInit {
     this.ActualizarPago.observacion_pc = data.observacion_pc
     this.ActualizarPago.dolar_dia = data.dolar_dia
     this.ActualizarPago.petro_dia = data.petro_dia
-    // this.ActualizarPago.archivo_adjunto = 'archivo.pdf'
+    this.ActualizarPago.archivo_adjunto = this.archivos[0].name
     this.ActualizarPago.user_created = this.idOPP
     this.ActualizarPago.user_updated = this.idOPP
     this.ActualizarPago.id_pc = data.id_pc
@@ -283,17 +325,20 @@ export class PaymentsListComponent implements OnInit {
   }
 
   async PagarRecaudacion(){
-    this.ActualizarPago.archivo_adjunto = this.archivos[0].name
-    // console.log(this.ActualizarPago.monto_pagar, this.ActualizarPago.monto_pc)
+    this.sectionBlockUI.start('Reportando Pago, Porfavor Espere!!!');
+    // this.ActualizarPago.archivo_adjunto = this.archivos[0].name
+    var frm = new FormData(document.forms.namedItem("forma"))
+    try {
+      await this.apiService.EnviarArchivos(frm).subscribe(
+        (data) => {
     this.xAPI.funcion = "IPOSTEL_U_PagosDeclaracionOPP_SUB"
     this.xAPI.parametros = ''
     this.xAPI.valores = JSON.stringify(this.ActualizarPago)
-    this.sectionBlockUI.start('Reportando Pago, Porfavor Espere!!!');
     if (this.ActualizarPago.monto_pagar === this.ActualizarPago.monto_pc) {
-      await this.apiService.Ejecutar(this.xAPI).subscribe(
-        (data) => {
+       this.apiService.Ejecutar(this.xAPI).subscribe(
+        (datax) => {
           this.rowsPagosConciliacion.push(this.List_Pagos_Recaudacion)
-          if (data.tipo === 1) {
+          if (datax.tipo === 1) {
             this.List_Pagos_Recaudacion = []
             this.ListaPagosRecaudacion()
             this.modalService.dismissAll('Close')
@@ -311,6 +356,11 @@ export class PaymentsListComponent implements OnInit {
     } else {
       this.sectionBlockUI.stop();
       this.utilService.alertConfirmMini('warning', 'El Monto Pagado es Diferente al de la Factura Adeudada, Porfavor verifique e intente nuevamente')
+    }
+        }
+      )
+    } catch (error) {
+      console.log(error)
     }
   }
 

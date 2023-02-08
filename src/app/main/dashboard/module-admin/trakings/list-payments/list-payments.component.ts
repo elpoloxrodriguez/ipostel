@@ -185,6 +185,7 @@ public idOPP
 
 
   dwUrl(ncontrol: string, archivo: string): string {
+    // console.log(ncontrol,archivo);
     return this.apiService.Dws(btoa("D" + ncontrol) + '/' + archivo)
   }
 

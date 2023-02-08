@@ -17,6 +17,8 @@ import { BlockUIModule } from 'ng-block-ui';
 
 import { PaymentsRoutingModule } from './payments-routing.module';
 
+import { AngularFileUploaderModule } from "angular-file-uploader";
+
 
 @NgModule({
   declarations: [],
@@ -31,7 +33,8 @@ import { PaymentsRoutingModule } from './payments-routing.module';
     NgSelectModule,
     BlockUIModule,
     CsvModule,
-    PaymentsRoutingModule
+    PaymentsRoutingModule,
+    AngularFileUploaderModule
   ]
 })
 export class PaymentsModule { }

@@ -449,7 +449,8 @@
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="col-xl-12 col-md-12 col-12">
       <!-- Header Starts -->
-      <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
+      <!-- <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater"> -->
+        <form method="post" enctype="multipart/form-data" id="forma" name="forma" class="invoice-repeater">
         <input type="hidden" name="identificador" value="{{hashcontrol}}" readonly="readonly">
       <div class="row d-flex align-items-end">
         <div class="col-md-12 col-12">
@@ -523,9 +524,9 @@
   <div class="modal-footer">
     <!-- <button class="btn bg-gradient-success text-white" [disabled]="!formUsersRegister.form.valid" (click)="RegistrarTarifaNacionalAereo()">
       <span class="fa fa-plus"></span> Registrar Tarifa</button> -->
-      <button type="submit" [disabled]="!formUsersRegister.form.valid" *ngIf="ShowReportarPago == true" (click)="PagarRecaudacion()"
+      <button type="submit"  *ngIf="ShowReportarPago == true" (click)="PagarRecaudacion()"
       rippleEffect class="btn btn-success mr-1">Reportar Pago</button>
-      <button type="submit" [disabled]="!formUsersRegister.form.valid" *ngIf="ShowModificarPago == true" (click)="ModificarConciliarPagoRecaudacion()"
+      <button type="submit"  *ngIf="ShowModificarPago == true" (click)="ModificarConciliarPagoRecaudacion()"
       rippleEffect class="btn btn-success mr-1">ModificarPago</button>
     <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
       Cerrar
