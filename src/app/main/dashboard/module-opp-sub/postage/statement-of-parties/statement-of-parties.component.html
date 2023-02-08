@@ -918,7 +918,7 @@
         <div class="row d-flex align-items-end">
           <div class="col-md-6 col-12">
             <div class="form-group">
-              <label for=" itempmvp">Nombre</label>
+              <label for=" itempmvp">Descripción</label>
               <input type="text" class="form-control" readonly  autocomplete="off" [value]="nombre">
               <!-- <p><label>{{ nombre }} ({{ iniciales }})</label></p> -->
             </div>
@@ -933,7 +933,7 @@
           <div class="col-md-3 col-12">
             <div class="form-group">
               <label for=" itempmvp">Monto en Bolivares</label>
-              <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="PrecioMantenimiento * precio"
+              <input type="text" class="form-control" readonly  autocomplete="off" [(ngModel)]="PrecioMantenimiento"
                 [ngModelOptions]="{standalone: true}"  placeholder="Mes" />
             </div>
           </div>
@@ -981,7 +981,7 @@
           <div class="col-md-6 col-12">
             <div class="form-group">
               <label for=" itempmvp">Monto Total a Pagar en Bolivares</label>
-              <input type="text" class="form-control" autocomplete="off" [(ngModel)]="MontoCausadoX"
+              <input type="text" class="form-control" autocomplete="off" [(ngModel)]="PrecioMantenimientoXT"
               [ngModelOptions]="{standalone: true}" readonly  placeholder="Monto a Pagar" />
             </div>
           </div>

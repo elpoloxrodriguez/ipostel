@@ -1,5 +1,8 @@
 <div class="card content-wrapper container-xxl p-0" *blockUI="'section-block'">
   <div class="card-body">
+    <div class="container">
+      <label><h5><font color="red">Estimado OPP, este modulo solo mostrara las tarifas del mes actual, si desea visualizar las tarifas de algun mes anterior y/o posterior al actual, tiene que dar click en el icono. </font><span [data-feather]="'archive'"></span></h5></label>
+    </div>
     <ul ngbNav #nav="ngbNav" class="nav nav-pills nav-pill-warning my-2 justify-content-center">
       <li ngbNavItem>
         <a ngbNavLink  (click)="CapturarNav($event)">Nacional Aéreo</a>
@@ -898,20 +901,25 @@
                 </ngx-datatable-column>
 
 
-                <!-- <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
+                <ngx-datatable-column name="Accion" [width]="5" [sortable]="false">
                   <ng-template ngx-datatable-cell-template let-row="row">
                     <div ngbDropdown container="body">
                       <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
                         <span [data-feather]="'settings'" [class]="'cursor-pointer'"></span>
                       </button>
                       <div ngbDropdownMenu>
-                        <a (click)="EditTarifa(ModalEditTarifa,row)"
-                          ngbDropdownItem><span [data-feather]="'eye'" [size]="16" [class]="'mr-50'"></span>
-                          Detalles</a>
+                        <div>
+                          <a *ngIf="row.status_pef != '0'"
+                            ngbDropdownItem><span [data-feather]="'trash'" [size]="16" [class]="'mr-50'"></span>
+                            No Puede Borrar</a>
+                          <a (click)="DeleteTarifaNacionalAereo(row)" *ngIf="row.status_pef != '1'" ngbDropdownItem><span [data-feather]="'trash'"
+                              [size]="16" [class]="'mr-50'"></span> Eliminar</a>
+                        </div>
                       </div>
                     </div>
                   </ng-template>
-                </ngx-datatable-column> -->
+                </ngx-datatable-column>
+               
 
               </ngx-datatable>
 

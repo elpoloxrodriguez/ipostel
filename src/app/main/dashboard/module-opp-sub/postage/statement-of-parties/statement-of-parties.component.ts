@@ -111,6 +111,11 @@ export class StatementOfPartiesComponent implements OnInit {
   public MontoPetro
 
 public PrecioMantenimiento
+public PrecioMantenimientoX
+public PrecioMantenimientoXT
+
+
+public MontoCausadoYMantenimiento
 
   public montoPagar
   public fechaActual
@@ -187,13 +192,13 @@ public idFactura
     // } else {
     //   await this.ListaDeclaracionMovilizacionPiezas()
     // }
+    await this. Precio_Dolar_Petro()
     await this.BloqueoBtnDeclaracion()
     await this.ListaDeclaracionMovilizacionPiezas()
     await this.TasaPostal(this.token.Usuario[0].tipologia_empresa, this.idOPP)
     await this.ListaServicioFranqueo()
     await this.ListaDeclaracionMovilizacionPiezasDECLARAR()
     await this.MantenimientoSIRPVEN()
-    await this. Precio_Dolar_Petro()
   }
 
   filterUpdate(event) {
@@ -239,7 +244,7 @@ public idFactura
   }
 
   LimpiarSelects() {
-    this.itemsSelectTipoServicio = []
+    // this.itemsSelectTipoServicio = []
     this.itemsSelectPesoEnvio = []
   }
   deleteItem(id) {
@@ -342,14 +347,14 @@ public idFactura
     switch (event.target.id) {
       case 'ngb-nav-0':
         this.DeclaracionPiezas = []
-        this.itemsSelectTipoServicio = []
+        // this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 1
         // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-1':
         this.DeclaracionPiezas = []
-        this.itemsSelectTipoServicio = []
+        // this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 2
         // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
@@ -363,21 +368,21 @@ public idFactura
         break;
       case 'ngb-nav-3':
         this.DeclaracionPiezas = []
-        this.itemsSelectTipoServicio = []
+        // this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 4
         // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-4':
         this.DeclaracionPiezas = []
-        this.itemsSelectTipoServicio = []
+        // this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 5
        //  await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
         break;
       case 'ngb-nav-5':
         this.DeclaracionPiezas = []
-        this.itemsSelectTipoServicio = []
+        // this.itemsSelectTipoServicio = []
         this.ServicioFranqueoID = 6
         // await this.ListaServicioFranqueo()
         await this.ListaDeclaracionMovilizacionPiezas()
@@ -413,11 +418,12 @@ public idFactura
      await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.map(e => {
-          this.PrecioMantenimiento = e.petro_bolivares
+          this.PrecioMantenimientoX = e.petro_bolivares
+          this.PrecioMantenimiento = this.utilService.ConvertirMoneda(e.petro_bolivares)
           this.PetroConvertidoBolivares = e.petro_bolivares
           return e
         });
-        console.log(this.PetroConvertidoBolivares)
+        // console.log(this.PetroConvertidoBolivares)
       },
       (error) => {
         console.log(error)
@@ -465,6 +471,14 @@ public idFactura
         })
         const SumaMontos = this.DeclaracionPiezasLength.map(item => item.monto_causado).reduce((prev, curr) => prev + curr, 0);
         this.MontoCausadoX = this.utilService.ConvertirMoneda(SumaMontos)
+        this.MontoCausado = SumaMontos
+        this.MontoCausadoYMantenimiento = SumaMontos
+        // this.PrecioMantenimientoXT = parseFloat(this.MontoCausado).toFixed(2)
+        var montoPagar = this.MontoCausado
+        var montoMant = this.PrecioMantenimientoX
+       var TotalMontoPagar = montoPagar + parseFloat(montoMant)
+       var TotalMontoPagarConvertido = TotalMontoPagar.toFixed(2)
+        this.PrecioMantenimientoXT = this.utilService.ConvertirMoneda(TotalMontoPagarConvertido)
         let ok = parseFloat(SumaMontos) / parseFloat(this.PetroConvertidoBolivares)
         this.MontoPetro = 'P ' + ok.toFixed(8)
         this.MontoCausado = SumaMontos
