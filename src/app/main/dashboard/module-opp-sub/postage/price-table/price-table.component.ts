@@ -125,6 +125,8 @@ export class PriceTableComponent implements OnInit {
   public mesx = this.fecha.getMonth();
   public anio = this.fecha.getFullYear();
 
+  public itemsSelectTipoServicio = []
+
   public items = [];
   public item = {
     id_opp: '',
@@ -414,11 +416,11 @@ public NombreTipoFranqueo
       }
     )
   }
-
+  
   async ModalRegistrarTarifaEnvio(modal) {
     this.modalService.open(modal, {
       centered: true,
-      size: 'lg',
+      size: 'xl',
       backdrop: false,
       keyboard: false,
       windowClass: 'fondo-modal',
@@ -518,6 +520,7 @@ public NombreTipoFranqueo
     })
   }
 
+
   async RegistrarTarifaNacionalAereo() {
     for (let index = 0; index < this.items.length; index++) {
       const element = this.items[index];
@@ -532,11 +535,12 @@ public NombreTipoFranqueo
       this.PesoEnvioFranqueo.tasa_postal = parseFloat(tasa.toFixed(2))
       this.PesoEnvioFranqueo.total_pagar = parseFloat(total.toFixed(2))
       this.PesoEnvioFranqueo.mes = this.fechax
-      this.PesoEnvioFranqueo.id_servicio_franqueo = this.ServicioFranqueoID
+      this.PesoEnvioFranqueo.id_servicio_franqueo = parseInt(element.id_servicio_franqueo)
       this.PesoEnvioFranqueo.user_created = this.idOPP
       this.xAPI.funcion = "IPOSTEL_C_Peso_Envio_Franqueo"
       this.xAPI.parametros = ''
       this.xAPI.valores = JSON.stringify(this.PesoEnvioFranqueo)
+      // console.log(this.PesoEnvioFranqueo )
       await this.apiService.Ejecutar(this.xAPI).subscribe(
         (data) => {
           this.sectionBlockUI.start('Guardando Registros, Porfavor Espere!!!');

@@ -931,7 +931,8 @@
 
 <ng-template #ModalTarifaEnvio let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Registrar Tarifa de Envio <strong><font color="red">{{ NombreTipoFranqueo }}</font></strong></h5>
+    <!-- <h5 class="modal-title" id="myModalLabel160">Registrar Tarifa de Envio <strong><font color="red">{{ NombreTipoFranqueo }}</font></strong></h5> -->
+    <h5 class="modal-title" id="myModalLabel160">Registrar Tarifa de Envio</h5>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="col-xl-12 col-md-12 col-12">
@@ -979,7 +980,18 @@
                       <span>{{ i }}</span>
                   </div>
                 </div> -->
-            <div class="col-md-4 col-12">
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">
+                    <label for="id_peso_envio{{ i }}">Servicio de Franqueo </label>
+                    <ng-select [items]="selectServicioFranqueo" [(ngModel)]="item.id_servicio_franqueo"
+                      [ngModelOptions]="{standalone: true}" bindLabel="name" bindValue="id" name="itemPesoEnvio{{ i }}"
+                      id="itemPesoEnvio{{ i }}" placeholder="Seleccionar Tipo de Servicio de Franqueo"></ng-select>
+                  </div>
+                </div>
+
+
+            <div class="col-md-2 col-12">
               <div class="form-group">
                 <label for="id_peso_envio{{ i }}">Peso de Envio <strong>{{ item.id_peso_envio }}</strong></label>
                 <ng-select [items]="itemsSelectPesoEnvio" [(ngModel)]="item.id_peso_envio"
@@ -1004,7 +1016,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 col-12">
+            <div class="col-md-2 col-12">
               <div class="form-group">
                 <label for=" itempmvp">PMVP</label>
                 <input type="number" class="form-control" [(ngModel)]="item.pmvp" autocomplete="off"

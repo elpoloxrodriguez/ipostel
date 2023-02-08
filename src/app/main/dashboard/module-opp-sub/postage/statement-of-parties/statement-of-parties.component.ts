@@ -479,8 +479,6 @@ public idFactura
   }
 
   async ListaServicioFranqueo() {
-    // this.ServicioFranqueoID 
-    // this.itemsSelectTipoServicio = []
     this.xAPI.funcion = "IPOSTEL_R_ServicioFranqueo_ID";
     this.xAPI.parametros = `${this.ServicioFranqueoID}`
     await this.apiService.Ejecutar(this.xAPI).subscribe(
@@ -710,8 +708,8 @@ public idFactura
       confirmButtonText: 'Si, Deseo Declarar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
-      // var frm = new FormData(document.forms.namedItem("forma"))
       if (result.isConfirmed) {
+        var frm = new FormData(document.forms.namedItem("forma"))
         this.IpagarRecaudacion.id_opp = this.idOPP
         this.IpagarRecaudacion.status_pc = 0
         this.IpagarRecaudacion.tipo_pago_pc = 1
@@ -730,17 +728,17 @@ public idFactura
           (data) => {
             if (data.tipo === 1) {
               try {
-              // this.apiService.EnviarArchivos(frm).subscribe(
-              //   (data) => {
+              this.apiService.EnviarArchivos(frm).subscribe(
+                (data) => {
                   this.modalService.dismissAll('Close')
                   this.sectionBlockUI.stop()
                   this.utilService.alertConfirmMini('success', 'Declaración Registrada Exitosamente!')
                   this.router.navigate(['payments/payments-list']).then(() => { window.location.reload() });    
-                // },
-                // (err) => {
-                //   this.sectionBlockUI.stop();
-                //   this.utilService.alertConfirmMini('error', 'Algo salio mal al cargar el archivo! <br> Verifique e intente de nuevo')    
-                // })
+                },
+                (err) => {
+                  this.sectionBlockUI.stop();
+                  this.utilService.alertConfirmMini('error', 'Algo salio mal al cargar el archivo! <br> Verifique e intente de nuevo')    
+                })
               } catch (err) {
                 this.sectionBlockUI.stop();
                 this.utilService.alertConfirmMini('error', 'Algo salio mal al cargar el archivo! <br> Verifique e intente de nuevo')    

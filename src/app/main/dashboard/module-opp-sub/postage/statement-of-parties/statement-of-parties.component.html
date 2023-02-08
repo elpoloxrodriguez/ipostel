@@ -1020,7 +1020,8 @@
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="col-xl-12 col-md-12 col-12">
       <!-- Header Starts -->
-      <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater">
+      <form method="post" enctype="multipart/form-data"  (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" id="forma" name="forma">
+      <!-- <form class="form" (ngSubmit)="(formUsersRegister.form.valid)" #formUsersRegister="ngForm" class="invoice-repeater"> -->
       <div class="row d-flex align-items-end">
         <input type="hidden" name="identificador" value="{{hashcontrol}}" readonly="readonly">
         <div class="col-md-6 col-12">
