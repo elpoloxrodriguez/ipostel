@@ -950,7 +950,8 @@
 
           <div class="form-group">
             <label for=" itempmvp">IVA</label>
-            <input type="text" class="form-control" autocomplete="off" readonly [value]="montoIVA+' %'" placeholder="Monto IVA" />
+            <input type="number" class="form-control" autocomplete="off" [(ngModel)]="montoIVA"
+            [ngModelOptions]="{standalone: true}"  placeholder="Monto IVA" />
           </div>
         </div>
         <div class="col-md-4 col-12">

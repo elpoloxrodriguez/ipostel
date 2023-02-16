@@ -115,6 +115,8 @@ public PrecioMantenimientoX
 public PrecioMantenimientoXT
 public PrecioMantenimientoXTF
 
+public MantenimientoYSeguridad = []
+
 public DolarDia
 public PetroDia
 
@@ -171,6 +173,11 @@ public idFactura
   public PetroConvertidoBolivares
   public PetroConvertidoBolivaresx
 
+  public totalPetros // Total de la Tabla de Mantenimiento
+  public totalBolivares
+  public convertirTotalBolivares
+
+
   constructor(
     private apiService: ApiService,
     private utilService: UtilService,
@@ -203,6 +210,7 @@ public idFactura
     await this.ListaServicioFranqueo()
     await this.ListaDeclaracionMovilizacionPiezasDECLARAR()
     await this.MantenimientoSIRPVEN()
+    await this.ListaMantenimientoSeguidad()
   }
 
   filterUpdate(event) {
@@ -415,6 +423,38 @@ public idFactura
     )
   }
 
+  async ListaMantenimientoSeguidad() {
+    this.xAPI.funcion = "IPOSTEL_R_MantenimientoSeguridad"
+    this.xAPI.parametros = '1'
+    this.xAPI.valores = ''
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.MantenimientoYSeguridad = data.Cuerpo.map(e => {
+          e.bolivares = e.tasa_petro * this.PetroDia ? this.PetroDia : 0
+          var valor = e.tasa_petro * this.PetroDia
+          e.bolivaresx = this.utilService.ConvertirMoneda(valor)
+          return e
+        });
+        // console.log(this.MantenimientoYSeguridad)
+            //Calculamos el TOTAL 
+        this.totalPetros = this.MantenimientoYSeguridad.reduce((
+          acc,
+          obj,
+        ) => acc + (parseFloat(obj.tasa_petro) ),
+        0);
+        this.totalBolivares = this.MantenimientoYSeguridad.reduce((
+          acc,
+          objx,
+        ) => acc + (objx.tasa_petro * this.PetroDia ),
+        0);
+        this.convertirTotalBolivares =  this.utilService.ConvertirMoneda(this.totalBolivares ? this.totalBolivares : 0)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
    async Precio_Dolar_Petro() {
     this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
     this.xAPI.parametros = ''
@@ -423,7 +463,7 @@ public idFactura
       (data) => {
         data.Cuerpo.map(e => {
           this.DolarDia = e.dolar
-          this.PetroDia = e.petro_bolivares
+          this.PetroDia = e.petro_bolivares ? e.petro_bolivares : 0
           this.PrecioMantenimientoX = e.petro_bolivares
           // this.PrecioMantenimiento = this.utilService.ConvertirMoneda(e.petro_bolivares)
           this.PrecioMantenimiento = 0
@@ -487,8 +527,9 @@ public idFactura
         this.PrecioMantenimientoXT = this.MontoCausadoX
         // this.PrecioMantenimientoXT = this.utilService.ConvertirMoneda(TotalMontoPagarConvertido)
         this.PrecioMantenimientoXTF = TotalMontoPagarConvertido
-        let ok = parseFloat(SumaMontos) / parseFloat(this.PetroConvertidoBolivares)
-        this.MontoPetro = 'P ' + ok.toFixed(8)
+        var ok = parseFloat(SumaMontos) / parseFloat(this.PetroDia)
+        var val =  ok.toFixed(8)
+        this.MontoPetro = 'P ' + val 
         this.MontoCausado = SumaMontos
         const SumarPiezas = this.DeclaracionPiezasLength.map(item => item.cantidad_piezas).reduce((prev, curr) => prev + curr, 0);
         this.TotalPiezas = SumarPiezas
@@ -679,7 +720,7 @@ public idFactura
       if (result.isConfirmed) {
         this.modalService.open(modal, {
           centered: true,
-          size: 'lg',
+          size: 'xl',
           backdrop: false,
           keyboard: false,
           windowClass: 'fondo-modal',
@@ -710,7 +751,7 @@ public idFactura
         this.fechaActual = this.utilService.FechaActual()
         this.modalService.open(modal, {
           centered: true,
-          size: 'lg',
+          size: 'xl',
           backdrop: false,
           keyboard: false,
           windowClass: 'fondo-modal',
