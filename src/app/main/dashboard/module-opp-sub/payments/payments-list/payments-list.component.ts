@@ -79,6 +79,8 @@ export class PaymentsListComponent implements OnInit {
 
   public SelectionType = SelectionType;
 
+  public MantenimientoYSeguridad = []
+  
   public  MontoRealPagar
   public token
   public n_opp = 0
@@ -89,6 +91,9 @@ export class PaymentsListComponent implements OnInit {
 
   public SelectBancos = []
   public NombreBancoEmisor
+
+  public MontoMantenimiento = []
+  public DolarPetroDia = []
 
   constructor(
     private apiService: ApiService,
@@ -105,6 +110,9 @@ export class PaymentsListComponent implements OnInit {
     this.idOPP = this.token.Usuario[0].id_opp
     await this.ListaPagosRecaudacion()
     await this. ListaBancosVzla()
+    await this.ListaMantenimientoSeguidad()
+    this.MantenimientoSIRPVEN()
+    this.Precio_Dolar_Petro()
   }
 
   async ListaBancosVzla() {
@@ -365,6 +373,53 @@ export class PaymentsListComponent implements OnInit {
     }
   }
 
+  MantenimientoSIRPVEN() {
+    this.xAPI.funcion = "IPOSTEL_R_MantenimientoSIRPVEN";
+    this.xAPI.parametros = '7'
+     this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.MontoMantenimiento = data.Cuerpo.map(e => {
+            return e
+          });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+   Precio_Dolar_Petro() {
+    this.xAPI.funcion = "IPOSTEL_R_PRECIO_PETRO_DOLAR";
+    this.xAPI.parametros = ''
+    this.xAPI.valores = ''
+      this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.DolarPetroDia = data.Cuerpo.map(e => {
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async ListaMantenimientoSeguidad() {
+    this.xAPI.funcion = "IPOSTEL_R_MantenimientoSeguridad"
+    this.xAPI.parametros = '1'
+    this.xAPI.valores = ''
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.MantenimientoYSeguridad = data.Cuerpo.map(e => {
+          return e
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
   async DescargarFactura(data: any){
     this.sectionBlockUI.start('Generando Factura, Porfavor Espere!!!');
     this.xAPI.funcion = "IPOSTEL_R_GenerarPlanillaAutoliquidacion"
@@ -379,7 +434,7 @@ export class PaymentsListComponent implements OnInit {
           this.utilService.alertConfirmMini('success', 'Factura Generada Exitosamente!')
           return e
         });
-        this.pdf.GenerarFactura(datos)
+        this.pdf.GenerarFactura(datos, this.MantenimientoYSeguridad)
       },
       (error) => {
         console.log(error)
