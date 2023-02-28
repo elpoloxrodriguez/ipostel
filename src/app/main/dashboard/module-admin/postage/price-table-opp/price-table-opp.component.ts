@@ -158,6 +158,7 @@ public SelectidOPP
       this.IUpdateListaTablaTarifasFranqueo.tasa_postal = element.tasa_postal
       this.IUpdateListaTablaTarifasFranqueo.total_pagar = element.total_pagar
       this.IUpdateListaTablaTarifasFranqueo.mes = element.mes
+      this.IUpdateListaTablaTarifasFranqueo.descripcion = element.descripcion
       this.IUpdateListaTablaTarifasFranqueo.id_servicio_franqueo = element.id_servicio_franqueo 
       this.IUpdateListaTablaTarifasFranqueo.user_updated = this.idOPP
       this.IUpdateListaTablaTarifasFranqueo.id_pef = element.id_pef
@@ -199,6 +200,7 @@ public SelectidOPP
         this.IUpdateListaTablaTarifasFranqueo.tasa_postal = element.tasa_postal
         this.IUpdateListaTablaTarifasFranqueo.total_pagar = element.total_pagar
         this.IUpdateListaTablaTarifasFranqueo.mes = element.mes
+        this.IUpdateListaTablaTarifasFranqueo.descripcion = element.descripcion
         this.IUpdateListaTablaTarifasFranqueo.id_servicio_franqueo = element.id_servicio_franqueo 
         this.IUpdateListaTablaTarifasFranqueo.user_updated = this.idOPP
         this.IUpdateListaTablaTarifasFranqueo.id_pef = element.id_pef
