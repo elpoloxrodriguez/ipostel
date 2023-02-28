@@ -167,7 +167,7 @@ public NombreTipoFranqueo
   public tempDataTarifasFranqueoAll = []
 
 
-  public montoIVA = 16
+  public montoIVA = 0
   public montoTASA
   public montoTASAnombre
 

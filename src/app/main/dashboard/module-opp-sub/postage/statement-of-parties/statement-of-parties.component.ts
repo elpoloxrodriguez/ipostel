@@ -125,7 +125,7 @@ public MontoCausadoYMantenimiento
 
   public montoPagar
   public fechaActual
-  public montoIVA = 16
+  public montoIVA = 0
   public montoTASA
   public montoTASAnombre
   public ServicioFranqueoID = 1
