@@ -339,7 +339,7 @@ public idFactura
       await this.apiService.Ejecutar(this.xAPI).subscribe(
         (data) => {
           this.itemsSelectPesoEnvio = data.Cuerpo.map(e => {
-            e.name = e.descripcion + ' (' + this.utilService.ConvertirMoneda(e.total_pagar) + ') ' + e.nombre_peso_envio
+            e.name = e.descripcion + ' (' + this.utilService.ConvertirMoneda(e.pmvp) + ') ' + e.nombre_peso_envio
             e.id = e.id_peso_envio
             // console.log(e)
             return e
@@ -585,8 +585,9 @@ public idFactura
   }
 
   async InsertMontoPeso(event: any) {
-    // console.log(event.total_pagar);
-    this.item.tarifa_servicio = event.total_pagar
+    // console.log(event);
+    // console.log(event.pmvp);
+    this.item.tarifa_servicio = event.pmvp
   }
 
   async DeletePiezas(data: any) {

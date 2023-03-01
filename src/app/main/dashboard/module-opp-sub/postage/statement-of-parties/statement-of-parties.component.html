@@ -845,7 +845,7 @@
                 <label for="id_peso_envio{{ i }}">Escala de Peso</label>
                 <ng-select [items]="itemsSelectPesoEnvio" [(ngModel)]="item.id_peso_envio"
                   [ngModelOptions]="{standalone: true}" bindLabel="name" bindValue="id" name="itemPesoEnvio{{ i }}"
-                  (ngModelChange)="InsertMontoPeso(itemsSelectPesoEnvio[i])"
+                  (ngModelChange)="item.tarifa_servicio = itemsSelectPesoEnvio[i].pmvp ?  itemsSelectPesoEnvio[i].pmvp : 0"
                   id="itemPesoEnvio{{ i }}" placeholder="Seleccionar Peso de Envio"></ng-select>
               </div>
             </div>
@@ -853,7 +853,7 @@
             <div class="col-md-2 col-12">
               <div class="form-group">
                 <label for=" itempmvp">Tarifa de Servicio </label>
-                <input type="number" class="form-control"  [value]="item.tarifa_servicio"  [(ngModel)]="item.tarifa_servicio" autocomplete="off"
+                <input type="number" class="form-control" readonly  [(ngModel)]="item.tarifa_servicio" autocomplete="off"
                   [ngModelOptions]="{standalone: true}" name="itempmvp{{ i }}" id="itempmvp{{ i }}"
                   placeholder="Monto PMVP" />
               </div>
@@ -864,13 +864,13 @@
                 <label for=" itempmvp">Cantidad Piezas Movilizadas</label>
                 <input type="number" class="form-control" [(ngModel)]="item.cantidad_piezas" autocomplete="off"
                   [ngModelOptions]="{standalone: true}" name="itemcantidad{{ i }}" id="itempmvp{{ i }}"
-                  placeholder="Monto PMVP" />
+                  placeholder="Cantidad de Piezas Movilizadas" />
               </div>
             </div>
 
             <div class="col-md-1 col-12">
               <div class="form-group">
-                <button class="btn btn-outline-danger text-nowrap px-1" (click)="deleteItem(i)" rippleEffect>
+                <button class="btn btn-danger text-nowrap px-1" (click)="deleteItem(i)" rippleEffect>
                   <i data-feather="trash" class="mr-25"></i>
                 </button>
               </div>
