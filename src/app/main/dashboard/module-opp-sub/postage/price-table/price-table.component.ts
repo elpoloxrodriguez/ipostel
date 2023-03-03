@@ -351,6 +351,7 @@ public NombreTipoFranqueo
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        this.TarifasFranqueoAll = []
         data.Cuerpo.map(e => {
           e.pmvp = this.utilService.ConvertirMoneda(e.pmvp);
           e.iva = this.utilService.ConvertirMoneda(e.iva);

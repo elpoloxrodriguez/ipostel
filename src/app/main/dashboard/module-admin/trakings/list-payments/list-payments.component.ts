@@ -118,6 +118,7 @@ public idOPP
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        this.List_Pagos_Recaudacion = []
         data.Cuerpo.map(e => {
           // console.log(e)
             if (e.monto_pc != '0.00' || e.monto_pagar == '0.00') {

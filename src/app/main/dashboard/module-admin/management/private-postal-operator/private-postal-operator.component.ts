@@ -224,12 +224,15 @@ export class PrivatePostalOperatorComponent implements OnInit {
     this.xAPI.valores = ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        // this.List_OPP_SUB = []
         data.Cuerpo.map(e => {
           if (this.n_opp != '2') {
+            // this.List_OPP_SUB = []
             // e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
             this.List_OPP_SUB.push(e)
           } else {
             if (e.status_empresa == 1) {
+              // this.List_OPP_SUB = []
               // e.telefonos_RepresentateLegal = e.telefono_movil_representante_legal +' | '+ e.telefono_residencial_representante_legal
               this.List_OPP_SUB.push(e)
             }
@@ -309,6 +312,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
   }
 
   async Subcontratistas(id: any) {
+    this.Subcontratista = []
     this.xAPI.funcion = "IPOSTEL_R_Subcontratista_ID"
     this.xAPI.parametros = id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
