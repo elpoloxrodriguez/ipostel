@@ -38,17 +38,17 @@ export class AsistenteVirtualComponent implements OnInit {
     this.status = true
   }
 
-  ChatBot() {
+  async ChatBot() {
     this.msjAux = this.msj
     this.msj = ''
     this.hidden = true
     this.xAPI.funcion = 'ChatBot'
     this.xAPI.parametros = this.msjAux
-    this.apiService.Ejecutar(this.xAPI).
+    await this.apiService.Ejecutar(this.xAPI).
       subscribe(
         (data: any) => {
           if (data.Cuerpo.length > 0) {
-            data.Cuerpo.forEach((e: any) => {
+            data.Cuerpo.map((e: any) => {
               e.preg = this.msjAux
               this.client.push(e)
             });
