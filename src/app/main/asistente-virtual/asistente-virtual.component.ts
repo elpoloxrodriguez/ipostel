@@ -44,7 +44,7 @@ export class AsistenteVirtualComponent implements OnInit {
     this.hidden = true
     this.xAPI.funcion = 'ChatBot'
     this.xAPI.parametros = this.msjAux
-    await this.apiService.Ejecutar(this.xAPI).
+    await this.apiService.EjecutarDev(this.xAPI).
       subscribe(
         (data: any) => {
           if (data.Cuerpo.length > 0) {
