@@ -75,7 +75,8 @@ const routes: Routes = [
     AuthRegisterOppComponent,
     AuthRegisterSubcontratorComponent,
     FooterComponent,
-    AsistenteVirtualComponent
+    AsistenteVirtualComponent,
+    AuthAdminComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes), NgbModule, NgSelectModule,
     FormsModule, ReactiveFormsModule, CoreCommonModule, ContentHeaderModule,

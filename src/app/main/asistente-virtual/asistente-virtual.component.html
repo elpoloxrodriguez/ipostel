@@ -1,25 +1,24 @@
 <!--button-->
-<div id="chat-circle" *ngIf="status">
+<div id="chat-circle"  *ngIf="status">
     <!-- <div id="chat-overlay"></div> -->
-    <img class="chat-circle_robot" src="assets/images/logo/logo.png">
+    <img class="chat-circle_robot fondo-negro" (click)="chat_box()" src="assets/images/ipostelin.png" title="CHATBOT IPOSTELIN">
 </div>
 
 <!--chat-bot-->
-<div class="chat-box" style="position: auto; z-index: 1200;">
+<div class="chat-box" *ngIf="MostrarChat" style="position: auto; z-index: 1200;">
     <div class="chat-box-body">
         <!--welcome message-->
-        <div class="chat-box-welcome__header">
-            <div class="chat-box__header-text">
-                <p class="chat-box-welcome__company-name">ChatBot</p>
-                <span class="chat-box-toggle"><i class="material-icons">cancel</i></span>
+        <div class="chat-box-welcome__header" *ngIf="ChatWelcome">
+            <div class="chat-box-header">
+                Asistente Virtual
+                <span class="chat-box-toggle" (click)="hideChat()"><i class="fa fa-minus-square-o"></i></span>
             </div>
 
             <div id="chat-box-welcome__ava">
-                <!-- <i class="material-icons">android</i> -->
-                <img class="chat-box-welcome_robot" src="assets/images/logo/logo.png">
+                <img class="chat-box-welcome_robot" src="assets/images/ipostelin.png">
             </div>
             <div class="chat-box-welcome__welcome-text">
-                <p>¡Hola! Soy ChatBot IPOSTEL, ¿en qué puedo ayudarlo?</p>
+                <p>¡Hola! Soy <strong>IPOSTELIN</strong>, ¿en qué puedo ayudarlo?</p>
             </div>
         </div>
 
@@ -27,30 +26,29 @@
 
 
         <!--chat-bot after welcome was toggled-->
-        <div id="chat-box__wraper">
+        <div id="chat-box__wraper" *ngIf="ChatMessage">
             <div class="chat-box-header">
-                ChatBot
-                <span class="chat-box-toggle"><i class="material-icons">cancel</i></span>
+                Asistente Virtual
+                <span class="chat-box-toggle" (click)="hideChat()"><i class="fa fa-minus-square-o"></i></span>
             </div>
-
-
 
             <div class="chat-box-overlay">
             </div>
+
             <div class="chat-logs">
-                <div id="cm-msg-0" style="padding: 2px;" class="chat-msg bot">
+                <div id="cm-msg-0" style="padding: 1px;" class="chat-msg bot">
                     <span class="msg-avatar">
-                        <img class="chat-box-overlay_robot" src="assets/images/logo/logo.png">
+                        <img class="chat-box-overlay_robot"  width="60px" src="assets/images/ipostelin-d.png">
                     </span>
                     <div class="cm-msg-text">
-                        ¡Hola! Soy ChatBot IPOSTEL, ¿en qué puedo ayudarlo?
+                        ¡Hola! Soy <strong>IPOSTELIN</strong>, ¿en qué puedo ayudarlo?
                     </div>
                 </div>
 
                 <div class="" *ngFor="let item of client">
                     <div  class="chat-msg bot">
                         <span class="msg-avatar-client">
-                            <img class="chat-box-overlay_robot" src="assets/images/avatar.png">
+                            <img class="chat-box-overlay_robot"  width="40px" src="assets/images/avatar.png">
                         </span>
                         <div class="cm-msg-text-client">
                             {{ item.preg }}
@@ -59,7 +57,7 @@
 
                     <div class="chat-msg bot">
                         <span class="msg-avatar">
-                            <img class="chat-box-overlay_robot" src="assets/images/logo/logo.png">
+                            <img class="chat-box-overlay_robot"  width="60px" src="assets/images/ipostelin-d.png">
                         </span>
                         <div class="cm-msg-text">
                             {{ item.resp }}
@@ -85,10 +83,10 @@
     </div>
     <div class="chat-input-box">
         <form class="chat-input__form">
-            <input type="text" autocomplete="off" [(ngModel)]="msj" [ngModelOptions]="{standalone: true}" required class="chat-input__text"
+            <input type="text" (click)="ChatMessages()" autocomplete="off" [(ngModel)]="msj" [ngModelOptions]="{standalone: true}" required class="chat-input__text"
                 id="chat-input__text" placeholder="Enviar un mensaje..." />
             <button (click)="ChatBot()" class="chat-submit" id="chat-submit">
-                <i class="material-icons">send</i>
+                <i class="fa fa-send-o"></i>
             </button>
         </form>
         <p class="chat-box__sign">powered by Code-Epic Technologies</p>

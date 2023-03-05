@@ -173,7 +173,7 @@ export class AuthLoginV2Component implements OnInit {
       "funcion": 'IPOSTEL_R_Login',
       "parametros": this.usuario + ',' + this.clave
     }
-    this.loginService.getLoginExternas(Xapi).subscribe(
+    await this.loginService.getLoginExternas(Xapi).subscribe(
       (data) => {
         const stoken = jwt_decode(data.token)
         this.sessionTOKEN = stoken 

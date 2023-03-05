@@ -62,7 +62,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthAdminComponent,
+    // AuthAdminComponent,
     PriceTableComponent,
     StatementOfPartiesComponent,
     ReportsRankingComponent,

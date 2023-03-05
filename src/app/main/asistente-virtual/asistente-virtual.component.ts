@@ -28,10 +28,14 @@ export class AsistenteVirtualComponent implements OnInit {
   public client: Array<Mensaje> = []
   public boot: Array<Mensaje> = []
 
+  public MostrarChat: boolean = false
+  public ChatWelcome: boolean = false
+  public ChatMessage: boolean = false
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    // this.status = true
+    this.status = true
   }
 
   ChatBot() {
@@ -60,5 +64,28 @@ export class AsistenteVirtualComponent implements OnInit {
         }
       )
   }
+
+
+  chat_box(){
+    this.client = []
+    this.msj = ''
+    this.status = false
+     this.MostrarChat = true
+     this.ChatWelcome = true
+  }
+
+  ChatMessages(){
+    this.ChatWelcome = false
+    this.ChatMessage = true
+  }
+
+  hideChat(){
+    this.client = []
+    this.msj = ''
+    this.MostrarChat = false
+    this.ChatMessage = false
+    this.status = true
+  }
+
 
 }
