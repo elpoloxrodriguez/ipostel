@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'digital-file-opp/private-postal-operator',
     component: PrivatePostalOperatorComponent,
     canActivate: [AuthGuard,AuthGuardGuard],
-    data: { roles: ['3','4','5'] },
+    data: { roles: ['3','4','5','6'] },
   },
 ];
 

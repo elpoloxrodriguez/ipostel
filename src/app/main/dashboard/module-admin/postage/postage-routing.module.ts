@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'postage/price-table-opp',
     component: PriceTableOppComponent,
     canActivate: [AuthGuard,AuthGuardGuard],
-    data: { roles: ['3','4'] },
+    data: { roles: ['3','4','6'] },
   },
 ];
 

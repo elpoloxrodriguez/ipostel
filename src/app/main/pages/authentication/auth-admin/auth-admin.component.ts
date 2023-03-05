@@ -178,7 +178,7 @@ export class AuthAdminComponent implements OnInit {
       (error) => {
         this.loading = false;
         this._router.navigate(['sirpv-admin'])
-        this.utilservice.alertConfirmMini('error','Verifique los dastos, e intente nuevamente')
+        this.utilservice.alertConfirmMini('error','Verifique los datos, e intente nuevamente')
       }
     );
   }

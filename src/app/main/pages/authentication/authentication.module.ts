@@ -23,6 +23,7 @@ import { AuthRegisterSubcontratorComponent } from './auth-register-subcontrator/
 import { BlockUIModule } from 'ng-block-ui';
 import { FooterComponent } from './footer/footer.component';
 import { AuthGuardGuard } from '@core/services/seguridad/auth-guard.guard';
+import { AsistenteVirtualComponent } from 'app/main/asistente-virtual/asistente-virtual.component';
 
 
 
@@ -74,6 +75,7 @@ const routes: Routes = [
     AuthRegisterOppComponent,
     AuthRegisterSubcontratorComponent,
     FooterComponent,
+    AsistenteVirtualComponent
   ],
   imports: [CommonModule, RouterModule.forChild(routes), NgbModule, NgSelectModule,
     FormsModule, ReactiveFormsModule, CoreCommonModule, ContentHeaderModule,

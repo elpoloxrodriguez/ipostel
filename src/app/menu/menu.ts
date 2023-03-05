@@ -15,7 +15,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'EmpresaOPP',
     nombre: 'Empresa',
-    role: ['1','2'], 
+    role: ['1', '2'],
     icono: 'package',
     type: 'item',
     url: 'business/opp',
@@ -49,7 +49,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'Subcontratistas',
     nombre: 'Subcontratistas',
-    role: ['1'], 
+    role: ['1'],
     icono: 'users',
     type: 'item',
     url: 'business/subcontractor',
@@ -58,7 +58,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'PagosPostales',
     nombre: 'Pagos',
-    role: ['1','2'], 
+    role: ['1', '2'],
     icono: 'credit-card',
     type: 'item',
     url: 'payments/payments-list',
@@ -67,7 +67,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'reports',
     nombre: 'Reportes',
-    role: ['1'], 
+    role: ['1'],
     icono: 'list',
     type: 'item',
     url: 'opp-reports/reports-ranking',
@@ -75,37 +75,37 @@ export const menu: CoreMenu[] = [
 
 
   // MENU ADMINISTRACION
-    // Franqueo Postal
-    {
-      id: 'FanqueoPostal',
-      nombre: 'Franqueo Postal',
-      title: 'Franqueo Postal',
-      role: ['3'],
-      type: 'collapsible',
-      icono: 'file-text',
-      children: [
-        {
-          id: 'TablaPrecios',
-          nombre: 'Tabla de Tarifas OPP',
-          type: 'item',
-          icono: 'circle',
-          url: 'postage/price-table-opp'
-        },
-        // {
-        //   id: 'MovementOfParts',
-        //   nombre: 'Declaración de Piezas',
-        //   type: 'item',
-        //   icono: 'circle',
-        //   url: 'postage/postage-per-month'
-        // }
-      ]
-    },
+  // Franqueo Postal
+  {
+    id: 'FanqueoPostal',
+    nombre: 'Franqueo Postal',
+    title: 'Franqueo Postal',
+    role: ['3', '6'],
+    type: 'collapsible',
+    icono: 'file-text',
+    children: [
+      {
+        id: 'TablaPrecios',
+        nombre: 'Tabla de Tarifas OPP',
+        type: 'item',
+        icono: 'circle',
+        url: 'postage/price-table-opp'
+      },
+      // {
+      //   id: 'MovementOfParts',
+      //   nombre: 'Declaración de Piezas',
+      //   type: 'item',
+      //   icono: 'circle',
+      //   url: 'postage/postage-per-month'
+      // }
+    ]
+  },
   {
     id: 'list-opp',
     nombre: 'OPP-SUB',
     icono: 'list',
     type: 'item',
-    role: ['3'],
+    role: ['3','6'],
     url: 'management/private-postal-operator',
   },
   //  REPORTES
@@ -114,36 +114,36 @@ export const menu: CoreMenu[] = [
     nombre: 'Reportes',
     icono: 'bar-chart-2',
     type: 'item',
-    role: ['3'],
+    role: ['3', '6'],
     url: 'admin-reports/admin-reports',
   },
-    //  RECAUDACION
-    {
-      id: 'takings',
-      nombre: 'Recaudacion',
-      icono: 'credit-card',
-      type: 'item',
-      role: ['3'],
-      url: 'takings/list-payments',
-    },
-        //  ARCHIVO DIGITAL POSTAL
-        {
-          id: 'digital-file-opp',
-          nombre: 'Archivo Digital P',
-          icono: 'folder-plus',
-          type: 'item',
-          role: ['3','4','5'],
-          url: 'digital-file-opp/private-postal-operator',
-        },
-    //  ACTUALIZACION DE SISTEMA
-    {
-      id: 'update-system',
-      nombre: 'Actualizar SIRPV',
-      icono: 'refresh-ccw',
-      type: 'item',
-      role: ['3','4'],
-      url: 'update-system/system-pull',
-    },
+  //  RECAUDACION
+  {
+    id: 'takings',
+    nombre: 'Recaudacion',
+    icono: 'credit-card',
+    type: 'item',
+    role: ['3', '6'],
+    url: 'takings/list-payments',
+  },
+  //  ARCHIVO DIGITAL POSTAL
+  {
+    id: 'digital-file-opp',
+    nombre: 'Archivo Digital P',
+    icono: 'folder-plus',
+    type: 'item',
+    role: ['3', '4', '5', '6'],
+    url: 'digital-file-opp/private-postal-operator',
+  },
+  //  ACTUALIZACION DE SISTEMA
+  {
+    id: 'update-system',
+    nombre: 'Actualizar SIRPV',
+    icono: 'refresh-ccw',
+    type: 'item',
+    role: ['3', '4'],
+    url: 'update-system/system-pull',
+  },
   // Soporte
   {
     id: 'config',

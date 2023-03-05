@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'takings/list-payments',
     component: ListPaymentsComponent,
     canActivate: [AuthGuard,AuthGuardGuard],
-    data: { roles: ['3','4'] },
+    data: { roles: ['3','6'] },
   },
 ];
 

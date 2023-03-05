@@ -15,6 +15,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
+    
   ],
   imports: [
     CommonModule,
@@ -25,7 +26,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     ReactiveFormsModule,
     AuthenticationModule,
-    MiscellaneousModule
+    MiscellaneousModule,
   ],
 
 })

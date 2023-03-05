@@ -171,6 +171,7 @@ public SelectidOPP
           this.sectionBlockUI.start('Autorizando Tarifas, Porfavor Espere!!!');
           this.rows.push(this.TarifasFranqueoAll)
           if (data.tipo === 1) {
+            this.selected = []
             this.TarifasFranqueoAll = []
             this.RowsLengthConciliacion = []
             this.ListaTarifasFranqueoAll(this.SelectidOPP)
