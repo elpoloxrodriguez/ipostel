@@ -38,13 +38,13 @@ export class AsistenteVirtualComponent implements OnInit {
     this.status = true
   }
 
-  async ChatBot() {
+   ChatBot() {
     this.msjAux = this.msj
     this.msj = ''
     this.hidden = true
     this.xAPI.funcion = 'ChatBot'
     this.xAPI.parametros = this.msjAux
-    await this.apiService.EjecutarDev(this.xAPI).
+     this.apiService.EjecutarDev(this.xAPI).
       subscribe(
         (data: any) => {
           if (data.Cuerpo.length > 0) {
@@ -59,7 +59,7 @@ export class AsistenteVirtualComponent implements OnInit {
         },
         error => {
           // console.log(error);
-          this.client.push({ resp: 'Problemas con Sandra Server, porfavor contacte al administrador!', preg: this.msjAux })
+          this.client.push({ resp: 'Problemas con BackEnd, porfavor contacte al administrador!', preg: this.msjAux })
           this.hidden = false
         }
       )
