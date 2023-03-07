@@ -63,11 +63,11 @@ export class LoginService {
       "nombre" : user,
       "clave" : clave,
     }
-    if (environment.production === true) {
-      var url = this.URL + 'wusuario/login'
-    } else {
-      var url =  this.URL + 'wusuario/login'
-    }
+    // if (environment.production === true) {
+      var url =  'devel/api/wusuario/login'
+    // } else {
+    //   var url =  this.URL + 'wusuario/login'
+    // }
     return this.http.post<IToken>(url, usuario )
   }
 
