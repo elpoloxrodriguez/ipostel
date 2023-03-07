@@ -64,7 +64,7 @@ export class LoginService {
       "clave" : clave,
     }
     if (environment.production === true) {
-      var url = this.RUTA  + this.URL + 'wusuario/login'
+      var url = this.URL + 'wusuario/login'
     } else {
       var url =  this.URL + 'wusuario/login'
     }
@@ -73,7 +73,7 @@ export class LoginService {
 
     getLoginExternas(parametro: any) : Observable<IToken>{
     if (environment.production === true) {
-      var url = this.RUTA  + this.URL + 'wusuario/access'
+      var url = this.URL + 'wusuario/access'
     } else {
       var url =  this.URL + 'wusuario/access'
     }
@@ -82,7 +82,7 @@ export class LoginService {
   
   makeUser(user: IUsuario): Observable<any>{    
     if (environment.production === true) {
-      var url = this.RUTA  + this.URL + 'identicacion'
+      var url =  this.URL + 'identicacion'
     } else {
       var url =  this.URL + 'identicacion'
     }
