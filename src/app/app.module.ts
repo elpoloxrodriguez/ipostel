@@ -44,6 +44,8 @@ import { StatementOfPartiesComponent } from './main/dashboard/module-opp-sub/pos
 import { SubcontractorComponent } from './main/dashboard/module-opp-sub/business/subcontractor/subcontractor.component';
 import { ReportsRankingComponent } from './main/dashboard/module-opp-sub/opp-reports/reports-ranking/reports-ranking.component';
 import { DigitalFileOppModule } from './main/dashboard/module-admin/digital-file-opp/digital-file-opp.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 //  subir Archivos
 
 
@@ -99,6 +101,12 @@ const appRoutes: Routes = [
     // App modules
     LayoutModule,
     DashboardModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     // PagesModule
   ],
   providers: [

@@ -264,6 +264,15 @@
 
         <div class="col-md-6 col-12">
           <div class="form-group">
+            <label class="form-label">Fecha de Autenticación</label>
+            <input required  type="date" class="form-control"
+            [(ngModel)]="ICrearConcesion.fecha_archivo_curp" [ngModelOptions]="{standalone: true}"
+            placeholder="Ingrese Fecha" />
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="form-group">
             <label class="form-label">N# Concesión Postal</label>
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.concesion_postal_curp" [ngModelOptions]="{standalone: true}"
@@ -283,7 +292,7 @@
           <div class="form-group">
             <label class="form-label">Tiempo del Concesión</label>
             <input required  type="number" class="form-control"
-            [(ngModel)]="ICrearConcesion.tiempo_concesion" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="ICrearConcesion.tiempo_concesion" (ngModelChange)="CalcularFecha(ICrearConcesion.tiempo_concesion)" [ngModelOptions]="{standalone: true}"
             placeholder="Ingrese Cantidad de Años" />
           </div>
         </div>
@@ -302,14 +311,6 @@
             <input required  type="text" class="form-control"
             [(ngModel)]="ICrearConcesion.tomo_archivo_curp" [ngModelOptions]="{standalone: true}"
             placeholder="Ingrese Tomo del Archivo" />
-          </div>
-        </div>
-        <div class="col-md-6 col-12">
-          <div class="form-group">
-            <label class="form-label">Fecha de Autenticación</label>
-            <input required  type="date" class="form-control"
-            [(ngModel)]="ICrearConcesion.fecha_archivo_curp" [ngModelOptions]="{standalone: true}"
-            placeholder="Ingrese Fecha" />
           </div>
         </div>
 

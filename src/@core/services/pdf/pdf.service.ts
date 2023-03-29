@@ -41,6 +41,10 @@ public MontoMantenimiento
 
 public DolarPetroDia = []
 
+  public fechas = new Date();
+  public mes = this.fechas.getMonth() + 1;
+  public anio = this.fechas.getFullYear();
+
   constructor(
     private utilService: UtilService,
     private apiService: ApiService,
@@ -69,9 +73,9 @@ public DolarPetroDia = []
 
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
-    // if ( this.utilService.FechaFormato(nueva) < data.periodo_contrato_curp) {
-    //   doc.addImage('assets/images/pdf/vencido.png', "PNG", 30, 140, 140, 140);
-    // } 
+    if (this.utilService.FechaMomentL(this.fechas) <= data.periodo_contrato_curp) {
+      doc.addImage('assets/images/pdf/vencido.png', "PNG", 30, 140, 140, 140);
+    } 
     doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
     doc.addImage(Qr, "PNG", 170, 255, 30, 30);
 
@@ -113,7 +117,7 @@ IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fec
 
     doc.setFontSize(12);
     doc.setFont(undefined, "bold");
-    doc.text(`CERTIFICADO VALIDO HASTA: ${this.utilService.FechaMoment(data.periodo_contrato_curp)}`, 15, 240, { align: "justify" });
+    doc.text(`CERTIFICADO VALIDO HASTA: ${data.periodo_contrato_curp}`, 15, 240, { align: "justify" });
 
 
 

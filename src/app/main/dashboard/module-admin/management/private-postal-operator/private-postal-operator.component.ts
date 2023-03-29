@@ -247,6 +247,7 @@ export class PrivatePostalOperatorComponent implements OnInit {
     )
   }
 
+
   AddMovilizacionPiezas(modal) {
     this.modalService.open(modal, {
       centered: true,
@@ -426,9 +427,6 @@ export class PrivatePostalOperatorComponent implements OnInit {
   }
 
   async GenerarConcesionPostalPrivada() {
-    var enero = new Date(this.ICrearConcesion.fecha_archivo_curp);
-    var febrero  = new Date(enero.setFullYear(enero.getFullYear()+this.ICrearConcesion.tiempo_concesion));
-    this.ICrearConcesion.periodo_contrato_curp = this.utilService.FechaMomentL(febrero)
     this.ICrearConcesion.user_created = this.IdUser
     this.xAPI.funcion = "IPOSTEL_I_OtorgamientoConcesion"
     this.xAPI.parametros = ''
@@ -453,6 +451,13 @@ export class PrivatePostalOperatorComponent implements OnInit {
       }
     )
 
+  }
+
+  CalcularFecha(event : any){
+    // console.log(event)
+    var enero = new Date(this.ICrearConcesion.fecha_archivo_curp);
+    var febrero  = new Date(enero.setFullYear(enero.getFullYear()+event));
+    this.ICrearConcesion.periodo_contrato_curp = this.utilService.FechaMomentL(febrero)
   }
 
   async DeleteConcesionPostalPrivada(id: any) {
