@@ -78,7 +78,7 @@ export const menu: CoreMenu[] = [
   // Franqueo Postal
   {
     id: 'FanqueoPostal',
-    nombre: 'FanqueoPostal',
+    nombre: 'Tabla de Tarifas OPP',
     icono: 'file-text',
     type: 'item',
     url: 'postage/price-table-opp',
