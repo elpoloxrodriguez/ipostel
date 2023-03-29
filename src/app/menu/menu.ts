@@ -78,28 +78,28 @@ export const menu: CoreMenu[] = [
   // Franqueo Postal
   {
     id: 'FanqueoPostal',
-    nombre: 'Franqueo Postal',
-    title: 'Franqueo Postal',
-    role: ['3', '6'],
-    type: 'collapsible',
+    nombre: 'FanqueoPostal',
     icono: 'file-text',
-    children: [
-      {
-        id: 'TablaPrecios',
-        nombre: 'Tabla de Tarifas OPP',
-        type: 'item',
-        icono: 'circle',
-        url: 'postage/price-table-opp'
-      },
-      // {
-      //   id: 'MovementOfParts',
-      //   nombre: 'Declaración de Piezas',
-      //   type: 'item',
-      //   icono: 'circle',
-      //   url: 'postage/postage-per-month'
-      // }
-    ]
+    type: 'item',
+    url: 'postage/price-table-opp',
   },
+  // {
+  //   id: 'FanqueoPostal',
+  //   nombre: 'Franqueo Postal',
+  //   title: 'Franqueo Postal',
+  //   role: ['3', '6'],
+  //   type: 'collapsible',
+  //   icono: 'file-text',
+  //   children: [
+  //     {
+  //       id: 'TablaPrecios',
+  //       nombre: 'Tabla de Tarifas OPP',
+  //       type: 'item',
+  //       icono: 'circle',
+  //       url: 'postage/price-table-opp'
+  //     },
+  //   ]
+  // },
   {
     id: 'list-opp',
     nombre: 'OPP-SUB',
