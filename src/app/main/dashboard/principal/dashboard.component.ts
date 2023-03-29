@@ -69,6 +69,8 @@ export class DashboardComponent implements OnInit {
   public hora_Actual_convert
   public role
 
+  public DatosSub_OPP = []
+
   public MesAnio
 
   public bolivares
@@ -94,10 +96,11 @@ export class DashboardComponent implements OnInit {
    * On init
    */
   async ngOnInit() {
+    this.token = jwt_decode(sessionStorage.getItem('token'));
+    this.EmpresaOppSub(this.token.Usuario[0].id_opp)
     await this.Precio_Dolar_Petro()
     await this.Meses()
     this.fecha_Actual_convert = this.utilService.FechaMomentActual()
-    this.token = jwt_decode(sessionStorage.getItem('token'));
     this.role = this.token.Usuario[0].role
     this.EmpresaRIF(this.token.Usuario[0].id_opp)
     switch (this.token.Usuario[0].tipo_registro) {
@@ -311,6 +314,22 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  EmpresaOppSub(id: any){
+    this.xAPI.funcion = "IPOSTEL_R_EmpresaOppSub";
+    this.xAPI.parametros = id
+    this.xAPI.valores = ''
+     this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        data.Cuerpo.forEach(e => {
+          this.DatosSub_OPP.push(e)
+        });
+      },
+      (err) => {
+        console.log(err)
+      }
+     )
+  }
+
   async GenerarAutorizacionInscripcion() {
     this.CrearCert.usuario = this.token.Usuario[0].id_opp
     this.CrearCert.created_user = this.token.Usuario[0].id_opp
@@ -334,7 +353,7 @@ export class DashboardComponent implements OnInit {
               // INSERT API
               this.apiService.LoadQR(id).subscribe(
                 (xdata) => {
-                  var sdata = this.DataEmpresa[0]
+                  var sdata = this.DatosSub_OPP
                   this.pdf.AutorizacionInscripcion(sdata[0], xdata.contenido, this.CrearCert.token, this.n_curp)
                   this.sectionBlockUI.stop()
                   this.utilService.alertConfirmMini('success', 'Autorización Descagada Exitosamente')

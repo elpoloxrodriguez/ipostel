@@ -146,7 +146,7 @@ IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fec
   }
 
   AutorizacionInscripcion(data: any, Qr: any, TokenQr: any,  n_curp: any) {
-    console.log(data)
+    // console.log(data)
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
@@ -183,29 +183,7 @@ IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fec
 
     doc.setFont(undefined, "");
     doc.setFontSize(12);
-    doc.text(`    El INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA, ente adscrito al Ministerio del Poder
-Popular para Ciencia y Tecnología, creado mediante Ley Publicada en la Gaceta Oficial de la República
-Bolivariana de Venezuela N° 2.146 Extraordinario, de fecha 28 de enero de 1978, reformada parcialmente
-según Decreto N° 403, de fecha 21 de Octubre de 1999, Publicada en la Gaceta Oficial de la República
-Bolivariana de Venezuela N° 5.398 Extraordinario, de fecha 26 de Octubre de 1999; el cual en lo sucesivo
-se denominará IPOSTEL, representado en este acto por su Presidenta, Msc. OLGA YOMIRA PEREIRA
-JAIMES, Venezolana, mayor de edad, de este domicilio, titular de la Cédula de Identidad N° V-
-14.551.754, designada por Decreto Presidencial de la República Bolivariana de Venezuela N° 3.877 del 21
-de Junio de 2019, Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 41.660, de
-fecha 21 de Junio de 2019, quien actúa en ejercicio de las atribuciones que le confiere el articulo 17 literal
-“e” de la Ley antes citada y bajo Autorización del Directorio de IPOSTEL, evidenciando la operatividad de
-las empresas subcontratadas que realizan a nombre de su representada las actividades inherentes a la
-prestación de los servicios públicos de correo, se procede a AUTORIZAR para la subcontratación de la
-empresa ${data.nombre_empresa}, sociedad mercantil inscrita en el Registro Mercantil Segundo de la Circunscripción Judicial
-del Estado Aragua, en fecha XXX, bajo el N° Xxx, tomo XXX; la cual prestara servicios al Operador Postal
-xxxxxxxxxxxxx identificado con el RIF J- XXXXXXX, Código Postal N° xxxxx, de conformidad a lo
-establecido en el CONTRATO DE CONCESIÓN PARA LA PRESTACION DE LOS SERVICIOS PÚBLICOS DE 
-CORREOS N°XXX, en su Capítulo XXX “DE LA SUBCONTRATACION PARA LA PRESTACIÓN DEL
-SERVICIO”, suscrito con IPOSTEL en fecha XXX, debidamente autenticados ante la Notaría Pública
-Tercera del Municipio Libertador, en la misma fecha, bajo el N° XXX, Tomo XXX, Folio xxx hasta XXX
-previa revisión de los documentos consignados, SE RESULEVE AUTORIZAR POR UN PERIODO
-SUPEDITADO A LA VIGENCIA DE LA CONCESIÓN DEL OPERADOR POSTAL PRIVADO, la
-operatividad de la sociedad mercantil supra identificada.`,
+    doc.text(`    El INSTITUTO POSTAL TELEGRÁFICO DE VENEZUELA, ente adscrito al Ministerio del Poder Popular para Ciencia y Tecnología, creado mediante Ley Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 2.146 Extraordinario, de fecha 28 de enero de 1978, reformada parcialmente según Decreto N° 403, de fecha 21 de Octubre de 1999, Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 5.398 Extraordinario, de fecha 26 de Octubre de 1999; el cual en lo sucesivo se denominará IPOSTEL, representado en este acto por su Presidenta, Msc. OLGA YOMIRA PEREIRA JAIMES, Venezolana, mayor de edad, de este domicilio, titular de la Cédula de Identidad N° V- 14.551.754, designada por Decreto Presidencial de la República Bolivariana de Venezuela N° 3.877 del 21 de Junio de 2019, Publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 41.660, de fecha 21 de Junio de 2019, quien actúa en ejercicio de las atribuciones que le confiere el articulo 17 literal “e” de la Ley antes citada y bajo Autorización del Directorio de IPOSTEL, evidenciando la operatividad de las empresas subcontratadas que realizan a nombre de su representada las actividades inherentes a la prestación de los servicios públicos de correo, se procede a AUTORIZAR para la subcontratación de la empresa ${data.nombreSub}, sociedad mercantil inscrita en el Registro Mercantil Segundo de la Circunscripción Judicial del Estado Aragua, en fecha ${data.fecha_punto_cuenta_curpOpp}, tomo ${data.tomo_archivo_curpOpp}; la cual prestara servicios al Operador Postal ${data.nombreOpp} identificado con el RIF ${data.rifOpp}, Código Postal N° ${data.concesion_postal_curpOpp}, de conformidad a lo establecido en el CONTRATO DE CONCESIÓN PARA LA PRESTACION DE LOS SERVICIOS PÚBLICOS DE CORREOS,  “DE LA SUBCONTRATACION PARA LA PRESTACIÓN DEL SERVICIO”, suscrito con IPOSTEL en fecha ${data.fecha_punto_cuenta_curpOpp}, debidamente autenticados ante la Notaría Pública Tercera del Municipio Libertador, en la misma fecha, bajo el N° ${data.n_archivo_curpOpp}, Tomo ${data.tomo_archivo_curpOpp}, Folio ${data.n_contrato_curpOpp} hasta ${data.periodo_contrato_curpOpp} previa revisión de los documentos consignados, SE RESULEVE AUTORIZAR POR UN PERIODO SUPEDITADO A LA VIGENCIA DE LA CONCESIÓN DEL OPERADOR POSTAL PRIVADO, la operatividad de la sociedad mercantil supra identificada.`,
       14,
       65,
       { maxWidth: 185, align: "justify" }
@@ -214,10 +192,7 @@ operatividad de la sociedad mercantil supra identificada.`,
 
     doc.setFont(undefined, "");
     doc.setFontSize(12);
-    doc.text(`    Es importante acotar, que la presente AUTORIZACIÓN se encuentra sujeta tanto al pago que por
-concepto de subcontratación debe realizar su representado ante este Instituto, tal como corresponde a los
-Operadores Postales Privados, de conformidad a la Providencia Administrativa emitida a tal fin, asi como a
-la inmediata consignación de los documentos solicitadas a tal fin.`,
+    doc.text(`    Es importante acotar, que la presente AUTORIZACIÓN se encuentra sujeta tanto al pago que por concepto de subcontratación debe realizar su representado ante este Instituto, tal como corresponde a los Operadores Postales Privados, de conformidad a la Providencia Administrativa emitida a tal fin, asi como a la inmediata consignación de los documentos solicitadas a tal fin.`,
       14,
       190,
       { maxWidth: 185, align: "justify" }
@@ -225,11 +200,7 @@ la inmediata consignación de los documentos solicitadas a tal fin.`,
 
     doc.setFont(undefined, "");
     doc.setFontSize(12);
-    doc.text(`    Conforme a lo aprobado por el Directorio del Instituto Postal Telegráfico de Venezuela, según
-Punto de Cuenta N° xxx en fecha XXX, Agenda XXX, el monto a cancelar por la empresa xxx, por concepto
-de obligaciones postales, es el equivalente al cincuenta por ciento (50%) del costo actual de la Concesión
-Postal, para lo cual deberá cancelar en el lapso que corresponda al Operador Postal Privado a que está
-supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por su representada.`,
+    doc.text(`    Conforme a lo aprobado por el Directorio del Instituto Postal Telegráfico de Venezuela, según Punto de Cuenta N° ${ data.punto_cuenta_curp } en fecha ${ data.fecha_punto_cuenta_curp }, el monto a cancelar por la empresa ${ data.nombreOpp.toUpperCase() }, por concepto de obligaciones postales, es el equivalente al cincuenta por ciento(50 %) del costo actual de la Concesión Postal, para lo cual deberá cancelar en el lapso que corresponda al Operador Postal Privado a que está supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por su representada.`,
       14,
       215,
       { maxWidth: 185, align: "justify" }
@@ -242,6 +213,11 @@ supeditado, conforme a lo establecido en la Contrato de Concesión suscrito por 
       245,
       { maxWidth: 185, align: "justify" }
     );
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    doc.text(`    CERTIFICADO VALIDO HASTA: ${data.periodo_contrato_curpSub}`, 14, 255, { align: "justify" });
+
 
 
     doc.setFontSize(12);
