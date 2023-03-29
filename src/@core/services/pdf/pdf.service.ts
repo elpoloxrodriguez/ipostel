@@ -73,6 +73,7 @@ public DolarPetroDia = []
 
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
+    doc.addImage('assets/images/pdf/sello.png', "PNG", 110, 220, 60, 60);
     if (this.utilService.FechaMomentL(this.fechas) <= data.periodo_contrato_curp) {
       doc.addImage('assets/images/pdf/vencido.png', "PNG", 30, 140, 140, 140);
     } 
@@ -106,9 +107,7 @@ public DolarPetroDia = []
 
     doc.setFont(undefined, "");
     doc.setFontSize(12);
-    doc.text(`  Queda la Sociedad Mercantil ${data.nombre_empresa} inserta en los Libros de Registro
-del Archivo Postal de Operadoras Privadas llevados por la Dirección de Gestión Postal de
-IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fecha ${this.utilService.FechaMomentLL(data.fecha_archivo_curp)} a los efectos de Ley.`,
+    doc.text(`    Queda la Sociedad Mercantil ${data.nombre_empresa} inserta en los Libros de Registro del Archivo Postal de Operadoras Privadas llevados por la Dirección de Gestión Postal de IPOSTEL bajo el N° ${data.n_archivo_curp} Tomo ${data.tomo_archivo_curp} de Fecha ${this.utilService.FechaMomentLL(data.fecha_archivo_curp)} a los efectos de Ley.`,
       14,
       205,
       { maxWidth: 185, align: "justify" }
