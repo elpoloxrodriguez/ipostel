@@ -134,7 +134,6 @@ export class AuthRegisterOppComponent implements OnInit {
   public motos = false
   public bicicletas = false
   public autobuses = false
-
   public ErrorRegistro
 
 
@@ -246,6 +245,7 @@ export class AuthRegisterOppComponent implements OnInit {
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
     });
+    
     this.Select_Estados()
     this.Select_TipoAgencia()
     this.Select_Tipo_servicio()

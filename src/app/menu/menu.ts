@@ -81,6 +81,7 @@ export const menu: CoreMenu[] = [
     nombre: 'Tabla de Tarifas OPP',
     icono: 'file-text',
     type: 'item',
+    role: ['3', '6'],
     url: 'postage/price-table-opp',
   },
   // {
