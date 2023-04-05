@@ -59,7 +59,10 @@ public DolarPetroDia = []
     const fecha = this.utilService.FechaActual()
     const doc = new jsPDF();
     var fechax= fecha
-    var nueva=fechax.split(" ")[0].split("/").reverse().join("/");
+    var nueva= fechax.split(" ")[0].split("-").reverse().join("/");
+    // console.log(nueva)
+    // console.log(data.periodo_contrato_curp)
+
 
     const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
@@ -74,7 +77,7 @@ public DolarPetroDia = []
     doc.addImage('assets/images/pdf/cintillo.png', "PNG", 5, 5, 200, 15);
     doc.addImage('assets/images/pdf/firma.png', "PNG", 80, 240, 65, 45);
     doc.addImage('assets/images/pdf/sello.png', "PNG", 110, 220, 60, 60);
-    if (this.utilService.FechaMomentL(this.fechas) <= data.periodo_contrato_curp) {
+    if (data.periodo_contrato_curp <= nueva) {
       doc.addImage('assets/images/pdf/vencido.png', "PNG", 30, 140, 140, 140);
     } 
     doc.addImage('assets/images/pdf/marca-agua.png', "PNG", 25, 115, 160, 60);
