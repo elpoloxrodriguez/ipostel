@@ -409,9 +409,9 @@ public SelectidOPP
       // const isPartialGenderMatch = row.nombre_servicios_franqueo.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
       // const isPartialStatusMatch = row.nombre_peso_envio.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
       // const isPartialStatusAutorizadoMatch = row.status_pef.indexOf(statusAutorizadoFilter) !== -1 || !statusAutorizadoFilter;
-      const isPartialGenderMatch = row.nombre_servicios_franqueo.indexOf(planFilter) !== -1 || !planFilter;
-      const isPartialStatusMatch = row.nombre_peso_envio.indexOf(statusFilter) !== -1 || !statusFilter;
-      const isPartialStatusAutorizadoMatch = row.status_pef.indexOf(statusAutorizadoFilter) !== -1 || !statusAutorizadoFilter;
+      const isPartialGenderMatch = row.nombre_servicios_franqueo.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
+      const isPartialStatusMatch = row.nombre_peso_envio.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
+      const isPartialStatusAutorizadoMatch = row.status_pef.toLowerCase().indexOf(statusAutorizadoFilter) !== -1 || !statusAutorizadoFilter;
       return isPartialNameMatch && isPartialGenderMatch && isPartialStatusMatch && isPartialStatusAutorizadoMatch;
     });
   }
