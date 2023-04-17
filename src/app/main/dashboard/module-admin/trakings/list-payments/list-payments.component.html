@@ -80,6 +80,14 @@
                           </div>
                         </ng-template>
                       </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Fecha" prop="fecha_pc" [width]="15">
+                        <ng-template let-fecha_pc="value" ngx-datatable-cell-template>
+                          <div>
+                            <span class="font-weight-bold"> {{ fecha_pc  }}</span>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
       
                       <ngx-datatable-column name="STATUS" prop="status_pc" [width]="5">
                         <ng-template let-status_pc="value" ngx-datatable-cell-template>

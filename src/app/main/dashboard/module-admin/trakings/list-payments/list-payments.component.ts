@@ -124,6 +124,7 @@ public idOPP
             if (e.monto_pc != '0.00' || e.monto_pagar == '0.00') {
             e.MontoPAGAR = e.monto_pagar
             e.MontoPC = e.monto_pc
+            e.fecha_pc = this.utilService.FechaMomentL(e.fecha_pc)
             e.monto_pagar = this.utilService.ConvertirMoneda(e.monto_pagar)
             e.monto_pc = this.utilService.ConvertirMoneda(e.monto_pc)
             this.List_Pagos_Recaudacion.push(e) 
